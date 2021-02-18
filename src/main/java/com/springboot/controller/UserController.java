@@ -1,10 +1,14 @@
 package com.springboot.controller;
 
 import com.springboot.entity.User;
-import com.springboot.entity.UserPrincipal;
-import com.springboot.services.UserService;
+import com.springboot.exception.EmailExistException;
+import com.springboot.exception.UsernameExistException;
+import com.springboot.service.UserService;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +43,8 @@ public class UserController {
     }
 
     @PostMapping("/registerForm")
-    public String registerUser(@ModelAttribute(value = "user") User user) {
+    public String registerUser(@ModelAttribute(value = "user") User user)
+            throws UsernameExistException, EmailExistException {
         userService.registerNewUser(user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail(), user.getPassword());
         return "redirect:/login";
     }
@@ -53,12 +58,22 @@ public class UserController {
     @PostMapping("/loginForm")
     public String loginUser(@ModelAttribute(value = "user") User user) {
         authenticate(user.getUsername(), user.getPassword());
-        User loginUser = userService.findUserByUsername(user.getUsername());
-        UserPrincipal userPrincipal = new UserPrincipal(loginUser);
+        if (isAuthenticated()) {
+            return "redirect:/user/" + user.getUsername();
+        }
         return "redirect:/login";
     }
 
     private void authenticate(String username, String password) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+    }
+
+    private boolean isAuthenticated() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || AnonymousAuthenticationToken.class.
+                isAssignableFrom(authentication.getClass())) {
+            return false;
+        }
+        return authentication.isAuthenticated();
     }
 }
