@@ -10,7 +10,12 @@ public interface ProjectService {
 
     Project findProjectByProjectName(String projectName);
 
-    Project createNewProject(String projectName, String description, Date startDate, Date endDate);
+    Project createProject(Project project);
 
     List<Project> findAllProjects();
+
+    void archiveProject(Project project);
+
+    List<Project> findAllArchivedProjects();
+    List<Project> findAllOngoingProjects();
 }
