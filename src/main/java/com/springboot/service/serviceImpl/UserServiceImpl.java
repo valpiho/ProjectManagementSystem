@@ -36,9 +36,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = userRepository.findUserByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("Username is not found");
-        } else {
-            return new UserPrincipal(user);
         }
+        return new UserPrincipal(user);
     }
 
     @Override

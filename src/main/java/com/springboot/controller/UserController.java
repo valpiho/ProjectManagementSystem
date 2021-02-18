@@ -4,11 +4,6 @@ import com.springboot.entity.User;
 import com.springboot.exception.EmailExistException;
 import com.springboot.exception.UsernameExistException;
 import com.springboot.service.UserService;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +13,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
-    private final AuthenticationManager authenticationManager;
 
-    public UserController(UserService userService,
-                          AuthenticationManager authenticationManager) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.authenticationManager = authenticationManager;
     }
 
     @GetMapping("/")
@@ -32,7 +24,9 @@ public class UserController {
     }
 
     @GetMapping("/user/{username}")
-    public String getUser(@PathVariable String username) {
+    public String getUser(@PathVariable String username, Model model) {
+        User user = this.userService.findUserByUsername(username);
+        model.addAttribute("user", user);
         return "profile";
     }
 
@@ -50,30 +44,12 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String loginUserForm(Model model) {
-        model.addAttribute("user", new User());
+    public String login() {
         return "login";
     }
 
-    @PostMapping("/loginForm")
-    public String loginUser(@ModelAttribute(value = "user") User user) {
-        authenticate(user.getUsername(), user.getPassword());
-        if (isAuthenticated()) {
-            return "redirect:/user/" + user.getUsername();
-        }
+    @GetMapping("/logout")
+    public String logout() {
         return "redirect:/login";
-    }
-
-    private void authenticate(String username, String password) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-    }
-
-    private boolean isAuthenticated() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || AnonymousAuthenticationToken.class.
-                isAssignableFrom(authentication.getClass())) {
-            return false;
-        }
-        return authentication.isAuthenticated();
     }
 }
