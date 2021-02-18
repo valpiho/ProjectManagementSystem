@@ -1,33 +1,64 @@
 package com.springboot.controller;
 
 import com.springboot.entity.User;
-import com.springboot.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.springboot.entity.UserPrincipal;
+import com.springboot.services.UserService;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping({"/", "user"})
 public class UserController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserService userService;
+    private final AuthenticationManager authenticationManager;
 
-    @PostMapping("/add")
-    public String addUser(@RequestParam String first, @RequestParam String last) {
-        User user = new User();
-        user.setFirstname(first);
-        user.setLastname(last);
-        userRepository.save(user);
-        return "Added new user to db!";
-    }
-    @GetMapping("/hello")
-    public String sayHello(@RequestParam(value = "myName", defaultValue = "World") String name) {
-        return String.format("Hello %s!", name);
+    public UserController(UserService userService,
+                          AuthenticationManager authenticationManager) {
+        this.userService = userService;
+        this.authenticationManager = authenticationManager;
     }
 
-    @GetMapping("/list")
-    public Iterable<User> getUser() {
-        return userRepository.findAll();
+    @GetMapping("/")
+    public String indexPage() {
+        return "index";
+    }
+
+    @GetMapping("/user/{username}")
+    public String getUser(@PathVariable String username) {
+        return "profile";
+    }
+
+    @GetMapping("/register")
+    public String registerUserForm(Model model) {
+        model.addAttribute("user", new User());
+        return "register";
+    }
+
+    @PostMapping("/registerForm")
+    public String registerUser(@ModelAttribute(value = "user") User user) {
+        userService.registerNewUser(user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail(), user.getPassword());
+        return "redirect:/login";
+    }
+
+    @GetMapping("/login")
+    public String loginUserForm(Model model) {
+        model.addAttribute("user", new User());
+        return "login";
+    }
+
+    @PostMapping("/loginForm")
+    public String loginUser(@ModelAttribute(value = "user") User user) {
+        authenticate(user.getUsername(), user.getPassword());
+        User loginUser = userService.findUserByUsername(user.getUsername());
+        UserPrincipal userPrincipal = new UserPrincipal(loginUser);
+        return "redirect:/login";
+    }
+
+    private void authenticate(String username, String password) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
     }
 }
