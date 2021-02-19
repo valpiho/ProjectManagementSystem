@@ -1,5 +1,8 @@
 package com.springboot.entity;
 
+import com.springboot.enumeration.TaskPriority;
+import com.springboot.enumeration.TaskStatus;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,21 +11,26 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String taskDescription;
+
     @ManyToOne
     private Project project;
+
+    private String taskDescription;
+    private TaskPriority priority;
+    private TaskStatus status = TaskStatus.NOT_STARTED;
+
     @OneToOne
     private User user;
-    private TaskPriority priority;
-    private TaskStatus status;
 
     public Task() {}
 
-    public Task(Long id, String taskDescription, Project project, User user) {
+    public Task(Long id, String taskDescription, Project project, User user, TaskPriority priority, TaskStatus status) {
         this.id = id;
         this.taskDescription = taskDescription;
         this.project = project;
         this.user = user;
+        this.priority = priority;
+        this.status = status;
     }
 
     public Long getId() {
@@ -55,5 +63,21 @@ public class Task {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public TaskPriority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(TaskPriority priority) {
+        this.priority = priority;
+    }
+
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
     }
 }

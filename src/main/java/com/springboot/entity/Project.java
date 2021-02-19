@@ -14,10 +14,10 @@ public class Project {
     private Date startDate;
     private Date endDate;
 
-    //kas mul peab siin ka olema:
+    //Do I need to have this here:
     //@OneToMany
     //private Task task
-    //?
+    //if I have @ManyToOne under Task?
 
     public Project() { }
 

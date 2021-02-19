@@ -3,13 +3,11 @@ package com.springboot.services.servicesImpl;
 import com.springboot.entity.Project;
 import com.springboot.repository.ProjectRepository;
 import com.springboot.services.ProjectService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -31,9 +29,15 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project createProject(Project project) {
-        //TODO: Create New Project
-        return projectRepository.save(project);
+    public void createProject(String projectName, String description, Date startDate, Date endDate) {
+        Project project = new Project();
+
+        project.setProjectName(projectName);
+        project.setDescription(description);
+        project.setStartDate(startDate);
+        project.setEndDate(endDate);
+
+        projectRepository.save(project);
     }
 
     @Override
