@@ -13,6 +13,8 @@ public class Task {
     private Project project;
     @OneToOne
     private User user;
+    private TaskPriority priority;
+    private TaskStatus status;
 
     public Task() {}
 
