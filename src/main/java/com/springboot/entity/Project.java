@@ -17,9 +17,9 @@ public class Project {
     private Date startDate;
     private Date endDate;
 
-    //@ManyToOne
+    @Enumerated(EnumType.STRING)
+    @Column(length = 11)
     private ProjectTaskStatus status = ProjectTaskStatus.NOT_STARTED;
-    private boolean archivedProject = false;
 
     @ManyToMany(mappedBy = "projects")
     private Set<User> users;
@@ -86,11 +86,19 @@ public class Project {
         this.status = projectTaskStatus;
     }
 
-    public boolean isArchivedProject() {
-        return archivedProject;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setArchivedProject(boolean archivedProject) {
-        this.archivedProject = archivedProject;
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    public Task getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Task tasks) {
+        this.tasks = tasks;
     }
 }

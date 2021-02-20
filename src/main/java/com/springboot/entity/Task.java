@@ -20,12 +20,15 @@ public class Task {
     @JoinColumn(name = "user_id", updatable = false)
     private User user;
 
-
-
     private String taskDescription;
-    private TaskPriority priority;
-    private ProjectTaskStatus status = ProjectTaskStatus.NOT_STARTED;
 
+    @Enumerated(EnumType.STRING)
+    @Column(length = 6)
+    private TaskPriority priority;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 11)
+    private ProjectTaskStatus status = ProjectTaskStatus.NOT_STARTED;
 
 
     public Task() {}

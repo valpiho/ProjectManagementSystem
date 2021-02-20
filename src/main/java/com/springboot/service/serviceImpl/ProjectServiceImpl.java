@@ -1,6 +1,7 @@
 package com.springboot.service.serviceImpl;
 
 import com.springboot.entity.Project;
+import com.springboot.entity.User;
 import com.springboot.enumeration.ProjectTaskStatus;
 import com.springboot.repository.ProjectRepository;
 import com.springboot.service.ProjectService;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -45,21 +47,36 @@ public class ProjectServiceImpl implements ProjectService {
         return projectRepository.findAll();
     }
 
+
     @Override
-    public void archiveProject(Project project) {
-        project.setArchivedProject(true);
-        System.out.println("The project is archived.");
+    public List<Project> findAllArchivedProjects(ProjectTaskStatus status) {
+        return projectRepository.findAllByStatus(ProjectTaskStatus.ARCHIVED);
     }
 
-    /*@Override
-    public Project findAllArchivedProjects() {
-        return projectRepository.findAllByArchivedProjectIsTrue(true);
-    }*/
+    @Override
+    public List<Project> findAllOngoingProjects(ProjectTaskStatus status) {
+        return projectRepository.findAllByStatus(ProjectTaskStatus.IN_PROGRESS);
+    }
 
     @Override
-    public List<Project> findAllOngoingProjects() {
-        //TODO: Find All Ongoing Projects
-        return null;
+    public void updateProjectNameAndDescription(Long id, String projectName, String description) {
+        Project project = projectRepository.findProjectById(id);
+        project.setProjectName(projectName);
+        project.setDescription(description);
+    }
+
+    @Override
+    public void changeProjectStatus(Long id, ProjectTaskStatus status) {
+        Project project = projectRepository.findProjectById(id);
+        project.setStatus(status);
+        projectRepository.save(project);
+    }
+
+    @Override
+    public void addUserToProject(Long id, Set<User> users) {
+        Project project = projectRepository.findProjectById(id);
+        project.setUsers(users);
+        projectRepository.save(project);
     }
 
 }

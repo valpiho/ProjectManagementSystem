@@ -2,10 +2,12 @@ package com.springboot.service;
 
 
 import com.springboot.entity.Project;
+import com.springboot.entity.User;
 import com.springboot.enumeration.ProjectTaskStatus;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 public interface ProjectService {
 
@@ -15,8 +17,12 @@ public interface ProjectService {
 
     List<Project> findAllProjects();
 
-    void archiveProject(Project project);
+    List<Project> findAllArchivedProjects(ProjectTaskStatus status);
+    List<Project> findAllOngoingProjects(ProjectTaskStatus status);
 
-    //Project findAllArchivedProjects();
-    List<Project> findAllOngoingProjects();
+    void updateProjectNameAndDescription(Long id, String projectName, String description);
+
+    void changeProjectStatus(Long id, ProjectTaskStatus status);
+
+    void addUserToProject(Long id, Set<User> users);
 }
