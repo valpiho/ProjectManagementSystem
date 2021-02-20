@@ -1,5 +1,7 @@
 package com.springboot.entity;
 
+import com.springboot.enumeration.ProjectTaskStatus;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -7,22 +9,17 @@ import java.util.Date;
 public class Project {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String projectName;
     private String description;
     private Date startDate;
     private Date endDate;
-
-    //Do I need to have this here:
-    //@OneToMany
-    //private Task task
-    //if I have @ManyToOne under Task?
+    private ProjectTaskStatus status = ProjectTaskStatus.NOT_STARTED;
 
     public Project() { }
 
-    public Project(Long id, String projectName, String description, Date startDate, Date endDate) {
-        this.id = id;
+    public Project(String projectName, String description, Date startDate, Date endDate) {
         this.projectName = projectName;
         this.description = description;
         this.startDate = startDate;
@@ -68,4 +65,14 @@ public class Project {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    public ProjectTaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ProjectTaskStatus projectTaskStatus) {
+        this.status = projectTaskStatus;
+    }
+
+
 }

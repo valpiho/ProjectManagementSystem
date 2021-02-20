@@ -1,4 +1,4 @@
-package com.springboot.services;
+package com.springboot.service;
 
 
 import com.springboot.entity.Project;

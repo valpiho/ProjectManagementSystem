@@ -1,6 +1,6 @@
 package com.springboot.controller;
 
-import com.springboot.services.ProjectService;
+import com.springboot.service.ProjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 

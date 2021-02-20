@@ -1,8 +1,8 @@
-package com.springboot.services.servicesImpl;
+package com.springboot.service.serviceImpl;
 
 import com.springboot.entity.Project;
 import com.springboot.repository.ProjectRepository;
-import com.springboot.services.ProjectService;
+import com.springboot.service.ProjectService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

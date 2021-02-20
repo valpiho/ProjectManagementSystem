@@ -1,12 +1,12 @@
-package com.springboot.services.servicesImpl;
+package com.springboot.service.serviceImpl;
 
 import com.springboot.entity.Project;
 import com.springboot.entity.Task;
 import com.springboot.entity.User;
 import com.springboot.enumeration.TaskPriority;
-import com.springboot.enumeration.TaskStatus;
+import com.springboot.enumeration.ProjectTaskStatus;
 import com.springboot.repository.TaskRepository;
-import com.springboot.services.TaskService;
+import com.springboot.service.TaskService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,13 +30,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void createTask(Project project, String description, TaskPriority priority, TaskStatus status) {
+    public void createTask(Project project, String description, TaskPriority priority, ProjectTaskStatus projectTaskStatus) {
         Task task = new Task();
 
         task.setProject(project);
         task.setTaskDescription(description);
         task.setPriority(TaskPriority.MEDIUM);
-        task.setStatus(TaskStatus.NOT_STARTED);
+        task.setStatus(ProjectTaskStatus.NOT_STARTED);
 
         taskRepository.save(task);
 
@@ -48,8 +48,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void changeTaskStatus(Long id, TaskStatus status) {
-        taskRepository.findById(id).get().setStatus(status);
+    public void changeTaskStatus(Long id, ProjectTaskStatus projectTaskStatus) {
+        taskRepository.findById(id).get().setStatus(projectTaskStatus);
     }
 
     @Override

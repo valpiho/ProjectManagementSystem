@@ -1,7 +1,7 @@
 package com.springboot.entity;
 
 import com.springboot.enumeration.TaskPriority;
-import com.springboot.enumeration.TaskStatus;
+import com.springboot.enumeration.ProjectTaskStatus;
 
 import javax.persistence.*;
 
@@ -9,23 +9,24 @@ import javax.persistence.*;
 public class Task {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    //@JoinColumn(name = "id")
+    @ManyToOne //(fetch = FetchType.EAGER)
+    @JoinColumn(name = "project_id", updatable = false)
     private Project project;
 
     private String taskDescription;
-    private TaskPriority priority;
-    private TaskStatus status = TaskStatus.NOT_STARTED;
 
-    @OneToOne
+    private TaskPriority priority;
+    private ProjectTaskStatus status = ProjectTaskStatus.NOT_STARTED;
+
+    @OneToOne(mappedBy = "task")
     private User user;
 
     public Task() {}
 
-    public Task(Long id, String taskDescription, Project project, User user, TaskPriority priority, TaskStatus status) {
+    public Task(Long id, String taskDescription, Project project, User user, TaskPriority priority, ProjectTaskStatus status) {
         this.id = id;
         this.taskDescription = taskDescription;
         this.project = project;
@@ -74,11 +75,11 @@ public class Task {
         this.priority = priority;
     }
 
-    public TaskStatus getStatus() {
+    public ProjectTaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(TaskStatus status) {
-        this.status = status;
+    public void setStatus(ProjectTaskStatus projectTaskStatus) {
+        this.status = projectTaskStatus;
     }
 }
