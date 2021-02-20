@@ -9,6 +9,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     Project findProjectByProjectName(String projectName);
 
+    //Project findAllByArchivedProjectIsTrue(boolean archivedProject);
 
 
 }

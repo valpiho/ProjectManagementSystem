@@ -1,6 +1,7 @@
 package com.springboot.service.serviceImpl;
 
 import com.springboot.entity.Project;
+import com.springboot.enumeration.ProjectTaskStatus;
 import com.springboot.repository.ProjectRepository;
 import com.springboot.service.ProjectService;
 import org.springframework.stereotype.Service;
@@ -21,22 +22,20 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
 
-
     @Override
     public Project findProjectByProjectName(String projectName) {
-
-      //  return projectRepository.findProjectByProjectName(projectName);
-            return null;
+        return projectRepository.findProjectByProjectName(projectName);
     }
 
     @Override
-    public void createProject(String projectName, String description, Date startDate, Date endDate) {
+    public void createProject(String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status) {
         Project project = new Project();
 
         project.setProjectName(projectName);
         project.setDescription(description);
         project.setStartDate(startDate);
         project.setEndDate(endDate);
+        project.setStatus(status);
 
         projectRepository.save(project);
     }
@@ -48,15 +47,14 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void archiveProject(Project project) {
-        List<Project> archivedProjects = new ArrayList<>();
-        archivedProjects.add(project);
+        project.setArchivedProject(true);
+        System.out.println("The project is archived.");
     }
 
-    @Override
-    public List<Project> findAllArchivedProjects() {
-        //TODO: Find All Archived Projects
-        return null;
-    }
+    /*@Override
+    public Project findAllArchivedProjects() {
+        return projectRepository.findAllByArchivedProjectIsTrue(true);
+    }*/
 
     @Override
     public List<Project> findAllOngoingProjects() {

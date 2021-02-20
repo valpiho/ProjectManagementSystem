@@ -12,22 +12,25 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne //(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "project_id", updatable = false)
     private Project project;
 
-    private String taskDescription;
+    @ManyToOne
+    @JoinColumn(name = "user_id", updatable = false)
+    private User user;
 
+
+
+    private String taskDescription;
     private TaskPriority priority;
     private ProjectTaskStatus status = ProjectTaskStatus.NOT_STARTED;
 
-    @OneToOne(mappedBy = "task")
-    private User user;
+
 
     public Task() {}
 
-    public Task(Long id, String taskDescription, Project project, User user, TaskPriority priority, ProjectTaskStatus status) {
-        this.id = id;
+    public Task(String taskDescription, Project project, User user, TaskPriority priority, ProjectTaskStatus status) {
         this.taskDescription = taskDescription;
         this.project = project;
         this.user = user;

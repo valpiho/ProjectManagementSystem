@@ -6,18 +6,16 @@ import com.springboot.entity.User;
 import com.springboot.enumeration.TaskPriority;
 import com.springboot.enumeration.ProjectTaskStatus;
 
-import java.util.Optional;
-
 public interface TaskService {
 
-    Optional<Task> findTaskById(Long id);
+    Task findTaskById(long id);
 
-    void createTask(Project project, String description, TaskPriority priority, ProjectTaskStatus projectTaskStatus);
+    void createTask(Project project, String description, TaskPriority priority, ProjectTaskStatus status);
 
-    void changeTaskPriority(Long id, TaskPriority priority);
+    void changeTaskPriority(long id, TaskPriority priority);
 
-    void changeTaskStatus(Long id, ProjectTaskStatus projectTaskStatus);
+    void changeTaskStatus(long id, ProjectTaskStatus status);
 
-    void addMembersToProject(Long id, User user);
+    void addMembersToTask(long id, User user);
 
 }

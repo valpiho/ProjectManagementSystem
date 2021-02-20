@@ -10,8 +10,6 @@ import com.springboot.service.TaskService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @Transactional
 public class TaskServiceImpl implements TaskService {
@@ -22,10 +20,8 @@ public class TaskServiceImpl implements TaskService {
         this.taskRepository = taskRepository;
     }
 
-
     @Override
-    public Optional<Task> findTaskById(Long id) {
-        //TODO: is Optional right here?
+    public Task findTaskById(long id) {
         return taskRepository.findById(id);
     }
 
@@ -43,17 +39,23 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void changeTaskPriority(Long id, TaskPriority priority) {
-       // taskRepository.findById(id).get().setPriority(priority);
+    public void changeTaskPriority(long id, TaskPriority priority) {
+       Task task = taskRepository.findById(id);
+       task.setPriority(priority);
+       taskRepository.save(task);
     }
 
     @Override
-    public void changeTaskStatus(Long id, ProjectTaskStatus projectTaskStatus) {
-        taskRepository.findById(id).get().setStatus(projectTaskStatus);
+    public void changeTaskStatus(long id, ProjectTaskStatus status) {
+        Task task = taskRepository.findById(id);
+        task.setStatus(status);
+        taskRepository.save(task);
     }
 
     @Override
-    public void addMembersToProject(Long id, User user) {
-        //taskRepository.findById(id).get().setUser(user);
+    public void addMembersToTask(long id, User user) {
+        Task task = taskRepository.findById(id);
+        task.setUser(user);
+        taskRepository.save(task);
     }
 }

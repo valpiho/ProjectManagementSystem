@@ -1,9 +1,8 @@
 package com.springboot.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User{
@@ -18,6 +17,16 @@ public class User{
     private String password;
     private String role;
     private String[] authorities;
+
+    @OneToMany
+    @JoinColumn(name = "task_id", updatable = false)
+    private List<Task> tasks;
+
+    @ManyToMany
+    @JoinTable(name = "users_projects",
+            joinColumns=@JoinColumn(name="user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name="project_id", referencedColumnName = "id"))
+    private Set<Project> projects;
 
     public User() {}
 
@@ -94,5 +103,21 @@ public class User{
 
     public void setAuthorities(String[] authorities) {
         this.authorities = authorities;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public Set<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Set<Project> projects) {
+        this.projects = projects;
     }
 }
