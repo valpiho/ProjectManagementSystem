@@ -44,7 +44,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void changeTaskPriority(Long id, TaskPriority priority) {
-        taskRepository.findById(id).get().setPriority(priority);
+       // taskRepository.findById(id).get().setPriority(priority);
     }
 
     @Override
@@ -54,6 +54,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void addMembersToProject(Long id, User user) {
-        taskRepository.findById(id).get().setUser(user);
+        //taskRepository.findById(id).get().setUser(user);
     }
 }

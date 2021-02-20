@@ -13,6 +13,7 @@ public class Task {
     private Long id;
 
     @ManyToOne
+    //@JoinColumn(name = "id")
     private Project project;
 
     private String taskDescription;
