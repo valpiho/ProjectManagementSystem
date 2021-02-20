@@ -8,8 +8,7 @@ import com.springboot.service.ProjectService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -30,7 +29,12 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void createProject(String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status) {
+    public Project findProjectById(Long id) {
+        return projectRepository.findProjectById(id);
+    }
+
+    @Override
+    public Project createProject(String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status) {
         Project project = new Project();
 
         project.setProjectName(projectName);
@@ -40,6 +44,8 @@ public class ProjectServiceImpl implements ProjectService {
         project.setStatus(status);
 
         projectRepository.save(project);
+
+        return project;
     }
 
     @Override
