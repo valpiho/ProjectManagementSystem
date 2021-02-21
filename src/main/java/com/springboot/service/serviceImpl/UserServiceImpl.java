@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -62,17 +63,29 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setPassword(bCryptPasswordEncoder.encode(password));
         user.setRole(Role.ROLE_USER.name());
         user.setAuthorities(Role.ROLE_USER.getAuthorities());
+        user.setCreatedAt(new Date());
         userRepository.save(user);
     }
 
     @Override
-    public void updateUserById(Long id, String firstName, String lastName, String username, String email, String password) {
-        // TODO: User update
+    public void updateUserByUsername(String username, String newFirstName, String newLastName, String newUsername, String newEmail, String newPassword) throws UsernameExistException, EmailExistException {
+        User user = userRepository.findUserByUsername(username);
+        validateUsernameAndEmail(newUsername, newEmail);
+        user.setFirstName(newFirstName);
+        user.setLastName(newLastName);
+        user.setUsername(newUsername);
+        user.setEmail(newEmail);
+        user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        user.setRole(Role.ROLE_USER.name());
+        user.setAuthorities(Role.ROLE_USER.getAuthorities());
+        user.setUpdatedAt(new Date());
+        userRepository.save(user);
     }
 
     @Override
-    public void deleteUserById(Long id) {
-        // TODO: User delete
+    public void deleteUserByUsername(String username) {
+        User user = userRepository.findUserByUsername(username);
+        userRepository.delete(user);
     }
 
     @Override
@@ -82,8 +95,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public List<User> findAllUsers() {
-        // TODO: Find all Users
-        return null;
+        return userRepository.findAll();
     }
 
     private void validateUsernameAndEmail(String username, String email)
@@ -92,7 +104,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new UsernameExistException("Username already exists");
         }
         if (findUserByEmail(email) != null) {
-            throw new EmailExistException("Username already exists");
+            throw new EmailExistException("Email already exists");
         }
     }
 }
