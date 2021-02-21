@@ -27,14 +27,14 @@ public class UserController {
 
     @GetMapping("/user/{username}")
     public String getUser(@PathVariable String username, Model model) {
-        User user = this.userService.findUserByUsername(username);
+        User user = userService.findUserByUsername(username);
         model.addAttribute("user", user);
         return "profile";
     }
 
     @GetMapping("/user/{username}/update")
     public String updateUser(@PathVariable String username, Model model) {
-        User user = this.userService.findUserByUsername(username);
+        User user = userService.findUserByUsername(username);
         model.addAttribute("user", user);
         return "user/update";
     }
@@ -48,7 +48,7 @@ public class UserController {
 
     @PostMapping("/user/{username}/delete")
     public String deleteUser(@PathVariable String username) {
-        User user = this.userService.findUserByUsername(username);
+        userService.deleteUserByUsername(username);
         return "redirect:/logout";
     }
 
