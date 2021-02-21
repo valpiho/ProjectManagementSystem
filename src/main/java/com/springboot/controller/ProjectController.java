@@ -1,27 +1,33 @@
 package com.springboot.controller;
 
 import com.springboot.entity.Project;
+import com.springboot.entity.User;
 import com.springboot.enumeration.ProjectTaskStatus;
 import com.springboot.service.ProjectService;
+import com.springboot.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/projects")
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final UserService userService;
 
-    public ProjectController(ProjectService projectService) {
+    public ProjectController(ProjectService projectService, UserService userService) {
         this.projectService = projectService;
+        this.userService = userService;
     }
 
     @GetMapping("/{project_id}")
     public String getProject(@PathVariable (name = "project_id") Long projectId, Model model) {
         Project project = projectService.findProjectById(projectId);
         model.addAttribute("project", project);
-        return "";
+        return "project";
     }
 
     @GetMapping("/all-projects")
@@ -30,12 +36,13 @@ public class ProjectController {
         return "";
     }
 
-    //TODO: kuidas otsida ühe kasutaja kõiki projekte?
-   /* @GetMapping("{user_id}")
-    public String getAllProjectsByUser(@PathVariable (name = "user_id") Long userId) {
-        projectService.findAllByUsers(userId);
+    @GetMapping("/{username}")
+    public String getAllProjectsByUser(@PathVariable (name = "username") String username, Model model) {
+        User user = userService.findUserByUsername(username);
+        List<Project> projects = projectService.findProjectsByUsers(user);
+        model.addAttribute(projects);
         return "";
-    }*/
+    }
 
     @GetMapping("/archived-projects")
     public String getAllArchivedProjects() {

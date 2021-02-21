@@ -51,6 +51,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public List<Project> findProjectsByUsers(User user) {
+        return projectRepository.findProjectsByUsers(user);
+    }
+
+    @Override
     public List<Project> findAllArchivedProjects(ProjectTaskStatus status) {
         return projectRepository.findAllByStatus(ProjectTaskStatus.ARCHIVED);
     }

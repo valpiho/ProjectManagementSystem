@@ -17,7 +17,7 @@ public interface ProjectService {
     void createProject(String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status);
 
     List<Project> findAllProjects();
-
+    List<Project> findProjectsByUsers(User user);
     List<Project> findAllArchivedProjects(ProjectTaskStatus status);
     List<Project> findAllOngoingProjects(ProjectTaskStatus status);
 

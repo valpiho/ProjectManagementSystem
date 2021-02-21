@@ -1,5 +1,6 @@
 package com.springboot.service.serviceImpl;
 
+import com.springboot.entity.Project;
 import com.springboot.entity.User;
 import com.springboot.entity.UserPrincipal;
 import com.springboot.enumeration.Role;
@@ -96,6 +97,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public List<User> findAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> findAllByProjects(Project project) {
+
+        return null;
     }
 
     private void validateUsernameAndEmail(String username, String email)
