@@ -1,6 +1,8 @@
 package com.springboot.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -17,20 +19,24 @@ public class User{
     private String password;
     private String role;
     private String[] authorities;
+    private boolean isEnabled;
+    private Date createdAt;
+    private Date updatedAt;
 
     @OneToMany
     @JoinColumn(name = "task_id", updatable = false)
     private List<Task> tasks;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "users_projects",
             joinColumns=@JoinColumn(name="user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name="project_id", referencedColumnName = "id"))
-    private Set<Project> projects;
+    private List<Project> projects;
 
     public User() {}
 
-    public User(Long id, String firstName, String lastName, String username, String email, String password, String role, String[] authorities) {
+    public User(Long id, String firstName, String lastName, String username, String email, String password,
+                String role, String[] authorities, boolean isEnabled, Date createdAt, Date updatedAt) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,6 +45,11 @@ public class User{
         this.password = password;
         this.role = role;
         this.authorities = authorities;
+        this.isEnabled = isEnabled;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.tasks = new ArrayList<>();
+        this.projects = new ArrayList<>();
     }
 
     public Long getId() {
@@ -113,11 +124,35 @@ public class User{
         this.tasks = tasks;
     }
 
-    public Set<Project> getProjects() {
+    public List<Project> getProjects() {
         return projects;
     }
 
-    public void setProjects(Set<Project> projects) {
+    public void setProjects(List<Project> projects) {
         this.projects = projects;
+    }
+
+    public boolean getIsEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
