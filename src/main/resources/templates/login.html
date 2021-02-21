@@ -23,14 +23,14 @@
             }
         }
     </style>
-    <link href="../static/image/login.css" rel="stylesheet">
+    <link href="../static/css/login.css" rel="stylesheet">
 </head>
 
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:#005a82">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.html">
-                <img src="../static/image/favicon.png" alt="" width="30" height="24" class="d-inline-block align-top">
+                <img src="../static/images/favicon.png" alt="" width="30" height="24" class="d-inline-block align-top">
                 SAV-i</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,9 +47,9 @@
 
 <main class="form-signin">
     <form>
-        <a th:href="@{}">
+       <!-- <a th:href="@{}">-->
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-        </a>
+      <!--  </a>-->
         <br>
 
         <label for="inputEmail" class="visually-hidden">Email address</label>
@@ -74,7 +74,7 @@
             </div>
 
             <div class="new-account mt-3">
-                <p>Don't have an account? <a class="text-primary" href="./register.html">Sign up</a></p>
+                <p>Don't have an account? <a class="nav-link" href="register.html">Sign up</a></p>
             </div>
             <p class="mt-5 mb-3 text-muted">&copy; 2021 SAV-i</p>
         </div>
@@ -82,4 +82,3 @@
 </main>
 </body>
 </html>
-<
