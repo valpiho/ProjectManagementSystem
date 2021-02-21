@@ -4,6 +4,7 @@ import com.springboot.enumeration.TaskPriority;
 import com.springboot.enumeration.ProjectTaskStatus;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Task {
@@ -11,16 +12,18 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String title;
+    private String taskDescription;
+    private Date createdAt;
+    private Date updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "project_id", updatable = false)
+    @JoinColumn(name = "project_id")
     private Project project;
 
     @ManyToOne
     @JoinColumn(name = "user_id", updatable = false)
     private User user;
-
-    private String taskDescription;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 6)
@@ -30,11 +33,13 @@ public class Task {
     @Column(length = 11)
     private ProjectTaskStatus status = ProjectTaskStatus.NOT_STARTED;
 
-
     public Task() {}
 
-    public Task(String taskDescription, Project project, User user, TaskPriority priority, ProjectTaskStatus status) {
+    public Task(String title, String taskDescription, Date createdAt, Date updatedAt, Project project, User user, TaskPriority priority, ProjectTaskStatus status) {
+        this.title = title;
         this.taskDescription = taskDescription;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.project = project;
         this.user = user;
         this.priority = priority;
@@ -49,12 +54,36 @@ public class Task {
         this.id = id;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getTaskDescription() {
         return taskDescription;
     }
 
     public void setTaskDescription(String taskDescription) {
         this.taskDescription = taskDescription;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public Project getProject() {

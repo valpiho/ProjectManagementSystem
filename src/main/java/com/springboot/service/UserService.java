@@ -15,9 +15,9 @@ public interface UserService {
     void registerNewUser(String firstName, String lastName, String username, String email, String password)
             throws UsernameExistException, EmailExistException;
 
-    void updateUserById(Long id, String firstName, String lastName, String username, String email, String password );
+    void updateUserByUsername(String username, String newFirstName, String newLastName, String newUsername, String newEmail, String newPassword) throws UsernameExistException, EmailExistException;
 
-    void deleteUserById(Long id);
+    void deleteUserByUsername(String username);
 
     void resetPasswordByEmail(String email);
 
