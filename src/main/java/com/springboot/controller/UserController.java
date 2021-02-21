@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping({"/", "user"})
 public class UserController {
@@ -28,6 +30,33 @@ public class UserController {
         User user = this.userService.findUserByUsername(username);
         model.addAttribute("user", user);
         return "profile";
+    }
+
+    @GetMapping("/user/{username}/update")
+    public String updateUser(@PathVariable String username, Model model) {
+        User user = this.userService.findUserByUsername(username);
+        model.addAttribute("user", user);
+        return "user/update";
+    }
+
+    @PostMapping("/user/{username}/updateForm")
+    public String updateUser(@PathVariable(value = "username") String username,
+                             @ModelAttribute(value = "user") User user) throws UsernameExistException, EmailExistException {
+        userService.updateUserByUsername(username, user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail(), user.getPassword());
+        return "profile";
+    }
+
+    @PostMapping("/user/{username}/delete")
+    public String deleteUser(@PathVariable String username) {
+        User user = this.userService.findUserByUsername(username);
+        return "redirect:/logout";
+    }
+
+    @GetMapping("/users")
+    public String getUser( Model model) {
+        List<User> users = userService.findAllUsers();
+        model.addAttribute("users", users);
+        return "users-list";
     }
 
     @GetMapping("/register")
