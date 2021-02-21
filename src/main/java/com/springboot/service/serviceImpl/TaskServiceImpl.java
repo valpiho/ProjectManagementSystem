@@ -16,7 +16,7 @@ import java.util.List;
 @Transactional
 public class TaskServiceImpl implements TaskService {
 
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
 
     public TaskServiceImpl(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
@@ -53,6 +53,17 @@ public class TaskServiceImpl implements TaskService {
 
         taskRepository.save(task);
 
+    }
+
+    @Override
+    public void updateTask(long projectId, long taskId, String description, TaskPriority priority, ProjectTaskStatus status) {
+        Task task = taskRepository.findById(taskId);
+
+        task.setTaskDescription(description);
+        task.setPriority(priority);
+        task.setStatus(status);
+
+        taskRepository.save(task);
     }
 
     @Override

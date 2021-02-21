@@ -14,14 +14,14 @@ public interface ProjectService {
     Project findProjectByProjectName(String projectName);
     Project findProjectById(Long id);
 
-    Project createProject(String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status);
+    void createProject(String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status);
 
     List<Project> findAllProjects();
 
     List<Project> findAllArchivedProjects(ProjectTaskStatus status);
     List<Project> findAllOngoingProjects(ProjectTaskStatus status);
 
-    void updateProjectNameAndDescription(Long id, String projectName, String description);
+    void updateProject(Long id, String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status);
 
     void changeProjectStatus(Long id, ProjectTaskStatus status);
 
