@@ -3,8 +3,9 @@ package com.springboot.entity;
 import com.springboot.enumeration.ProjectTaskStatus;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 public class Project {
@@ -16,26 +17,31 @@ public class Project {
     private String description;
     private Date startDate;
     private Date endDate;
+    private Date createdAt;
+    private Date updatedAt;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 11)
     private ProjectTaskStatus status = ProjectTaskStatus.NOT_STARTED;
 
-    @ManyToMany(mappedBy = "projects")
-    private Set<User> users;
+    @ManyToMany(mappedBy = "projects", fetch = FetchType.LAZY)
+    private List<User> users;
 
-    @ManyToOne
-    @JoinColumn(name = "task_id", updatable = false)
-    private Task tasks;
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Task> tasks;
 
     public Project() { }
 
-    public Project(String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status) {
+    public Project(String projectName, String description, Date startDate, Date endDate, Date createdAt, Date updatedAt, ProjectTaskStatus status) {
         this.projectName = projectName;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.status = status;
+        this.users = new ArrayList<>();
+        this.tasks = new ArrayList<>();
     }
 
     public Long getId() {
@@ -78,6 +84,22 @@ public class Project {
         this.endDate = endDate;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     public ProjectTaskStatus getStatus() {
         return status;
     }
@@ -86,19 +108,19 @@ public class Project {
         this.status = projectTaskStatus;
     }
 
-    public Set<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 
-    public Task getTasks() {
+    public List<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(Task tasks) {
+    public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
 }

@@ -22,13 +22,12 @@ public class User{
     private boolean isEnabled;
     private Date createdAt;
     private Date updatedAt;
-    private Date deleted;
 
     @OneToMany
     @JoinColumn(name = "task_id", updatable = false)
     private List<Task> tasks;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "users_projects",
             joinColumns=@JoinColumn(name="user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name="project_id", referencedColumnName = "id"))
@@ -37,8 +36,7 @@ public class User{
     public User() {}
 
     public User(Long id, String firstName, String lastName, String username, String email, String password,
-                String role, String[] authorities, boolean isEnabled, Date createdAt, Date updatedAt, Date deleted,
-                List<Task> tasks, List<Project> projects) {
+                String role, String[] authorities, boolean isEnabled, Date createdAt, Date updatedAt) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -50,7 +48,6 @@ public class User{
         this.isEnabled = isEnabled;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.deleted = deleted;
         this.tasks = new ArrayList<>();
         this.projects = new ArrayList<>();
     }
@@ -157,13 +154,5 @@ public class User{
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public Date getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Date deleted) {
-        this.deleted = deleted;
     }
 }
