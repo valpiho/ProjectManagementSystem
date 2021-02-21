@@ -7,8 +7,12 @@ import com.springboot.enumeration.TaskPriority;
 import com.springboot.enumeration.ProjectTaskStatus;
 import com.springboot.repository.TaskRepository;
 import com.springboot.service.TaskService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -23,6 +27,16 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task findTaskById(long id) {
         return taskRepository.findById(id);
+    }
+
+    @Override
+    public List<Task> findByProjectId(long id) {
+        return taskRepository.findByProjectId(id);
+    }
+
+    @Override
+    public List<Task> findAllByUserId(long id) {
+        return taskRepository.findAllByUserId(id);
     }
 
     @Override

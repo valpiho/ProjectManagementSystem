@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping({"/", "project"})
+@RequestMapping("/project")
 public class ProjectController {
 
     private ProjectService projectService;
@@ -16,16 +16,14 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    @GetMapping("/projects/{projectName}")
-    public String getProject(@PathVariable String projectName, Model model) {
-        Project project = this.projectService.findProjectByProjectName(projectName);
+    @GetMapping("/{id}")
+    public String getProject(@PathVariable Long id, Model model) {
+        Project project = this.projectService.findProjectById(id);
         model.addAttribute("project", project);
         return "project";
-
-        //TODO: Should we use findProjectByProjectId here?
     }
 
-    @GetMapping("/projects/all-projects")
+    @GetMapping("/all-projects")
     public String getAllProjects() {
         projectService.findAllProjects();
         return "";

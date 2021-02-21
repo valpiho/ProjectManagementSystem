@@ -53,7 +53,6 @@ public class ProjectServiceImpl implements ProjectService {
         return projectRepository.findAll();
     }
 
-
     @Override
     public List<Project> findAllArchivedProjects(ProjectTaskStatus status) {
         return projectRepository.findAllByStatus(ProjectTaskStatus.ARCHIVED);
