@@ -24,4 +24,6 @@ public interface TaskService {
 
     void addMembersToTask(long id, User user);
 
+    void deleteTask(long id);
+
 }

@@ -1,18 +1,15 @@
 package com.springboot.controller;
 
+import com.springboot.entity.Task;
 import com.springboot.service.TaskService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/project/{id}")
 public class TaskController {
 
-    private TaskService taskService;
+    private final TaskService taskService;
 
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
@@ -31,4 +28,22 @@ public class TaskController {
 
         return "";
     }
+
+    @PostMapping("/create-task")
+    public String createTask(@ModelAttribute(value = "task") Task task) {
+
+        taskService.createTask(task.getProject(),
+                                task.getTaskDescription(),
+                                task.getPriority(),
+                                task.getStatus());
+        return "";
+    }
+
+    @DeleteMapping("/delete-task/{id}")
+    public String deleteTask(@PathVariable Long id) {
+        taskService.deleteTask(id);
+
+        return "";
+    }
+
 }

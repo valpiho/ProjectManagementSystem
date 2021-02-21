@@ -7,8 +7,6 @@ import com.springboot.enumeration.TaskPriority;
 import com.springboot.enumeration.ProjectTaskStatus;
 import com.springboot.repository.TaskRepository;
 import com.springboot.service.TaskService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +38,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void createTask(Project project, String description, TaskPriority priority, ProjectTaskStatus projectTaskStatus) {
+    public void createTask(Project project, String description, TaskPriority priority, ProjectTaskStatus status) {
         Task task = new Task();
 
         task.setProject(project);
@@ -71,5 +69,11 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskRepository.findById(id);
         task.setUser(user);
         taskRepository.save(task);
+    }
+
+    @Override
+    public void deleteTask(long id) {
+        Task task = taskRepository.findById(id);
+        taskRepository.delete(task);
     }
 }
