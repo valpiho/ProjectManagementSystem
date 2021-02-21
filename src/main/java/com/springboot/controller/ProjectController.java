@@ -43,7 +43,7 @@ public class ProjectController {
         return "";
     }
 
-    @GetMapping("/ongiong-projects")
+    @GetMapping("/ongoing-projects")
     public String getAllOngoingProjects() {
         projectService.findAllOngoingProjects(ProjectTaskStatus.IN_PROGRESS);
         return "";
@@ -75,7 +75,7 @@ public class ProjectController {
 
     @PostMapping("/{project_id}/updateForm")
     public String updateProject(@PathVariable (name = "project_id") Long projectId,
-                                @ModelAttribute(value = "user") Project project) {
+                                @ModelAttribute(value = "project") Project project) {
 
         projectService.updateProject(projectId,
                 project.getProjectName(),
