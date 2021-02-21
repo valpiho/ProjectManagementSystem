@@ -3,10 +3,13 @@ package com.springboot.controller;
 import com.springboot.entity.Task;
 import com.springboot.service.TaskService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
-@RequestMapping("/project/{id}")
+@RequestMapping("/project")
 public class TaskController {
 
     private final TaskService taskService;
@@ -15,23 +18,25 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/tasks/{id}")
-    public String getAllUsersTasks(@PathVariable Long id) {
-        this.taskService.findAllByUserId(id);
+    @GetMapping("{user_id}/tasks")
+    public String getTasksByUser(@PathVariable (name = "user_id") Long id) {
+        taskService.findAllByUserId(id);
 
         return "";
     }
 
-    @GetMapping("/all-tasks")
-    public String getAllTasksByProjectId(@PathVariable Long id) {
-        this.taskService.findByProjectId(id);
+    @GetMapping("{project_id}/all-tasks")
+    public String getAllTasksByProject(@PathVariable (name = "project_id") Long id, Model model) {
+        List<Task> tasks = taskService.findByProjectId(id);
+        model.addAllAttributes(tasks);
 
         return "";
     }
 
-    @PostMapping("/create-task")
-    public String createTask(@ModelAttribute(value = "task") Task task) {
-
+    @PostMapping("{project_id}/create-task")
+    public String createTask(@PathVariable (name = "project_id") Long id,
+                             @ModelAttribute(value = "task") Task task) {
+        //TODO: mõtle välja, kuidas määrata, millise projekti koht task käib
         taskService.createTask(task.getProject(),
                                 task.getTaskDescription(),
                                 task.getPriority(),
