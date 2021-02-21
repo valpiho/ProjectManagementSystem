@@ -16,7 +16,7 @@ import java.util.Set;
 @Transactional
 public class ProjectServiceImpl implements ProjectService {
 
-    private ProjectRepository projectRepository;
+    private final ProjectRepository projectRepository;
 
     public ProjectServiceImpl(ProjectRepository projectRepository) {
         this.projectRepository = projectRepository;
@@ -34,7 +34,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project createProject(String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status) {
+    public void createProject(String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status) {
         Project project = new Project();
 
         project.setProjectName(projectName);
@@ -44,15 +44,12 @@ public class ProjectServiceImpl implements ProjectService {
         project.setStatus(status);
 
         projectRepository.save(project);
-
-        return project;
     }
 
     @Override
     public List<Project> findAllProjects() {
         return projectRepository.findAll();
     }
-
 
     @Override
     public List<Project> findAllArchivedProjects(ProjectTaskStatus status) {
@@ -65,10 +62,13 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void updateProjectNameAndDescription(Long id, String projectName, String description) {
+    public void updateProject(Long id, String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status) {
         Project project = projectRepository.findProjectById(id);
         project.setProjectName(projectName);
         project.setDescription(description);
+        project.setStartDate(startDate);
+        project.setEndDate(endDate);
+        project.setStatus(status);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void addUserToProject(Long id, Set<User> users) {
+    public void addUserToProject(Long id, List<User> users) {
         Project project = projectRepository.findProjectById(id);
         project.setUsers(users);
         projectRepository.save(project);

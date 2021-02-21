@@ -10,11 +10,13 @@ import com.springboot.service.TaskService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class TaskServiceImpl implements TaskService {
 
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
 
     public TaskServiceImpl(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
@@ -26,7 +28,22 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void createTask(Project project, String description, TaskPriority priority, ProjectTaskStatus projectTaskStatus) {
+    public List<Task> findByProjectId(long id) {
+        return taskRepository.findByProjectId(id);
+    }
+
+    @Override
+    public List<Task> findAllByUserId(long id) {
+        return taskRepository.findAllByUserId(id);
+    }
+
+    @Override
+    public Task findByIdAndProjectId(Long taskId, Long projectId) {
+        return taskRepository.findByIdAndProjectId(taskId, projectId);
+    }
+
+    @Override
+    public void createTask(Project project, String description, TaskPriority priority, ProjectTaskStatus status) {
         Task task = new Task();
 
         task.setProject(project);
@@ -36,6 +53,17 @@ public class TaskServiceImpl implements TaskService {
 
         taskRepository.save(task);
 
+    }
+
+    @Override
+    public void updateTask(long projectId, long taskId, String description, TaskPriority priority, ProjectTaskStatus status) {
+        Task task = taskRepository.findById(taskId);
+
+        task.setTaskDescription(description);
+        task.setPriority(priority);
+        task.setStatus(status);
+
+        taskRepository.save(task);
     }
 
     @Override
@@ -57,5 +85,11 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskRepository.findById(id);
         task.setUser(user);
         taskRepository.save(task);
+    }
+
+    @Override
+    public void deleteTask(long id) {
+        Task task = taskRepository.findById(id);
+        taskRepository.delete(task);
     }
 }
