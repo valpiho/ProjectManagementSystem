@@ -38,6 +38,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public Task findByIdAndProjectId(Long taskId, Long projectId) {
+        return taskRepository.findByIdAndProjectId(taskId, projectId);
+    }
+
+    @Override
     public void createTask(Project project, String description, TaskPriority priority, ProjectTaskStatus status) {
         Task task = new Task();
 

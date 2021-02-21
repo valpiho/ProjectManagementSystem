@@ -1,6 +1,9 @@
 package com.springboot.controller;
 
+import com.springboot.entity.Project;
 import com.springboot.entity.Task;
+import com.springboot.repository.ProjectRepository;
+import com.springboot.service.ProjectService;
 import com.springboot.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,14 +16,26 @@ import java.util.List;
 public class TaskController {
 
     private final TaskService taskService;
+    private ProjectService projectService;
 
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
 
+    @GetMapping("{project_id}/{task_id}")
+    public String getTask(@PathVariable(name = "project_id") Long projectId,
+                          @PathVariable(name = "task_id") Long taskId,
+                          Model model) {
+
+        Task task = taskService.findByIdAndProjectId(taskId, projectId);
+        model.addAttribute("task", task);
+
+        return "";
+    }
+
     @GetMapping("{user_id}/tasks")
-    public String getTasksByUser(@PathVariable (name = "user_id") Long id) {
-        taskService.findAllByUserId(id);
+    public String getTasksByUser(@PathVariable (name = "user_id") Long userId) {
+        taskService.findAllByUserId(userId);
 
         return "";
     }
@@ -33,10 +48,15 @@ public class TaskController {
         return "";
     }
 
-    @PostMapping("{project_id}/create-task")
-    public String createTask(@PathVariable (name = "project_id") Long id,
-                             @ModelAttribute(value = "task") Task task) {
-        //TODO: mõtle välja, kuidas määrata, millise projekti koht task käib
+    @GetMapping("")
+    public String createTaskForm(Model model) {
+        model.addAttribute("task", new Task());
+        return "";
+    }
+
+    @PostMapping("/create-task")
+    public String createTask(@ModelAttribute(value = "task") Task task) {
+
         taskService.createTask(task.getProject(),
                                 task.getTaskDescription(),
                                 task.getPriority(),
@@ -44,8 +64,8 @@ public class TaskController {
         return "";
     }
 
-    @DeleteMapping("/delete-task/{id}")
-    public String deleteTask(@PathVariable Long id) {
+    @DeleteMapping("{task_id}/delete-task")
+    public String deleteTask(@PathVariable (name = "task_id") Long id) {
         taskService.deleteTask(id);
 
         return "";

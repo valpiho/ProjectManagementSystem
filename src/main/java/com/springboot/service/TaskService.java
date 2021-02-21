@@ -15,6 +15,7 @@ public interface TaskService {
     Task findTaskById(long id);
     List<Task> findByProjectId(long id);
     List<Task> findAllByUserId(long id);
+    Task findByIdAndProjectId(Long taskId, Long projectId);
 
     void createTask(Project project, String description, TaskPriority priority, ProjectTaskStatus status);
 

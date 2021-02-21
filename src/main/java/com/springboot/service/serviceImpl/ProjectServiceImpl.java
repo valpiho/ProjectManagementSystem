@@ -78,7 +78,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void addUserToProject(Long id, Set<User> users) {
+    public void addUserToProject(Long id, List<User> users) {
         Project project = projectRepository.findProjectById(id);
         project.setUsers(users);
         projectRepository.save(project);

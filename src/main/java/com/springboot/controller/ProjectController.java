@@ -18,7 +18,7 @@ public class ProjectController {
 
     @GetMapping("/{id}")
     public String getProject(@PathVariable Long id, Model model) {
-        Project project = this.projectService.findProjectById(id);
+        Project project = projectService.findProjectById(id);
         model.addAttribute("project", project);
         return "project";
     }
