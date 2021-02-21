@@ -25,5 +25,5 @@ public interface ProjectService {
 
     void changeProjectStatus(Long id, ProjectTaskStatus status);
 
-    void addUserToProject(Long id, Set<User> users);
+    void addUserToProject(Long id, List<User> users);
 }
