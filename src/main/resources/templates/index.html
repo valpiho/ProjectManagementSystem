@@ -26,14 +26,13 @@
     </style>
 
 </head>
-<body>
 
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:#005a82">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="index.html" th:href="@{/}">
                 <img th:src="@{/static/images/favicon.png}" alt="" width="30" height="24"
-                     class="d-inline-block align-top">
+                     class="d-inline-block align-top" src="">
                 SAV-i</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +57,7 @@
                  </form>-->
                 <ul class="navbar-nav justify-content-right">
                     <li class="nav-item text-nowrap">
-                        <a class="nav-link" href="register.html">Sign Up</a>
+                        <a class="nav-link" href="register.html" th:href="@{register.html}">Sign Up</a>
                     </li>
                 </ul>
 
@@ -66,6 +65,8 @@
         </div>
     </nav>
 </header>
+
+<body>
 
 <main>
 
