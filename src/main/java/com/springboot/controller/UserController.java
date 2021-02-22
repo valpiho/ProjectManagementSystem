@@ -6,12 +6,13 @@ import com.springboot.exception.UsernameExistException;
 import com.springboot.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
-@RequestMapping({"/", "user"})
+@RequestMapping({"/", "user", "error"})
 public class UserController {
 
     private final UserService userService;
@@ -75,6 +76,13 @@ public class UserController {
     @GetMapping("/login")
     public String login() {
         return "login";
+    }
+
+    //TODO AT: loginError
+    @GetMapping("/error")
+    public String loginError (Model model) {
+        model.addAttribute("loginError", true);
+        return "/login";
     }
 
     @GetMapping("/logout")
