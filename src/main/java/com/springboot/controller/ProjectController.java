@@ -52,7 +52,7 @@ public class ProjectController {
     @GetMapping("/create")
     public String createProjectForm(Model model) {
         model.addAttribute("project", new Project());
-        return "";
+        return "project-add";
     }
 
     @PostMapping("/create/new-project")
@@ -63,7 +63,7 @@ public class ProjectController {
                                         project.getStartDate(),
                                         project.getEndDate(),
                                         project.getStatus());
-        return "";
+        return "project-add";
     }
 
     @GetMapping("/{project_id}/update")
