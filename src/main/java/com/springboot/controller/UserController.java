@@ -6,11 +6,14 @@ import com.springboot.exception.EmailExistException;
 import com.springboot.exception.UsernameExistException;
 import com.springboot.service.ProjectService;
 import com.springboot.service.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -29,11 +32,23 @@ public class UserController {
         return "index";
     }
 
-    @GetMapping("/user/{username}")
-    public String getUser(@PathVariable String username, Model model) {
-        User user = userService.findUserByUsername(username);
+    @GetMapping("/user")
+    public String getUser(Model model, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User user = userService.findUserByUsername(userDetails.getUsername());
         model.addAttribute("user", user);
         return "profile";
+    }
+
+    @GetMapping("/user/{username}")
+    public String getUser(@PathVariable String username, Model model, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        if (username.equals(userDetails.getUsername())) {
+            User user = userService.findUserByUsername(username);
+            model.addAttribute("user", user);
+            return "profile";
+        }
+        return "redirect:/";
     }
 
     @GetMapping("/user/{username}/update")
@@ -81,11 +96,10 @@ public class UserController {
         return "login";
     }
 
-    //TODO AT: loginError
-    @GetMapping("/error")
-    public String loginError (Model model) {
+    @RequestMapping("/login-error")
+    public String loginError(Model model) {
         model.addAttribute("loginError", true);
-        return "/login";
+        return "login";
     }
 
     @GetMapping("/logout")

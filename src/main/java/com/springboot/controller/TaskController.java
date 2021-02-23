@@ -1,11 +1,8 @@
 package com.springboot.controller;
 
-import com.springboot.entity.Project;
 import com.springboot.entity.Task;
-import com.springboot.repository.ProjectRepository;
 import com.springboot.service.ProjectService;
 import com.springboot.service.TaskService;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -93,7 +90,4 @@ public class TaskController {
 
         return "";
     }
-
-
-
 }
