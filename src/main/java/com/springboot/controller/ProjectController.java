@@ -33,7 +33,7 @@ public class ProjectController {
     @GetMapping("/all-projects")
     public String getAllProjects() {
         projectService.findAllProjects();
-        return "";
+        return "dashboard";
     }
 
     @GetMapping("/{username}")
@@ -41,19 +41,19 @@ public class ProjectController {
         User user = userService.findUserByUsername(username);
         List<Project> projects = projectService.findProjectsByUsers(user);
         model.addAttribute(projects);
-        return "";
+        return "dashboard";
     }
 
     @GetMapping("/archived-projects")
     public String getAllArchivedProjects() {
         projectService.findAllArchivedProjects(ProjectTaskStatus.ARCHIVED);
-        return "";
+        return "dashboard";
     }
 
     @GetMapping("/ongoing-projects")
     public String getAllOngoingProjects() {
         projectService.findAllOngoingProjects(ProjectTaskStatus.IN_PROGRESS);
-        return "";
+        return "dashboard";
     }
 
     @GetMapping("/create")
@@ -77,7 +77,7 @@ public class ProjectController {
     public String updateProject(@PathVariable (name = "project_id") Long projectId, Model model) {
         Project project = projectService.findProjectById(projectId);
         model.addAttribute("project", project);
-        return "";
+        return "project/update";
     }
 
     @PostMapping("/{project_id}/updateForm")
@@ -91,7 +91,7 @@ public class ProjectController {
                 project.getEndDate(),
                 project.getStatus());
 
-        return "";
+        return "project";
     }
 
 
