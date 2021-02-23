@@ -83,7 +83,7 @@ public class UserController {
         model.addAttribute("user", new User());
         return "register";
     }
-
+//TODO AT: cannot resolve controller redirect:/login
     @PostMapping("/registerForm")
     public String registerUser(@ModelAttribute(value = "user") User user)
             throws UsernameExistException, EmailExistException {
@@ -101,7 +101,7 @@ public class UserController {
         model.addAttribute("loginError", true);
         return "login";
     }
-
+    //TODO AT: cannot resolve controller redirect:/login
     @GetMapping("/logout")
     public String logout() {
         return "redirect:/login";
