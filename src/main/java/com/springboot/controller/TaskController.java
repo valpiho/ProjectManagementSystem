@@ -1,7 +1,6 @@
 package com.springboot.controller;
 
 import com.springboot.entity.Task;
-import com.springboot.service.ProjectService;
 import com.springboot.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +13,6 @@ import java.util.List;
 public class TaskController {
 
     private final TaskService taskService;
-    private ProjectService projectService;
 
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
@@ -28,7 +26,7 @@ public class TaskController {
         Task task = taskService.findByIdAndProjectId(taskId, projectId);
         model.addAttribute("task", task);
 
-        return "";
+        return "task";
     }
 
     @GetMapping("{user_id}/tasks")
@@ -49,7 +47,7 @@ public class TaskController {
     @GetMapping("/tasks")
     public String createTaskForm(Model model) {
         model.addAttribute("task", new Task());
-        return "";
+        return "tasks-add";
     }
 
     @PostMapping("/tasks/create-task")
@@ -59,7 +57,7 @@ public class TaskController {
                                 task.getTaskDescription(),
                                 task.getPriority(),
                                 task.getStatus());
-        return "";
+        return "task";
     }
 
     @GetMapping("/{project_id}/tasks/{task_id}/update")
@@ -68,7 +66,7 @@ public class TaskController {
                              Model model){
         Task task = taskService.findByIdAndProjectId(taskId, projectId);
         model.addAttribute("task", task);
-        return "";
+        return "task/update";
     }
 
     @PostMapping("/{project_id}/tasks/{task_id}/updateForm")
@@ -81,7 +79,7 @@ public class TaskController {
                 task.getPriority(),
                 task.getStatus());
 
-        return "";
+        return "task";
     }
 
     @DeleteMapping("tasks/{task_id}/delete-task")
