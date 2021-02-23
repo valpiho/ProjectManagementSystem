@@ -13,8 +13,11 @@ ThymeLeaf,
 CSS Bootstrap5
 
 ### Other information
-User stories can be found here: https://1drv.ms/w/s!Ao4FCkOtaAkYgblukgle49DgNGZ_1g?e=qh7Jbw 
+User stories can be found here: 
+https://1drv.ms/w/s!Ao4FCkOtaAkYgblukgle49DgNGZ_1g?e=qh7Jbw 
 
-Database schema can be seen here: https://onedrive.live.com/?authkey=%21AGnRrL6x8VeSuEM&cid=180968AD430A058E&id=180968AD430A058E%2123818&parId=180968AD430A058E%2123785&o=OneUp
+Database schema can be seen here: 
+https://onedrive.live.com/?authkey=%21AGnRrL6x8VeSuEM&cid=180968AD430A058E&id=180968AD430A058E%2123818&parId=180968AD430A058E%2123785&o=OneUp
 
-Team: Valentin Piho, Airika Torn and Susanna Oja
+Team: 
+Valentin Piho, Airika Torn and Susanna Oja
