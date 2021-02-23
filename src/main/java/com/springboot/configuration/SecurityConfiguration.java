@@ -32,20 +32,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
-    //TODO AT: added successUrl and failureUrl
-    //TODO AT: change endpoint of defaultSuccessUrl
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers(PUBLIC_URLS).permitAll()
                 .anyRequest().authenticated()
                 .and()
                     .formLogin()
-                    .loginPage("/login").permitAll()
-                    .defaultSuccessUrl("/profile", true)
-                    .failureUrl("/login.html?error=true")
+                        .loginPage("/login").permitAll()
+                        .defaultSuccessUrl("/user")
+                        .failureUrl("/login-error")
                 .and()
                     .logout().permitAll()
-                    .logoutSuccessUrl("/index")
+                    .logoutSuccessUrl("/")
                 .and()
                     .httpBasic();
     }

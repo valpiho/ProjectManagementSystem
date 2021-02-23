@@ -25,33 +25,23 @@
     </nav>
 </header>
 <body class="text-center">
-
-
-<!-- https://www.thymeleaf.org/doc/articles/springsecurity.html -->
 <main class="form-signin">
-
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
-    <!--loginError is declared UserController row 80-->
     <p th:if="${loginError}" class="error">Wrong user or password</p>
-
+    <div th:if="${param.error}">
+        <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+    </div>
+    <div th:if="${param.logout}">
+        <p class="text-warning">You have been logged out.</p>
+    </div>
     <form th:action="@{/login}" method="post">
-
-        <div th:if="${param.error}">
-            <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
-        </div>
-
-        <div th:if="${param.logout}">
-            <p class="text-warning">You have been logged out.</p>
-        </div>
-
         <div class="mb-3">
-            <label for="username" class="visually-hidden">Username</label>
-            <input type="text" id="username" class="form-control" placeholder="Username"  autofocus="autofocus"/> <br>
+            <label for="username" class="form-label">Username</label>
+            <input type="text" id="username" class="form-control" placeholder="Username" name="username"/> <br>
         </div>
         <div class="mb-3">
-            <label for="password" class="visually-hidden">Password</label>
-            <input type="password" id="password" class="form-control" placeholder="Password" />
+            <label for="password" class="form-label">Password</label>
+            <input type="password" id="password" class="form-control" placeholder="Password" name="password" />
         </div>
         <div>
             <div class="text-center mt-3">
@@ -59,7 +49,7 @@
             </div>
 
             <div>
-                <p>You do not have an account? <a class="text-primary" href="register.html" th:href="@{register}">Sign
+                <p>You do not have an account? <a class="text-primary" href="register.html" th:href="@{/register}">Sign
                     up</a></p>
             </div>
             <p class="mt-5 mb-3 text-muted">&copy; 2021 SAV-i</p>
