@@ -203,7 +203,7 @@
                         <tr th:each="project: ${projects}">
                             <td>#1</td>
                             <td>
-                                <a th:href="@{/project/{project_id}(project_id=@{project.id})}"
+                                <a th:href="@{/project/{project_id}(project_id)=@{project.id})}"
                                    th:text="${project.project_name}"></a>
                             </td>
 
@@ -223,8 +223,6 @@
                             <td>visual</td>
                             <td>layout</td>
                         </tr>
-
-                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -232,10 +230,6 @@
             </main>
         </div>
     </div>
-</main>
-
-</div>
-</div>
 </main>
 
 </body>
