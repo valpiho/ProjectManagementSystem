@@ -30,8 +30,7 @@ public class UserController {
     @GetMapping("/")
     public String indexPage(Model model, Authentication authentication) {
         if (authentication != null) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            User user = userService.findUserByUsername(userDetails.getUsername());
+            User user = getUser(authentication);
             model.addAttribute("user", user);
         }
         return "index";
@@ -39,8 +38,7 @@ public class UserController {
 
     @GetMapping("/user")
     public String getUser(Model model, Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User user = userService.findUserByUsername(userDetails.getUsername());
+        User user = getUser(authentication);
         model.addAttribute("user", user);
         return "user/profile";
     }
@@ -78,33 +76,35 @@ public class UserController {
 
     @GetMapping("/user/projects-list")
     public String getUserProjects(Model model, Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        List<Project> projects = projectService.findAllProjectsByUsername(userDetails.getUsername());
+        User user = getUser(authentication);
+        List<Project> projects = projectService.findAllProjectsByUsername(user.getUsername());
         model.addAttribute("projects", projects);
-        model.addAttribute("user", userDetails);
+        model.addAttribute("user", user);
         return "user/projects-list";
     }
 
     @GetMapping("/dashboard")
     public String getUserDashboard(Model model, Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User user = userService.findUserByUsername(userDetails.getUsername());
+        User user = getUser(authentication);
         model.addAttribute("user", user);
         return "user/dashboard";
     }
 
     @GetMapping("/users-list")
     public String getUsersList(Model model, Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        List<User> usersList = userService.findAllByUsernameNot(userDetails.getUsername());
-        model.addAttribute("user", userDetails);
+        User user = getUser(authentication);
+        List<User> usersList = userService.findAllByUsernameNot(user.getUsername());
+        model.addAttribute("user", user);
         model.addAttribute("usersList", usersList);
         return "user/users-list";
     }
 
     @GetMapping("/register")
     // TODO: Check if already logged in
-    public String registerUserForm(Model model) {
+    public String registerUserForm(Model model, Authentication authentication) {
+        if (authentication != null) {
+            return "redirect:/";
+        }
         model.addAttribute("user", new User());
         return "register";
     }
@@ -117,8 +117,10 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    // TODO: Check if already logged in
-    public String login() {
+    public String login(Authentication authentication) {
+        if (authentication != null) {
+            return "redirect:/";
+        }
         return "login";
     }
 
@@ -137,5 +139,10 @@ public class UserController {
     @GetMapping("/error")
     public String errorPage() {
         return "error";
+    }
+
+    private User getUser(Authentication authentication){
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userService.findUserByUsername(userDetails.getUsername());
     }
 }
