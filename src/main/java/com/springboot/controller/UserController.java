@@ -1,5 +1,6 @@
 package com.springboot.controller;
 
+import com.springboot.entity.Project;
 import com.springboot.entity.User;
 import com.springboot.exception.EmailExistException;
 import com.springboot.exception.UsernameExistException;
@@ -121,5 +122,15 @@ public class UserController {
     @GetMapping("/error")
     public String errorPage() {
         return "error";
+    }
+
+   //TODO: find all users
+    @GetMapping("/users-list")
+    public String getAllUsers(Model model, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        List<User> users = userService.findAllUsers();
+        model.addAttribute("users", users);
+        model.addAttribute("user", userDetails);
+        return "users/users-list";
     }
 }

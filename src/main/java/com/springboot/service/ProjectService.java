@@ -22,6 +22,8 @@ public interface ProjectService {
 
     List<Project> findAllOngoingProjects(ProjectTaskStatus status);
 
+    List<Project> findAllProjects();
+
     void updateProject(Long id, String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status);
 
     void changeProjectStatus(Long id, ProjectTaskStatus status);

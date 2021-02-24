@@ -1,5 +1,6 @@
 package com.springboot.service;
 
+import com.springboot.entity.Project;
 import com.springboot.entity.User;
 import com.springboot.exception.EmailExistException;
 import com.springboot.exception.UsernameExistException;
@@ -24,5 +25,6 @@ public interface UserService {
 
     void resetPasswordByEmail(String email);
 
-
+    List<User> findAllUsers();
 }
+
