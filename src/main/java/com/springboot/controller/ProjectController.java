@@ -1,10 +1,8 @@
 package com.springboot.controller;
 
 import com.springboot.entity.Project;
-import com.springboot.entity.User;
 import com.springboot.enumeration.ProjectTaskStatus;
 import com.springboot.service.ProjectService;
-import com.springboot.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;

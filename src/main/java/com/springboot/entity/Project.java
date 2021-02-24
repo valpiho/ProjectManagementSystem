@@ -50,6 +50,20 @@ public class Project {
         this.tasks = new ArrayList<>();
     }
 
+    public void addUser(User user) {
+        this.users.add(user);
+        user.getProjects().add(this);
+    }
+
+    public void removeUser(User user) {
+        this.users.remove(user);
+        user.getProjects().remove(this);
+    }
+
+    public void addTask(Task task) {
+        this.tasks.add(task);
+        task.setProject(this);
+    }
 
     public Long getId() {
         return id;

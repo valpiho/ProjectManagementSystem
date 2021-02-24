@@ -27,7 +27,7 @@ public class User{
     @JoinColumn(name = "project_id")
     private List<Project> ownProjects;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JoinColumn(name = "task_id")
     private List<Task> tasks;
 
@@ -55,6 +55,11 @@ public class User{
         this.ownProjects = new ArrayList<>();
         this.tasks = new ArrayList<>();
         this.projects = new ArrayList<>();
+    }
+
+    public void addTask(Task task) {
+        this.tasks.add(task);
+        task.setUser(this);
     }
 
     public Long getId() {
