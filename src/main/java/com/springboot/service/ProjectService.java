@@ -14,7 +14,7 @@ public interface ProjectService {
     Project findProjectByProjectName(String projectName);
     Project findProjectById(Long id);
 
-    void createProject(String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status);
+    void createProject(String username, String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status);
 
     List<Project> findAllProjectsByUsername(String username);
 

@@ -5,21 +5,24 @@ import com.springboot.entity.User;
 import com.springboot.enumeration.ProjectTaskStatus;
 import com.springboot.repository.ProjectRepository;
 import com.springboot.service.ProjectService;
+import com.springboot.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @Transactional
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final UserService userService;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository) {
+    public ProjectServiceImpl(ProjectRepository projectRepository,
+                              UserService userService) {
         this.projectRepository = projectRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -38,15 +41,16 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void createProject(String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status) {
+    public void createProject(String username, String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status) {
         Project project = new Project();
-
+        User user = userService.findUserByUsername(username);
+        project.setOwner(user);
         project.setProjectName(projectName);
         project.setDescription(description);
         project.setStartDate(startDate);
         project.setEndDate(endDate);
+        project.setCreatedAt(new Date());
         project.setStatus(status);
-
         projectRepository.save(project);
     }
 
