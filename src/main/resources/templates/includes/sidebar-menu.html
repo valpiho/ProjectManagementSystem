@@ -1,31 +1,26 @@
-<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-    <div class="sidebar-sticky">
-        <div></div>
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/projects/projects-list}">Projects All</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/users-list}">Users</a>
-            </li>
-                <a class="nav-link" th:href="@{/tasks/task-list}">Tasks All</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/users/users-list}">Users All</a>
-            </li>
-        </ul>
+<div class="sidebar-sticky">
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/projects/projects-list}">All Projects</a>
+        </li>
+        <li>
+            <a class="nav-link" th:href="@{/}">All Tasks *</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/users-list}">All Users</a>
+        </li>
+    </ul>
 
-            <span class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">Personal Items</span>
-        <ul class="nav flex-column">
+    <span class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">Personal Items</span>
+    <ul class="nav flex-column">
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/projects/projects-user-list}">Projects</a>
+            <a class="nav-link" th:href="@{/}">Projects *</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/tasks/tasks-user-list}">Tasks</a>
+            <a class="nav-link" th:href="@{/}">Tasks *</a>
         </li>
-        </ul>
-    </div>
-</nav>
+    </ul>
+</div>
