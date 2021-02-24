@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-md navbar-dark sticky-top flex-md-nowrap p-0" style="background-color:#005a82">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">
+            <img th:src="@{/static/images/favicon.png}" alt="" width="30" height="24"
+                 class="d-inline-block align-top" src="">SAV-i
+        </a>
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li sec:authorize="isAuthenticated()" class="nav-item text-nowrap">
+                <a class="nav-link" th:href="@{/user}">Profile</a>
+            </li>
+            <li sec:authorize="isAuthenticated()" class="nav-item text-nowrap">
+                <a class="nav-link" th:href="@{/user/{username}/update(username=${user.username})}">Update</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav justify-content-right">
+            <li sec:authorize="isAuthenticated()" class="nav-item text-nowrap">
+                <a class="nav-link" th:href="@{/logout}">Sing Out</a>
+            </li>
+            <li sec:authorize="isAnonymous()" class="nav-item text-nowrap">
+                <a class="nav-link" th:href="@{/login}">Sign In</a>
+            </li>
+            <li sec:authorize="isAnonymous()" class="nav-item text-nowrap">
+                <a class="nav-link" th:href="@{/register}">Sign Up</a>
+            </li>
+        </ul>
+    </div>
+</nav>

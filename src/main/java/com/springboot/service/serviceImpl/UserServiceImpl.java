@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setPassword(bCryptPasswordEncoder.encode(password));
         user.setRole(Role.ROLE_USER.name());
         user.setAuthorities(Role.ROLE_USER.getAuthorities());
-        user.setEnabled(true);
+        user.setIsEnabled(true);
         user.setCreatedAt(new Date());
         userRepository.save(user);
     }
@@ -92,11 +92,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void resetPasswordByEmail(String email) {
         // TODO: User password reset
-    }
-
-    @Override
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
     }
 
     private void validateUsernameAndEmail(String username, String email)

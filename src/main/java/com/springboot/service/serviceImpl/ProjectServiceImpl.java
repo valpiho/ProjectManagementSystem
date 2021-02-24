@@ -22,6 +22,10 @@ public class ProjectServiceImpl implements ProjectService {
         this.projectRepository = projectRepository;
     }
 
+    @Override
+    public List<Project> findAllProjectsByUsername(String username) {
+        return projectRepository.findProjectByOwner_Username(username);
+    }
 
     @Override
     public Project findProjectByProjectName(String projectName) {
@@ -44,11 +48,6 @@ public class ProjectServiceImpl implements ProjectService {
         project.setStatus(status);
 
         projectRepository.save(project);
-    }
-
-    @Override
-    public List<Project> findAllProjects() {
-        return projectRepository.findAll();
     }
 
     @Override

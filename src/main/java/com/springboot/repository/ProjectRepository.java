@@ -11,7 +11,11 @@ import java.util.List;
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     Project findProjectById(Long id);
+
+    List<Project> findProjectByOwner_Username(String username);
+
     Project findProjectByProjectName(String projectName);
+
     List<Project> findAllByStatus(ProjectTaskStatus status);
 
 

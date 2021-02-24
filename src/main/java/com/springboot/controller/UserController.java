@@ -8,14 +8,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-import java.util.List;
-
 @Controller
-@RequestMapping({"/", "user", "error"})
+@RequestMapping({"/", "user"})
 public class UserController {
 
     private final UserService userService;
@@ -25,7 +21,12 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public String indexPage() {
+    public String indexPage(Model model, Authentication authentication) {
+        if (authentication != null) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            User user = userService.findUserByUsername(userDetails.getUsername());
+            model.addAttribute("user", user);
+        }
         return "index";
     }
 
@@ -34,7 +35,7 @@ public class UserController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = userService.findUserByUsername(userDetails.getUsername());
         model.addAttribute("user", user);
-        return "profile";
+        return "user/profile";
     }
 
     @GetMapping("/user/{username}")
@@ -43,7 +44,7 @@ public class UserController {
         if (username.equals(userDetails.getUsername())) {
             User user = userService.findUserByUsername(username);
             model.addAttribute("user", user);
-            return "profile";
+            return "user/profile";
         }
         return "redirect:/";
     }
@@ -59,7 +60,7 @@ public class UserController {
     public String updateUser(@PathVariable(value = "username") String username,
                              @ModelAttribute(value = "user") User user) throws UsernameExistException, EmailExistException {
         userService.updateUserByUsername(username, user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail(), user.getPassword());
-        return "profile";
+        return "user/profile";
     }
 
     @PostMapping("/user/{username}/delete")
@@ -68,11 +69,12 @@ public class UserController {
         return "redirect:/logout";
     }
 
-    @GetMapping("/users")
-    public String getUser( Model model) {
-        List<User> users = userService.findAllUsers();
-        model.addAttribute("users", users);
-        return "users-list";
+    @GetMapping("/dashboard")
+    public String getUserDashboard(Model model, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User user = userService.findUserByUsername(userDetails.getUsername());
+        model.addAttribute("user", user);
+        return "user/dashboard";
     }
 
     @GetMapping("/register")
@@ -80,7 +82,7 @@ public class UserController {
         model.addAttribute("user", new User());
         return "register";
     }
-//TODO AT: cannot resolve controller redirect:/login
+
     @PostMapping("/registerForm")
     public String registerUser(@ModelAttribute(value = "user") User user)
             throws UsernameExistException, EmailExistException {
@@ -98,9 +100,15 @@ public class UserController {
         model.addAttribute("loginError", true);
         return "login";
     }
-    //TODO AT: cannot resolve controller redirect:/login
+
     @GetMapping("/logout")
-    public String logout() {
-        return "redirect:/login";
+    public String logout(Authentication authentication) {
+        authentication.setAuthenticated(false);
+        return "redirect:/";
+    }
+
+    @GetMapping("/error")
+    public String errorPage() {
+        return "error";
     }
 }

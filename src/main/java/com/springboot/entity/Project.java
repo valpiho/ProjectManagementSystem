@@ -20,8 +20,13 @@ public class Project {
     private Date createdAt;
     private Date updatedAt;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User owner;
+
     @Enumerated(EnumType.STRING)
     @Column(length = 11)
+    // TODO: Find way to achieve
     private ProjectTaskStatus status = ProjectTaskStatus.NOT_STARTED;
 
     @ManyToMany(mappedBy = "projects", fetch = FetchType.LAZY)
@@ -32,13 +37,14 @@ public class Project {
 
     public Project() { }
 
-    public Project(String projectName, String description, Date startDate, Date endDate, Date createdAt, Date updatedAt, ProjectTaskStatus status) {
+    public Project(String projectName, String description, Date startDate, Date endDate, Date createdAt, Date updatedAt, User owner, ProjectTaskStatus status) {
         this.projectName = projectName;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.owner = owner;
         this.status = status;
         this.users = new ArrayList<>();
         this.tasks = new ArrayList<>();
@@ -98,6 +104,14 @@ public class Project {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     public ProjectTaskStatus getStatus() {

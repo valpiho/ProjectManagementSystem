@@ -16,9 +16,10 @@ public interface ProjectService {
 
     void createProject(String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status);
 
-    List<Project> findAllProjects();
+    List<Project> findAllProjectsByUsername(String username);
 
     List<Project> findAllArchivedProjects(ProjectTaskStatus status);
+
     List<Project> findAllOngoingProjects(ProjectTaskStatus status);
 
     void updateProject(Long id, String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status);
@@ -26,4 +27,6 @@ public interface ProjectService {
     void changeProjectStatus(Long id, ProjectTaskStatus status);
 
     void addUserToProject(Long id, List<User> users);
+
+
 }
