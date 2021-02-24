@@ -23,7 +23,7 @@
              th:insert="includes/sidebar-menu"></nav>
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5">
-            <h2>Ongoing Projects overview</h2>
+            <h2>All Projects overview</h2>
             <hr class="feature-divider">
             <div class="row">
                 <div class="d-grid justify-content-end">
@@ -39,6 +39,7 @@
                             <th>Description</th>
                             <th>Tasks</th>
                             <th>Status</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -52,6 +53,10 @@
                                 <span th:text="${project.tasks.size() + ' Task(s)'}"></span>
                             </td>
                             <td th:text="${project.status}"></td>
+                            <td>
+                                <a th:href="@{/projects/{project_id}/edit(project_id=${project.id})}">Edit</a> /
+                                <a th:href="@{/projects/{project_id}/archive(project_id=${project.id})}">Archive</a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

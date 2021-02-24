@@ -4,6 +4,7 @@ import com.springboot.entity.Project;
 import com.springboot.entity.User;
 import com.springboot.exception.EmailExistException;
 import com.springboot.exception.UsernameExistException;
+import com.springboot.service.ProjectService;
 import com.springboot.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,9 +19,12 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final ProjectService projectService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService,
+                          ProjectService projectService) {
         this.userService = userService;
+        this.projectService = projectService;
     }
 
     @GetMapping("/")
@@ -72,6 +76,15 @@ public class UserController {
         return "redirect:/logout";
     }
 
+    @GetMapping("/user/projects-list")
+    public String getUserProjects(Model model, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        List<Project> projects = projectService.findAllProjectsByUsername(userDetails.getUsername());
+        model.addAttribute("projects", projects);
+        model.addAttribute("user", userDetails);
+        return "user/projects-list";
+    }
+
     @GetMapping("/dashboard")
     public String getUserDashboard(Model model, Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -90,6 +103,7 @@ public class UserController {
     }
 
     @GetMapping("/register")
+    // TODO: Check if already logged in
     public String registerUserForm(Model model) {
         model.addAttribute("user", new User());
         return "register";
@@ -103,6 +117,7 @@ public class UserController {
     }
 
     @GetMapping("/login")
+    // TODO: Check if already logged in
     public String login() {
         return "login";
     }
