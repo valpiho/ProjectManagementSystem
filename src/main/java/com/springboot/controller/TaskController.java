@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/projects")
+@RequestMapping("/")
 public class TaskController {
 
     private final TaskService taskService;
@@ -18,7 +18,7 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping("{project_id}/tasks/{task_id}")
+    @GetMapping("/projects/{project_id}/tasks/{task_id}")
     public String getTask(@PathVariable(name = "project_id") Long projectId,
                           @PathVariable(name = "task_id") Long taskId,
                           Model model) {
@@ -29,7 +29,7 @@ public class TaskController {
         return "task/task";
     }
 
-    @GetMapping("all-tasks ")
+    @GetMapping("/all-tasks")
     public String getAllTasks(Model model) {
         List<Task> tasks = taskService.findAllTasks();
         model.addAllAttributes(tasks);
@@ -44,7 +44,7 @@ public class TaskController {
         return "";
     }
 
-    @GetMapping("{project_id}/tasks-list")
+    @GetMapping("/projects/{project_id}/tasks-list")
     public String getAllTasksByProject(@PathVariable (name = "project_id") Long id, Model model) {
         List<Task> tasks = taskService.findByProjectId(id);
         model.addAllAttributes(tasks);
@@ -52,20 +52,20 @@ public class TaskController {
         return "task/tasks-list";
     }
 
-    @GetMapping("/tasks")
+    @GetMapping("/projects/{project_id}/create")
     public String createTaskForm(Model model) {
         model.addAttribute("task", new Task());
-        return "tasks-add";
+        return "task/create-task";
     }
 
-    @PostMapping("{project_id}/create-task")
+    @PostMapping("/projects/{project_id}/create/new-task")
     public String createTask(@ModelAttribute(value = "task") Task task) {
 
         taskService.createTask(task.getProject(),
                                 task.getTaskDescription(),
                                 task.getPriority(),
                                 task.getStatus());
-        return "task";
+        return "task/task";
     }
 
     @GetMapping("/{project_id}/tasks/{task_id}/update")
@@ -87,7 +87,7 @@ public class TaskController {
                 task.getPriority(),
                 task.getStatus());
 
-        return "task";
+        return "task/task";
     }
 
     @DeleteMapping("tasks/{task_id}/delete-task")
