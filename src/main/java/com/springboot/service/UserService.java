@@ -13,6 +13,8 @@ public interface UserService {
 
     User findUserByEmail(String email);
 
+    List<User> findAllByUsernameNot(String username);
+
     void registerNewUser(String firstName, String lastName, String username, String email, String password)
             throws UsernameExistException, EmailExistException;
 

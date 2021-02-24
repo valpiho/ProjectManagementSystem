@@ -80,6 +80,15 @@ public class UserController {
         return "user/dashboard";
     }
 
+    @GetMapping("/users-list")
+    public String getUsersList(Model model, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        List<User> usersList = userService.findAllByUsernameNot(userDetails.getUsername());
+        model.addAttribute("user", userDetails);
+        model.addAttribute("usersList", usersList);
+        return "user/users-list";
+    }
+
     @GetMapping("/register")
     public String registerUserForm(Model model) {
         model.addAttribute("user", new User());

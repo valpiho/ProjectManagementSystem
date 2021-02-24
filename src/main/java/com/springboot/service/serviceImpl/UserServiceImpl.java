@@ -58,6 +58,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public List<User> findAllByUsernameNot(String username) {
+        return userRepository.findAllByUsernameNot(username);
+    }
+
+    @Override
     public void registerNewUser(String firstName, String lastName, String username, String email, String password)
             throws UsernameExistException, EmailExistException {
         validateUsernameAndEmail(username, email);
