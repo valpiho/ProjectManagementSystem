@@ -23,8 +23,12 @@ public class User{
     private Date createdAt;
     private Date updatedAt;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "project_id")
+    private List<Project> ownProjects;
+
     @OneToMany
-    @JoinColumn(name = "task_id", updatable = false)
+    @JoinColumn(name = "task_id")
     private List<Task> tasks;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -48,6 +52,7 @@ public class User{
         this.isEnabled = isEnabled;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.ownProjects = new ArrayList<>();
         this.tasks = new ArrayList<>();
         this.projects = new ArrayList<>();
     }
@@ -116,6 +121,14 @@ public class User{
         this.authorities = authorities;
     }
 
+    public List<Project> getOwnProjects() {
+        return ownProjects;
+    }
+
+    public void setOwnProjects(List<Project> ownProjects) {
+        this.ownProjects = ownProjects;
+    }
+
     public List<Task> getTasks() {
         return tasks;
     }
@@ -136,7 +149,7 @@ public class User{
         return isEnabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setIsEnabled(boolean enabled) {
         isEnabled = enabled;
     }
 

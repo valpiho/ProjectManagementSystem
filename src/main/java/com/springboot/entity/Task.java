@@ -22,7 +22,7 @@ public class Task {
     private Project project;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", updatable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Enumerated(EnumType.STRING)
