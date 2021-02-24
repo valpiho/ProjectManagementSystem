@@ -65,6 +65,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public List<Project> findAllProjects() {
+        return projectRepository.findAll();
+    }
+
+    @Override
     public void updateProject(Long id, String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status) {
         Project project = projectRepository.findProjectById(id);
         project.setProjectName(projectName);
