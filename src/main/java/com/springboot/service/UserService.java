@@ -1,14 +1,19 @@
 package com.springboot.service;
 
+import com.springboot.entity.Project;
 import com.springboot.entity.User;
 import com.springboot.exception.EmailExistException;
 import com.springboot.exception.UsernameExistException;
+
+import java.util.List;
 
 public interface UserService {
 
     User findUserByUsername(String username);
 
     User findUserByEmail(String email);
+
+    List<User> findAllByUsernameNot(String username);
 
     void registerNewUser(String firstName, String lastName, String username, String email, String password)
             throws UsernameExistException, EmailExistException;
@@ -19,4 +24,7 @@ public interface UserService {
     void deleteUserByUsername(String username);
 
     void resetPasswordByEmail(String email);
+
+    List<User> findAllUsers();
 }
+

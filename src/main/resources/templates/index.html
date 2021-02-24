@@ -6,39 +6,76 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Profile</title>
+    <meta name="description" content="">
+    <title>Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link th:src="@{/static/styles/style.css}" rel="stylesheet">
+    <link href="../static/styles/carousel.css" rel="stylesheet">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
 </head>
+
 <body>
-<nav class="navbar navbar-expand-md navbar-dark sticky-top flex-md-nowrap p-0" style="background-color:#005a82">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}">
-            <img th:src="@{/static/images/favicon.png}" alt="" width="30" height="24"
-                 class="d-inline-block align-top" src="">SAV-i
-        </a>
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li sec:authorize="isAuthenticated()" class="nav-item text-nowrap">
-                <a class="nav-link" th:href="@{/user}">Profile</a>
-            </li>
-            <li sec:authorize="isAuthenticated()" class="nav-item text-nowrap">
-                <a class="nav-link" th:href="@{/user/{username}/update(username=${user.username})}">Update</a>
-            </li>
-        </ul>
-        <ul class="navbar-nav justify-content-right">
-            <li sec:authorize="isAuthenticated()" class="nav-item text-nowrap">
-                <a class="nav-link" th:href="@{/logout}">Sing Out</a>
-            </li>
-            <li sec:authorize="isAnonymous()" class="nav-item text-nowrap">
-                <a class="nav-link" th:href="@{/login}">Sign In</a>
-            </li>
-            <li sec:authorize="isAnonymous()" class="nav-item text-nowrap">
-                <a class="nav-link" th:href="@{/register}">Sign Up</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark sticky-top flex-md-nowrap p-0" style="background-color:#005a82">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/}">
+                <img th:src="@{/static/images/favicon.png}" alt="" width="30" height="24"
+                     class="d-inline-block align-top" src="">SAV-i
+            </a>
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li sec:authorize="isAuthenticated()" class="nav-item text-nowrap">
+                    <a class="nav-link" th:href="@{/user}">Profile</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item text-nowrap">
+                    <a class="nav-link" th:href="@{/user/{username}/update(username=${user.username})}">Update</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav justify-content-right">
+                <li sec:authorize="isAuthenticated()" class="nav-item text-nowrap">
+                    <a class="nav-link" th:href="@{/logout}">Sing Out</a>
+                </li>
+                <li sec:authorize="isAnonymous()" class="nav-item text-nowrap">
+                    <a class="nav-link" th:href="@{/login}">Sign In</a>
+                </li>
+                <li sec:authorize="isAnonymous()" class="nav-item text-nowrap">
+                    <a class="nav-link" th:href="@{/register}">Sign Up</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
 <main>
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <!--first carousel-->
+            <div class="carousel-item active">
+                <img th:src="@{/static/images/sobradorrel.png}" class="d-block w-100" alt="first">
+                <div class="carousel-caption text-end d-none d-md-block">
+                    <h1>First slide label</h1>
+                    <p>Some representative placeholder content for the first slide.</p>
+                    <p><a class="btn btn-lg btn-primary" style="background-color:#005a82" th:href="@{/register}">
+                        Sign up today</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container marketing">
         <p class="text-uppercase fs-3 text-center" style="color:#005a82">all-in-one</p>
         <p class="text-capitalized fs-4 text-center" style="color:#005a82">Project, Management, Program</p>
@@ -49,11 +86,13 @@
                 <img th:src="@{/static/images/susanna.png}" class="rounded-circle" width="140" height="140"
                      alt="susanna" src="">
                 <h2>Susanna</h2>
-                <p>Our awesome Project Manager, who keeps everything in order. One of the warmest person we know.</p>
+                <p>Our awesome Project Manager, who keeps everything in order. One of the warmest person we
+                    know.</p>
                 <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
             </div>
             <div class="col-lg-4">
-                <img th:src="@{/static/images/airika.png}" class="rounded-circle" width="140" height="140" alt="airika">
+                <img th:src="@{/static/images/airika.png}" class="rounded-circle" width="140" height="140"
+                     alt="airika">
                 <h2>Airika</h2>
                 <p>As a customer relationship manager, no issues would be overlooked. Everything has a solution.</p>
                 <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
@@ -77,7 +116,8 @@
                     self-management, wholeness, and a deeper sense of purpose. <br><br>
                     Many people sense that the way organizations are run today has been stretched to its limits. In
                     survey after survey, businesspeople make it clear that they
-                    see companies as places of dread and drudgery, not passion or purpose. All of us yearn for better
+                    see companies as places of dread and drudgery, not passion or purpose. All of us yearn for
+                    better
                     ways to work together — for more soulful workplaces where
                     our talents are nurtured and our deepest aspirations are honored. </p>
                 <p><a class="btn btn-secondary"
@@ -99,10 +139,12 @@
             <div class="col-md-7 order-md-2">
                 <h2 class="featurette-heading fs-2 fw-bold">Theory Of Change <br><span class="text-muted">It’ll blow your mind</span>
                 </h2>
-                <p class="lead fs-6">Theory of Change is an increasingly popular tool for organisations to describe how
+                <p class="lead fs-6">Theory of Change is an increasingly popular tool for organisations to describe
+                    how
                     they believe that change happens,
                     and to help focus their work on achieving their long-term goals.
-                    <br> There’s no universally agreed definition of what constitutes a Theory of Change. If you hear
+                    <br> There’s no universally agreed definition of what constitutes a Theory of Change. If you
+                    hear
                     someone refer to ‘Theory of Change’ today, they can mean a number of things.</p>
                 <p><a class="btn btn-secondary" href="https://www.managementcentre.co.uk/blog/theory-of-change-3/">Read
                     more &raquo;</a></p>
@@ -128,5 +170,6 @@
             &middot; <a href="https://sdacademy.ee/en/information-obligation/">SDA Data Protection</a></p>
     </footer>
 </main>
+
 </body>
 </html>

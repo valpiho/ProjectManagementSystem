@@ -12,6 +12,7 @@ import java.util.Set;
 public interface ProjectService {
 
     Project findProjectByProjectName(String projectName);
+
     Project findProjectById(Long id);
 
     void createProject(String username, String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status);
@@ -22,11 +23,13 @@ public interface ProjectService {
 
     List<Project> findAllOngoingProjects(ProjectTaskStatus status);
 
+    List<Project> findAllProjects();
+
     void updateProject(Long id, String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status);
 
     void changeProjectStatus(Long id, ProjectTaskStatus status);
 
     void addUserToProject(Long id, List<User> users);
 
-
+    void deleteProject(Long id);
 }
