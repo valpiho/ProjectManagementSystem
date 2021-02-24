@@ -1,34 +1,132 @@
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <title>Team's SDA first Spring application</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    </head>
+<!doctype html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <body>
-        <p><a href="/hello">Greet the world!</a></p>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:src="@{/static/styles/style.css}" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark sticky-top flex-md-nowrap p-0" style="background-color:#005a82">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">
+            <img th:src="@{/static/images/favicon.png}" alt="" width="30" height="24"
+                 class="d-inline-block align-top" src="">SAV-i
+        </a>
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li sec:authorize="isAuthenticated()" class="nav-item text-nowrap">
+                <a class="nav-link" th:href="@{/user}">Profile</a>
+            </li>
+            <li sec:authorize="isAuthenticated()" class="nav-item text-nowrap">
+                <a class="nav-link" th:href="@{/user/{username}/update(username=${user.username})}">Update</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav justify-content-right">
+            <li sec:authorize="isAuthenticated()" class="nav-item text-nowrap">
+                <a class="nav-link" th:href="@{/logout}">Sing Out</a>
+            </li>
+            <li sec:authorize="isAnonymous()" class="nav-item text-nowrap">
+                <a class="nav-link" th:href="@{/login}">Sign In</a>
+            </li>
+            <li sec:authorize="isAnonymous()" class="nav-item text-nowrap">
+                <a class="nav-link" th:href="@{/register}">Sign Up</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<main>
+    <div class="container marketing">
+        <p class="text-uppercase fs-3 text-center" style="color:#005a82">all-in-one</p>
+        <p class="text-capitalized fs-4 text-center" style="color:#005a82">Project, Management, Program</p>
 
-        <form action="/hello" method="GET" id="nameForm">
-        <div>
-            <label for="nameField">How should the app call you?</label>
-            <input name="myName" id="nameField">
-            <button>Greet me!</button>
+        <!-- Three columns about team members -->
+        <div class="row">
+            <div class="col-lg-4">
+                <img th:src="@{/static/images/susanna.png}" class="rounded-circle" width="140" height="140"
+                     alt="susanna" src="">
+                <h2>Susanna</h2>
+                <p>Our awesome Project Manager, who keeps everything in order. One of the warmest person we know.</p>
+                <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+            </div>
+            <div class="col-lg-4">
+                <img th:src="@{/static/images/airika.png}" class="rounded-circle" width="140" height="140" alt="airika">
+                <h2>Airika</h2>
+                <p>As a customer relationship manager, no issues would be overlooked. Everything has a solution.</p>
+                <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+            </div>
+            <div class="col-lg-4">
+                <img th:src="@{/static/images/valentin.png}" class="rounded-circle" width="140" height="140"
+                     alt="valentin">
+                <h2>Valentin</h2>
+                <p>The experienced Tech Lead and our team's mentor. There are no problems he doesn't know how to
+                    solve!</p>
+                <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+            </div>
         </div>
-        </form>
 
-        <form action="/add" method="POST">
-            <p>Let's add a user.</p>
-            <div>
-                <label for="firstName">First name:</label>
-                <input name="first" id="firstName" value="Homer">
+        <!-- Two shared articles -->
+        <hr class="feature-divider">
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h2 class="featurette-heading fs-2 fw-bold">The Future of Management Is Teal.</h2>
+                <p class="lead fs-6">Organizations are moving forward along an evolutionary spectrum, toward
+                    self-management, wholeness, and a deeper sense of purpose. <br><br>
+                    Many people sense that the way organizations are run today has been stretched to its limits. In
+                    survey after survey, businesspeople make it clear that they
+                    see companies as places of dread and drudgery, not passion or purpose. All of us yearn for better
+                    ways to work together — for more soulful workplaces where
+                    our talents are nurtured and our deepest aspirations are honored. </p>
+                <p><a class="btn btn-secondary"
+                      href="https://www.strategy-business.com/media/file/00344_The_Future_of_Management_Is_Teal.pdf">Read
+                    more &raquo;</a></p>
             </div>
-            <div>
-                <label for="lastName">Last name:</label>
-                <input name="last" id="lastName" value="Simpson">
+            <div class="col-md-5">
+                <img th:src="@{/static/images/steal.png}"
+                     class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
+                     height="500"
+                     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" alt="teal"
+                     preserveAspectRatio="xMidYMid slice" focusable="false">
             </div>
-            <div>
-                <button>Add customer</button>
+        </div>
+
+        <hr class="feature-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7 order-md-2">
+                <h2 class="featurette-heading fs-2 fw-bold">Theory Of Change <br><span class="text-muted">It’ll blow your mind</span>
+                </h2>
+                <p class="lead fs-6">Theory of Change is an increasingly popular tool for organisations to describe how
+                    they believe that change happens,
+                    and to help focus their work on achieving their long-term goals.
+                    <br> There’s no universally agreed definition of what constitutes a Theory of Change. If you hear
+                    someone refer to ‘Theory of Change’ today, they can mean a number of things.</p>
+                <p><a class="btn btn-secondary" href="https://www.managementcentre.co.uk/blog/theory-of-change-3/">Read
+                    more &raquo;</a></p>
             </div>
-        </form>
-    </body>
+            <div class="col-md-5 order-md-1">
+                <img th:src="@{/static/images/theoryofchange.png}"
+                     class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
+                     height="500"
+                     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" alt="teal"
+                     preserveAspectRatio="xMidYMid slice" focusable="false">
+            </div>
+        </div>
+
+        <hr class="feature-divider">
+
+    </div>
+
+
+    <!-- FOOTER -->
+    <footer class="container">
+        <p class="float-end"><a href="#">Back to top</a></p>
+        <p>&copy; 2021 Company SAV-i. &middot; <a href="https://sdacademy.ee/en/privacy-policy/">SDA Privacy</a>
+            &middot; <a href="https://sdacademy.ee/en/information-obligation/">SDA Data Protection</a></p>
+    </footer>
+</main>
+</body>
 </html>

@@ -4,6 +4,8 @@ import com.springboot.entity.User;
 import com.springboot.exception.EmailExistException;
 import com.springboot.exception.UsernameExistException;
 import com.springboot.service.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,15 +21,60 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public String indexPage() {
+    public String indexPage(Model model, Authentication authentication) {
+        if (authentication != null) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            User user = userService.findUserByUsername(userDetails.getUsername());
+            model.addAttribute("user", user);
+        }
         return "index";
     }
 
-    @GetMapping("/user/{username}")
-    public String getUser(@PathVariable String username, Model model) {
-        User user = this.userService.findUserByUsername(username);
+    @GetMapping("/user")
+    public String getUser(Model model, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User user = userService.findUserByUsername(userDetails.getUsername());
         model.addAttribute("user", user);
-        return "profile";
+        return "user/profile";
+    }
+
+    @GetMapping("/user/{username}")
+    public String getUser(@PathVariable String username, Model model, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        if (username.equals(userDetails.getUsername())) {
+            User user = userService.findUserByUsername(username);
+            model.addAttribute("user", user);
+            return "user/profile";
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/user/{username}/update")
+    public String updateUser(@PathVariable String username, Model model) {
+        User user = userService.findUserByUsername(username);
+        model.addAttribute("user", user);
+        return "user/update";
+    }
+
+    @PostMapping("/user/{username}/updateForm")
+    public String updateUser(@PathVariable(value = "username") String username,
+                             @ModelAttribute(value = "user") User user) throws UsernameExistException, EmailExistException {
+        userService.updateUserByUsername(username, user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail(), user.getPassword());
+        return "user/profile";
+    }
+
+    @PostMapping("/user/{username}/delete")
+    public String deleteUser(@PathVariable String username) {
+        userService.deleteUserByUsername(username);
+        return "redirect:/logout";
+    }
+
+    @GetMapping("/dashboard")
+    public String getUserDashboard(Model model, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User user = userService.findUserByUsername(userDetails.getUsername());
+        model.addAttribute("user", user);
+        return "user/dashboard";
     }
 
     @GetMapping("/register")
@@ -48,8 +95,20 @@ public class UserController {
         return "login";
     }
 
+    @RequestMapping("/login-error")
+    public String loginError(Model model) {
+        model.addAttribute("loginError", true);
+        return "login";
+    }
+
     @GetMapping("/logout")
-    public String logout() {
-        return "redirect:/login";
+    public String logout(Authentication authentication) {
+        authentication.setAuthenticated(false);
+        return "redirect:/";
+    }
+
+    @GetMapping("/error")
+    public String errorPage() {
+        return "error";
     }
 }

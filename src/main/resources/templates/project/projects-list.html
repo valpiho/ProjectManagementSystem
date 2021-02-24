@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:src="@{/static/styles/style.css}" rel="stylesheet">
+</head>
+<body>
+
+<!-- TOP MENU -->
+<div th:insert="includes/top-menu"></div>
+
+<main>
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- SIDEBAR MENU -->
+            <div th:insert="includes/sidebar-menu"></div>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5">
+                <h2>All Projects overview</h2>
+                <hr class="feature-divider">
+                <div class="row">
+                    <div class="d-grid justify-content-end">
+                        <a th:href="@{/projects/create}">
+                            <button class="btn btn-primary" type="button">Add new project</button>
+                        </a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th>Projects</th>
+                                <th>Description</th>
+                                <th>Tasks</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr th:each="project: ${projects}">
+                                <td>
+                                    <a th:href="@{/projects/{project_id}(project_id=${project.getId()})}"
+                                       th:text="${project.projectName}"></a>
+                                </td>
+
+                                <td th:text="${project.description}"></td>
+
+                                <td>
+                                    <span th:text="${project.tasks.size() + ' Task(s)'}"></span>
+                                </td>
+                                <td th:text="${project.status}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
