@@ -33,15 +33,7 @@ public class ProjectController {
         model.addAttribute("user", userDetails);
         return "project/project";
     }
-//TODO: project list by user endpoint change
-    @GetMapping("/projects-user-list")
-    public String getAllUsersProjects(Model model, Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        List<Project> projects = projectService.findAllProjectsByUsername(userDetails.getUsername());
-        model.addAttribute("projects", projects);
-        model.addAttribute("user", userDetails);
-        return "project/projects-list";
-    }
+
     @GetMapping("/projects-list")
     public String getAllProjects(Model model, Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
