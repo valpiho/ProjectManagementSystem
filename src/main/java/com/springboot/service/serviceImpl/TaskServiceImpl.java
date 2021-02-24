@@ -33,8 +33,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> findAllByUsername(String username) {
-        return taskRepository.findAllByUsername(username);
+    public List<Task> findAllByUser(User user) {
+        return taskRepository.findAllByUser(user);
     }
 
     @Override

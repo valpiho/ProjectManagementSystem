@@ -27,7 +27,7 @@
                 <hr class="feature-divider">
                 <div class="row">
                     <div class="d-grid justify-content-end">
-                        <a th:href="@{/projects/create-task}">
+                        <a th:href="@{/tasks/create-task}">
                             <button class="btn btn-primary" type="button">Add new task</button>
                         </a>
                     </div>
@@ -44,9 +44,9 @@
                             </thead>
                             <tbody>
 
-                            <tr th:each="task : ${tasks.stream().filter(user.getUsername())}">
+                            <tr th:each="task : ${tasks}">
                                 <td>
-                                    <a th:href="@{/user/{project_id}(project_id=${project_id})/tasks/{task_id}(task_id=${task.getId()})}"
+                                    <a th:href="@{/tasks/{task_id}(task_id=${task.getId()})}"
                                        th:text="${task.title}"></a>
                                 </td>
                                 <td th:text="${task.taskDescription}"></td>
