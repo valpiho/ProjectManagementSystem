@@ -16,51 +16,50 @@
 <!-- TOP MENU -->
 <div th:insert="includes/top-menu"></div>
 
-<main>
-    <div class="container-fluid">
-        <div class="row">
+<div class="container-fluid">
+    <div class="row">
 
-            <!-- SIDEBAR MENU -->
-            <div th:insert="includes/sidebar-menu"></div>
+        <!-- SIDEBAR MENU -->
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
+             th:insert="includes/sidebar-menu"></nav>
+        v>
 
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5">
-                <h2>Create Project</h2>
-                <hr class="feature-divider">
-                <form action="#" th:action="@{/projects/create/new-project}" th:object="${project}" method="post">
-                    <div class="mb-3">
-                        <label for="title" class="form-label">Project Title</label>
-                        <input type="text" class="form-control"
-                               th:field="*{projectName}" id="title" name="title">
-                    </div>
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Project Description</label>
-                        <input type="text" class="form-control"
-                               th:field="*{description}" id="description" name="description">
-                    </div>
-                    <div class="mb-3">
-                        <label for="startDate" class="form-label">Project Start Date</label>
-                        <input type="date" class="form-control"
-                               th:field="*{startDate}" id="startDate" name="startDate">
-                    </div>
-                    <div class="mb-3">
-                        <label for="endDate" class="form-label">Project End Date</label>
-                        <input type="date" class="form-control"
-                               th:field="*{endDate}" id="endDate" name="endDate">
-                    </div>
-                    <div class="mb-3">
-                        <label for="status" class="form-label">Project Status</label>
-                        <select class="form-control"
-                               th:field="*{status}" id="status" name="status">
-                            <option th:value="*{status.NOT_STARTED}" selected>NOT_STARTED</option>
-                            <option th:value="*{status.IN_PROGRESS}">IN_PROGRESS</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </main>
-        </div>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5">
+            <h2>Create Project</h2>
+            <hr class="feature-divider">
+            <form action="#" th:action="@{/projects/create/new-project}" th:object="${project}" method="post">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Project Title</label>
+                    <input type="text" class="form-control"
+                           th:field="*{projectName}" id="title" name="title">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Project Description</label>
+                    <input type="text" class="form-control"
+                           th:field="*{description}" id="description" name="description">
+                </div>
+                <div class="mb-3">
+                    <label for="startDate" class="form-label">Project Start Date</label>
+                    <input type="date" class="form-control"
+                           th:field="*{startDate}" id="startDate" name="startDate">
+                </div>
+                <div class="mb-3">
+                    <label for="endDate" class="form-label">Project End Date</label>
+                    <input type="date" class="form-control"
+                           th:field="*{endDate}" id="endDate" name="endDate">
+                </div>
+                <div class="mb-3">
+                    <label for="status" class="form-label">Project Status</label>
+                    <select class="form-control"
+                            th:field="*{status}" id="status" name="status">
+                        <option th:value="*{status.NOT_STARTED}" selected>NOT_STARTED</option>
+                        <option th:value="*{status.IN_PROGRESS}">IN_PROGRESS</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </main>
     </div>
-</main>
-
+</div>
 </body>
 </html>

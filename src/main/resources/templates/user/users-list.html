@@ -23,30 +23,30 @@
              th:insert="includes/sidebar-menu"></nav>
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5">
-            <h2>Archived Projects overview</h2>
+            <h2>All Users</h2>
             <hr class="feature-divider">
             <div class="row">
                 <div class="table-responsive">
                     <table class="table table-striped table-sm">
                         <thead>
                         <tr>
+                            <th>Name</th>
+                            <th>Username</th>
+                            <th>Email</th>
                             <th>Projects</th>
-                            <th>Description</th>
                             <th>Tasks</th>
-                            <th>Status</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="project: ${projects}">
+                        <tr th:each="userInList: ${usersList}">
                             <td>
-                                <a th:href="@{/projects/{project_id}(project_id=${project.getId()})}"
-                                   th:text="${project.projectName}"></a>
+                                <a th:href="@{/user/{username}(username=${userInList.username})}"
+                                   th:text="${userInList.firstName} + ' ' + ${userInList.lastName}"></a>
                             </td>
-                            <td th:text="${project.description}"></td>
-                            <td>
-                                <span th:text="${project.tasks.size() + ' Task(s)'}"></span>
-                            </td>
-                            <td th:text="${project.status}"></td>
+                            <td th:text="${userInList.username}"></td>
+                            <td th:text="${userInList.email}"></td>
+                            <td th:text="${userInList.projects.size()}"></td>
+                            <td th:text="${userInList.tasks.size()}"></td>
                         </tr>
                         </tbody>
                     </table>
