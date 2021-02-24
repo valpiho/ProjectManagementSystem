@@ -26,7 +26,15 @@ public class TaskController {
         Task task = taskService.findByIdAndProjectId(taskId, projectId);
         model.addAttribute("task", task);
 
-        return "task";
+        return "task/task";
+    }
+
+    @GetMapping("all-tasks ")
+    public String getAllTasks(Model model) {
+        List<Task> tasks = taskService.findAllTasks();
+        model.addAllAttributes(tasks);
+
+        return "task/tasks-list";
     }
 
     @GetMapping("{user_id}/tasks")
@@ -36,12 +44,12 @@ public class TaskController {
         return "";
     }
 
-    @GetMapping("{project_id}/tasks/all-tasks")
+    @GetMapping("{project_id}/tasks-list")
     public String getAllTasksByProject(@PathVariable (name = "project_id") Long id, Model model) {
         List<Task> tasks = taskService.findByProjectId(id);
         model.addAllAttributes(tasks);
 
-        return "";
+        return "task/tasks-list";
     }
 
     @GetMapping("/tasks")
@@ -50,7 +58,7 @@ public class TaskController {
         return "tasks-add";
     }
 
-    @PostMapping("/tasks/create-task")
+    @PostMapping("{project_id}/create-task")
     public String createTask(@ModelAttribute(value = "task") Task task) {
 
         taskService.createTask(task.getProject(),

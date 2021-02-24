@@ -92,4 +92,9 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskRepository.findById(id);
         taskRepository.delete(task);
     }
+
+    @Override
+    public List<Task> findAllTasks() {
+        return taskRepository.findAll();
+    }
 }
