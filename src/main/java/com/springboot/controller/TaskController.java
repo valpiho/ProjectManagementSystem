@@ -86,8 +86,10 @@ public class TaskController {
                              @ModelAttribute(value = "task") Task task) {
 
         taskService.updateTask(projectId, taskId,
+                task.getTitle(),
                 task.getTaskDescription(),
                 task.getPriority(),
+                task.getUser(),
                 task.getStatus());
 
         return "task/task";

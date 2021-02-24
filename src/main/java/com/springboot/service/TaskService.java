@@ -19,7 +19,7 @@ public interface TaskService {
 
     void createTask(Project project, String description, TaskPriority priority, ProjectTaskStatus status);
 
-    void updateTask(long projectId, long taskId, String description, TaskPriority priority, ProjectTaskStatus status);
+    void updateTask(long projectId, long taskId, String title, String description, TaskPriority priority, User user, ProjectTaskStatus status);
 
     void changeTaskPriority(long id, TaskPriority priority);
 

@@ -39,13 +39,17 @@
                     </div>
                     <div class="mb-3">
                         <label for="priority" class="form-label">Priority</label>
-                        <input type="date" class="form-control"
-                               th:field="*{priority}" id="priority" name="priority">
+                        <select class="form-control"
+                                th:field="*{priority}" id="priority" name="status">
+                            <option th:value="*{priority.HIGH}" selected>High</option>
+                            <option th:value="*{priority.MEDIUM}">Medium</option>
+                            <option th:value="*{priority.LOW}">Low</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="user" class="form-label">User</label>
-                        <input type="date" class="form-control"
-                               th:field="*{user}" id="user" name="user">
+                        <input type="text" class="form-control"
+                               th:field="*{user.username}" id="user" name="user">
                     </div>
                     <div class="mb-3">
                         <label for="status" class="form-label">Task Status</label>
