@@ -1,7 +1,9 @@
 package com.springboot.controller;
 
+import com.springboot.entity.Project;
 import com.springboot.entity.Task;
 import com.springboot.service.TaskService;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +34,7 @@ public class TaskController {
     @GetMapping("/all-tasks")
     public String getAllTasks(Model model) {
         List<Task> tasks = taskService.findAllTasks();
-        model.addAllAttributes(tasks);
+        model.addAttribute("task", tasks);
 
         return "task/tasks-list";
     }
@@ -52,13 +54,14 @@ public class TaskController {
         return "task/tasks-list";
     }
 
-    @GetMapping("/projects/{project_id}/create")
+    //TODO: teine mapping tuleb siia panna
+    @GetMapping("/projects/create-task")
     public String createTaskForm(Model model) {
         model.addAttribute("task", new Task());
         return "task/create-task";
     }
 
-    @PostMapping("/projects/{project_id}/create/new-task")
+    @PostMapping("/projects/create-task")
     public String createTask(@ModelAttribute(value = "task") Task task) {
 
         taskService.createTask(task.getProject(),

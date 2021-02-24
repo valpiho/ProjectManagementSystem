@@ -26,33 +26,34 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5">
                 <h2>Create new task</h2>
                 <hr class="feature-divider">
-                <form action="#" th:action="@{/projects/{project_id}(project_id=${.getId()})/create-task}" th:object="${project}" method="post">
+                <form action="#" th:action="@{/projects/create-task}" th:object="${task}" method="post">
                     <div class="mb-3">
-                        <label for="title" class="form-label">Project Title</label>
+                        <label for="title" class="form-label">Title</label>
                         <input type="text" class="form-control"
-                               th:field="*{projectName}" id="title" name="title">
+                               th:field="*{title}" id="title" name="title">
                     </div>
                     <div class="mb-3">
-                        <label for="description" class="form-label">Project Description</label>
+                        <label for="description" class="form-label">Task Description</label>
                         <input type="text" class="form-control"
-                               th:field="*{description}" id="description" name="description">
+                               th:field="*{taskDescription}" id="description" name="description">
                     </div>
                     <div class="mb-3">
-                        <label for="startDate" class="form-label">Project Start Date</label>
+                        <label for="priority" class="form-label">Priority</label>
                         <input type="date" class="form-control"
-                               th:field="*{startDate}" id="startDate" name="startDate">
+                               th:field="*{priority}" id="priority" name="priority">
                     </div>
                     <div class="mb-3">
-                        <label for="endDate" class="form-label">Project End Date</label>
+                        <label for="user" class="form-label">User</label>
                         <input type="date" class="form-control"
-                               th:field="*{endDate}" id="endDate" name="endDate">
+                               th:field="*{user}" id="user" name="user">
                     </div>
                     <div class="mb-3">
-                        <label for="status" class="form-label">Project Status</label>
+                        <label for="status" class="form-label">Task Status</label>
                         <select class="form-control"
                                 th:field="*{status}" id="status" name="status">
-                            <option th:value="*{status.NOT_STARTED}" selected>NOT_STARTED</option>
-                            <option th:value="*{status.IN_PROGRESS}">IN_PROGRESS</option>
+                            <option th:value="*{status.NOT_STARTED}" selected>NOT STARTED</option>
+                            <option th:value="*{status.IN_PROGRESS}">IN PROGRESS</option>
+                            <option th:value="*{status.COMPLETED}">COMPLETED</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
