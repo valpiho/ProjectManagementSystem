@@ -25,17 +25,17 @@ public class User{
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "project_id")
-    private List<Project> ownProjects;
+    private List<Project> ownProjects = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JoinColumn(name = "task_id")
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "users_projects",
             joinColumns=@JoinColumn(name="user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name="project_id", referencedColumnName = "id"))
-    private List<Project> projects;
+    private List<Project> projects = new ArrayList<>();
 
     public User() {}
 
@@ -52,9 +52,6 @@ public class User{
         this.isEnabled = isEnabled;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.ownProjects = new ArrayList<>();
-        this.tasks = new ArrayList<>();
-        this.projects = new ArrayList<>();
     }
 
     public void addTask(Task task) {

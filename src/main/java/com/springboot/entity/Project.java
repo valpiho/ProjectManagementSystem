@@ -1,6 +1,7 @@
 package com.springboot.entity;
 
 import com.springboot.enumeration.ProjectTaskStatus;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,8 +16,13 @@ public class Project {
     private Long id;
     private String projectName;
     private String description;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endDate;
+
     private Date createdAt;
     private Date updatedAt;
 
@@ -26,14 +32,13 @@ public class Project {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 11)
-    // TODO: Find way to achieve
     private ProjectTaskStatus status = ProjectTaskStatus.NOT_STARTED;
 
     @ManyToMany(mappedBy = "projects", fetch = FetchType.LAZY)
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<>();
 
     public Project() { }
 
@@ -46,8 +51,6 @@ public class Project {
         this.updatedAt = updatedAt;
         this.owner = owner;
         this.status = status;
-        this.users = new ArrayList<>();
-        this.tasks = new ArrayList<>();
     }
 
     public void addUser(User user) {
@@ -127,6 +130,9 @@ public class Project {
 
     public void setOwner(User owner) {
         this.owner = owner;
+        this.getUsers().add(owner);
+        owner.getOwnProjects().add(this);
+        owner.getProjects().add(this);
     }
 
     public ProjectTaskStatus getStatus() {
