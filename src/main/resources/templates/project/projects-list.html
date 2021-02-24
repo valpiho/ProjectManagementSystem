@@ -45,7 +45,7 @@
 
                             <tr th:each="project: ${projects}">
                                 <td>
-                                    <a th:href="@{/project/{project_id}(project_id=${project.getId()})}"
+                                    <a th:href="@{/projects/{project_id}(project_id=${project.getId()})}"
                                        th:text="${project.projectName}"></a>
                                 </td>
 

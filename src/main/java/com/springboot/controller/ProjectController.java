@@ -72,14 +72,13 @@ public class ProjectController {
     }
 
     @PostMapping("/create/new-project")
-    public String createProject(@ModelAttribute(value = "project") Project project) {
-
-        projectService.createProject(project.getProjectName(),
-                                        project.getDescription(),
-                                        project.getStartDate(),
-                                        project.getEndDate(),
-                                        project.getStatus());
-        return String.format("redirect:/projects/%s", project.getId());
+    public String createProject(@ModelAttribute(value = "project") Project project,
+                                Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        projectService.createProject(userDetails.getUsername(), project.getProjectName(), project.getDescription(),
+                project.getStartDate(), project.getEndDate(), project.getStatus());
+        Project newProject = projectService.findProjectByProjectName(project.getProjectName());
+        return String.format("redirect:/projects/%s", newProject.getId());
     }
 
     @GetMapping("/{project_id}/update")
@@ -107,5 +106,25 @@ public class ProjectController {
         return String.format("redirect:/projects/%s", project.getId());
     }
 
+    @GetMapping("/{project_id}/users-list")
+    public String getProjectUsersList(@PathVariable (name = "project_id") Long projectId,
+                             Model model,
+                             Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Project project = projectService.findProjectById(projectId);
+        model.addAttribute("project", project);
+        model.addAttribute("user", userDetails);
+        return "project/project";
+    }
 
+    @GetMapping("/{project_id}/user-invite")
+    public String getProjectUserInvite(@PathVariable (name = "project_id") Long projectId,
+                             Model model,
+                             Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Project project = projectService.findProjectById(projectId);
+        model.addAttribute("project", project);
+        model.addAttribute("user", userDetails);
+        return "project/project";
+    }
 }
