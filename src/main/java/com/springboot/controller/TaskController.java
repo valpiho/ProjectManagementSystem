@@ -63,10 +63,15 @@ public class TaskController {
     @GetMapping ("/completed")
     public String getAllCompletedTasks(Model model) {
         List<Task> tasks = taskService.findAllByStatus(ProjectTaskStatus.COMPLETED);
-        //TODO: kas nii saab teha? kui tahan mõlemat staatust ühes listis kuvada?
-        tasks.addAll(taskService.findAllByStatus(ProjectTaskStatus.ARCHIVED));
         model.addAttribute("tasks", tasks);
         return "task/tasks-completed";
+    }
+
+    @GetMapping ("/archived")
+    public String getAllArchivedTasks(Model model) {
+        List<Task> tasks = taskService.findAllByStatus(ProjectTaskStatus.ARCHIVED);
+        model.addAttribute("tasks", tasks);
+        return "task/tasks-archived";
     }
 
     @GetMapping("/create")
