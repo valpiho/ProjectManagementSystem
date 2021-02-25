@@ -1,8 +1,12 @@
 package com.springboot.controller;
 
 import com.springboot.entity.Task;
+import com.springboot.entity.User;
 import com.springboot.enumeration.ProjectTaskStatus;
 import com.springboot.service.TaskService;
+import com.springboot.service.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +18,12 @@ import java.util.List;
 public class TaskController {
 
     private final TaskService taskService;
+    private final UserService userService;
 
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService,
+                          UserService userService) {
         this.taskService = taskService;
+        this.userService = userService;
     }
 
     @GetMapping("/{task_id}")
@@ -29,11 +36,12 @@ public class TaskController {
         return "task/task";
     }
 
-    @GetMapping("/all-tasks")
-    public String getAllTasks(Model model) {
+    @GetMapping("/tasks-list")
+    public String getAllTasks(Model model, Authentication authentication) {
+        User user = getUser(authentication);
         List<Task> tasks = taskService.findAllTasks();
+        model.addAttribute("user", user);
         model.addAttribute("tasks", tasks);
-
         return "task/tasks-list";
     }
 
@@ -117,5 +125,10 @@ public class TaskController {
         taskService.deleteTask(id);
 
         return "";
+    }
+
+    private User getUser(Authentication authentication){
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userService.findUserByUsername(userDetails.getUsername());
     }
 }

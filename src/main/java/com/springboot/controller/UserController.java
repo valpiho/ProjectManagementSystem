@@ -6,7 +6,6 @@ import com.springboot.entity.User;
 import com.springboot.exception.EmailExistException;
 import com.springboot.exception.UsernameExistException;
 import com.springboot.service.ProjectService;
-import com.springboot.service.ProjectService;
 import com.springboot.service.TaskService;
 import com.springboot.service.UserService;
 import org.springframework.security.core.Authentication;
@@ -23,12 +22,14 @@ public class UserController {
 
     private final UserService userService;
     private final ProjectService projectService;
-    private TaskService taskService;
+    private final TaskService taskService;
 
     public UserController(UserService userService,
-                          ProjectService projectService) {
+                          ProjectService projectService,
+                          TaskService taskService) {
         this.userService = userService;
         this.projectService = projectService;
+        this.taskService = taskService;
     }
 
     @GetMapping("/")
@@ -78,6 +79,13 @@ public class UserController {
         return "redirect:/logout";
     }
 
+    @GetMapping("/dashboard")
+    public String getUserDashboard(Model model, Authentication authentication) {
+        User user = getUser(authentication);
+        model.addAttribute("user", user);
+        return "user/dashboard";
+    }
+
     @GetMapping("/user/projects-list")
     public String getUserProjects(Model model, Authentication authentication) {
         User user = getUser(authentication);
@@ -87,11 +95,13 @@ public class UserController {
         return "user/projects-list";
     }
 
-    @GetMapping("/dashboard")
-    public String getUserDashboard(Model model, Authentication authentication) {
+    @GetMapping("/user/all-tasks")
+    public String getUsersTasks(Model model, Authentication authentication) {
         User user = getUser(authentication);
+        List<Task> tasks = taskService.findAllByUserUsername(user.getUsername());
+        model.addAttribute("tasks", tasks);
         model.addAttribute("user", user);
-        return "user/dashboard";
+        return "user/tasks-list";
     }
 
     @GetMapping("/users-list")
@@ -103,17 +113,7 @@ public class UserController {
         return "user/users-list";
     }
 
-    @GetMapping("/all-tasks")
-    public String getUsersTasks(Model model, Authentication authentication) {
-        User user = getUser(authentication);
-        List<Task> tasks = taskService.findAllByUserUsername(user.getUsername());
-        model.addAttribute("user", user);
-        model.addAttribute("tasks", tasks);
-        return "user/all-tasks";
-    }
-
     @GetMapping("/register")
-    // TODO: Check if already logged in
     public String registerUserForm(Model model, Authentication authentication) {
         if (authentication != null) {
             return "redirect:/";
@@ -137,7 +137,7 @@ public class UserController {
         return "login";
     }
 
-    @RequestMapping("/login-error")
+    @GetMapping("/login-error")
     public String loginError(Model model) {
         model.addAttribute("loginError", true);
         return "login";
