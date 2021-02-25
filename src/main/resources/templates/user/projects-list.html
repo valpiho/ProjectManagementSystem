@@ -37,9 +37,10 @@
                         <tr>
                             <th>Projects</th>
                             <th>Description</th>
+                            <th>Users</th>
                             <th>Tasks</th>
                             <th>Status</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -50,9 +51,17 @@
                             </td>
                             <td th:text="${project.description}"></td>
                             <td>
+                                <span th:text="${project.users.size() + ' User(s)'}"></span>
+                            </td>
+                            <td>
                                 <span th:text="${project.tasks.size() + ' Task(s)'}"></span>
                             </td>
-                            <td th:text="${project.status}"></td>
+                            <td th:switch="${project.status.toString()}">
+                                <span class="badge bg-secondary" th:case="'NOT_STARTED'">Not started</span>
+                                <span class="badge bg-primary" th:case="'IN_PROGRESS'">In progress</span>
+                                <span class="badge bg-success" th:case="'COMPLETED'">Completed</span>
+                                <span class="badge bg-danger" th:case="'ARCHIVED'">Archived</span>
+                            </td>
                             <td>
                                 <a th:href="@{/projects/{project_id}/update(project_id=${project.id})}">Edit</a> /
                                 <a th:href="@{/projects/{project_id}/archive(project_id=${project.id})}">Archive</a>

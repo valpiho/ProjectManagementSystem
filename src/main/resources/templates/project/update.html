@@ -60,7 +60,8 @@
                     <div class="col-sm-4">
                         <select class="form-control"
                                 th:field="*{status}" id="status" name="status">
-                            <option th:value="*{status.IN_PROGRESS}" selected>In progress</option>
+                            <option th:value="*{status.NOT_STARTED}" selected>Not started</option>
+                            <option th:value="*{status.IN_PROGRESS}">In progress</option>
                             <option th:value="*{status.COMPLETED}">Completed</option>
                             <option th:value="*{status.ARCHIVED}">Archived</option>
                         </select>

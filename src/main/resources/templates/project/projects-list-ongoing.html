@@ -37,8 +37,8 @@
                         <tr>
                             <th>Projects</th>
                             <th>Description</th>
+                            <th>Users</th>
                             <th>Tasks</th>
-                            <th>Status</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -49,9 +49,11 @@
                             </td>
                             <td th:text="${project.description}"></td>
                             <td>
+                                <span th:text="${project.users.size() + ' User(s)'}"></span>
+                            </td>
+                            <td>
                                 <span th:text="${project.tasks.size() + ' Task(s)'}"></span>
                             </td>
-                            <td th:text="${project.status}"></td>
                         </tr>
                         </tbody>
                     </table>
