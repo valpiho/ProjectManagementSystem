@@ -1,10 +1,13 @@
 package com.springboot.controller;
 
 import com.springboot.entity.Project;
+import com.springboot.entity.Task;
 import com.springboot.entity.User;
 import com.springboot.exception.EmailExistException;
 import com.springboot.exception.UsernameExistException;
 import com.springboot.service.ProjectService;
+import com.springboot.service.ProjectService;
+import com.springboot.service.TaskService;
 import com.springboot.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +23,7 @@ public class UserController {
 
     private final UserService userService;
     private final ProjectService projectService;
+    private TaskService taskService;
 
     public UserController(UserService userService,
                           ProjectService projectService) {
@@ -97,6 +101,15 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("usersList", usersList);
         return "user/users-list";
+    }
+
+    @GetMapping("/all-tasks")
+    public String getUsersTasks(Model model, Authentication authentication) {
+        User user = getUser(authentication);
+        List<Task> tasks = taskService.findAllByUserUsername(user.getUsername());
+        model.addAttribute("user", user);
+        model.addAttribute("tasks", tasks);
+        return "user/all-tasks";
     }
 
     @GetMapping("/register")

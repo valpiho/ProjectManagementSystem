@@ -1,10 +1,8 @@
 package com.springboot.controller;
 
 import com.springboot.entity.Project;
-import com.springboot.entity.User;
 import com.springboot.enumeration.ProjectTaskStatus;
 import com.springboot.service.ProjectService;
-import com.springboot.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -33,7 +31,15 @@ public class ProjectController {
         model.addAttribute("user", userDetails);
         return "project/project";
     }
-
+//TODO: project list by user endpoint change
+    @GetMapping("/projects-user-list")
+    public String getAllProjectsByUser(Model model, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        List<Project> projects = projectService.findAllProjectsByUsername(userDetails.getUsername());
+        model.addAttribute("projects", projects);
+        model.addAttribute("user", userDetails);
+        return "project/projects-list";
+    }
     @GetMapping("/projects-list")
     public String getAllProjects(Model model, Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -127,4 +133,5 @@ public class ProjectController {
         model.addAttribute("user", userDetails);
         return "project/project";
     }
+
 }

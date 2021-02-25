@@ -1,6 +1,7 @@
 package com.springboot.repository;
 
 import com.springboot.entity.Project;
+import com.springboot.entity.User;
 import com.springboot.enumeration.ProjectTaskStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -18,5 +19,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     List<Project> findAllByStatus(ProjectTaskStatus status);
 
+    List<Project> findProjectsByUsers(User user);
 
 }

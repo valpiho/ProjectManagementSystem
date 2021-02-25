@@ -7,6 +7,7 @@ import com.springboot.enumeration.TaskPriority;
 import com.springboot.enumeration.ProjectTaskStatus;
 import com.springboot.repository.TaskRepository;
 import com.springboot.service.TaskService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,13 +34,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> findAllByUserId(long id) {
-        return taskRepository.findAllByUserId(id);
+    public List<Task> findAllByUserUsername(String username) {
+
+        return taskRepository.findAllByUserUsername(username);
     }
 
     @Override
-    public Task findByIdAndProjectId(Long taskId, Long projectId) {
-        return taskRepository.findByIdAndProjectId(taskId, projectId);
+    public List<Task> findAllByStatus(ProjectTaskStatus status) {
+        return taskRepository.findAllByStatus(status);
     }
 
     @Override
@@ -52,19 +54,21 @@ public class TaskServiceImpl implements TaskService {
         task.setStatus(ProjectTaskStatus.NOT_STARTED);
 
         taskRepository.save(task);
-
     }
 
     @Override
-    public void updateTask(long projectId, long taskId, String description, TaskPriority priority, ProjectTaskStatus status) {
+    public void updateTask(long taskId, String title, String description, TaskPriority priority, User user, ProjectTaskStatus status) {
         Task task = taskRepository.findById(taskId);
 
+        task.setTitle(title);
         task.setTaskDescription(description);
         task.setPriority(priority);
+        task.setUser(user);
         task.setStatus(status);
 
         taskRepository.save(task);
     }
+
 
     @Override
     public void changeTaskPriority(long id, TaskPriority priority) {
@@ -91,5 +95,10 @@ public class TaskServiceImpl implements TaskService {
     public void deleteTask(long id) {
         Task task = taskRepository.findById(id);
         taskRepository.delete(task);
+    }
+
+    @Override
+    public List<Task> findAllTasks() {
+        return taskRepository.findAll();
     }
 }

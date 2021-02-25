@@ -5,8 +5,6 @@ import com.springboot.entity.Task;
 import com.springboot.entity.User;
 import com.springboot.enumeration.TaskPriority;
 import com.springboot.enumeration.ProjectTaskStatus;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -14,12 +12,12 @@ public interface TaskService {
 
     Task findTaskById(long id);
     List<Task> findByProjectId(long id);
-    List<Task> findAllByUserId(long id);
-    Task findByIdAndProjectId(Long taskId, Long projectId);
+    List<Task> findAllByUserUsername(String username);
+    List<Task> findAllByStatus(ProjectTaskStatus status);
 
     void createTask(Project project, String description, TaskPriority priority, ProjectTaskStatus status);
 
-    void updateTask(long projectId, long taskId, String description, TaskPriority priority, ProjectTaskStatus status);
+    void updateTask(long taskId, String title, String description, TaskPriority priority, User user, ProjectTaskStatus status);
 
     void changeTaskPriority(long id, TaskPriority priority);
 
@@ -29,4 +27,5 @@ public interface TaskService {
 
     void deleteTask(long id);
 
+    List<Task> findAllTasks();
 }
