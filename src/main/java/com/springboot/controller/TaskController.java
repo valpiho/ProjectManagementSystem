@@ -1,6 +1,7 @@
 package com.springboot.controller;
 
 import com.springboot.entity.Task;
+import com.springboot.enumeration.ProjectTaskStatus;
 import com.springboot.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +32,7 @@ public class TaskController {
     @GetMapping("/all-tasks")
     public String getAllTasks(Model model) {
         List<Task> tasks = taskService.findAllTasks();
-        model.addAttribute("task", tasks);
+        model.addAttribute("tasks", tasks);
 
         return "task/tasks-list";
     }
@@ -40,9 +41,32 @@ public class TaskController {
     @GetMapping("/{project_id}/tasks-list")
     public String getAllTasksByProject(@PathVariable (name = "project_id") Long id, Model model) {
         List<Task> tasks = taskService.findByProjectId(id);
-        model.addAllAttributes(tasks);
+        model.addAttribute("tasks", tasks);
 
         return "task/tasks-list";
+    }
+
+    @GetMapping("/not-started")
+    public String getAllNotStartedTasks(Model model) {
+        List<Task> tasks = taskService.findAllByStatus(ProjectTaskStatus.NOT_STARTED);
+        model.addAttribute("tasks", tasks);
+        return "task/tasks-not-started";
+    }
+
+    @GetMapping("/in-progress")
+    public String getAllTasksInProgress(Model model) {
+        List<Task> tasks = taskService.findAllByStatus(ProjectTaskStatus.IN_PROGRESS);
+        model.addAttribute("tasks", tasks);
+        return "task/tasks-inprogress";
+    }
+
+    @GetMapping ("/completed")
+    public String getAllCompletedTasks(Model model) {
+        List<Task> tasks = taskService.findAllByStatus(ProjectTaskStatus.COMPLETED);
+        //TODO: kas nii saab teha? kui tahan mõlemat staatust ühes listis kuvada?
+        tasks.addAll(taskService.findAllByStatus(ProjectTaskStatus.ARCHIVED));
+        model.addAttribute("tasks", tasks);
+        return "task/tasks-completed";
     }
 
     @GetMapping("/create")

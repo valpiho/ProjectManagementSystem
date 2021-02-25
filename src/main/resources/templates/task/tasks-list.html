@@ -44,15 +44,19 @@
                             </thead>
                             <tbody>
 
-                            <tr th:each="task : ${task}">
+                            <tr th:each="taskInList : ${tasks}">
                                 <td>
-                                    <a th:href="@{/tasks/{task_id}(task_id=${task.id})}"
-                                       th:text="${task.title}"></a>
+                                    <a th:href="@{/tasks/{task_id}(task_id=${taskInList.id})}"
+                                       th:text="${taskInList.title}"></a>
                                 </td>
-                                <td th:text="${task.taskDescription}"></td>
-                                <td th:text="${task.priority}"></td>
-                                <td th:text="${task.user}"></td>
-                                <td th:text="${task.status}"></td>
+                                <td th:text="${taskInList.taskDescription}"></td>
+                                <td th:text="${taskInList.priority}"></td>
+                                <td th:text="${taskInList.user}"></td>
+                                <td th:text="${taskInList.status}"></td>
+                                <td>
+                                    <a th:href="@{/tasks/{task_id}/update(task_id=${taskInList.id})}">Edit</a>
+                                    <a th:href="@{/tasks/{task_id}/archive(task_id=${taskInList.id})}">Archive</a>
+                                </td>
                             </tr>
                             </tbody>
                         </table>

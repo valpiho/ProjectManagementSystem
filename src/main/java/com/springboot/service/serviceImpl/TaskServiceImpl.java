@@ -38,6 +38,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<Task> findAllByStatus(ProjectTaskStatus status) {
+        return taskRepository.findAllByStatus(status);
+    }
+
+    @Override
     public void createTask(Project project, String description, TaskPriority priority, ProjectTaskStatus status) {
         Task task = new Task();
 
