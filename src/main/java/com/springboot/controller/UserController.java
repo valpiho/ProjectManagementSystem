@@ -3,6 +3,7 @@ package com.springboot.controller;
 import com.springboot.entity.Project;
 import com.springboot.entity.Task;
 import com.springboot.entity.User;
+import com.springboot.enumeration.ProjectTaskStatus;
 import com.springboot.exception.EmailExistException;
 import com.springboot.exception.UsernameExistException;
 import com.springboot.service.ProjectService;
@@ -15,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.springboot.enumeration.ProjectTaskStatus.*;
 
 @Controller
 @RequestMapping({"/", "user"})
@@ -81,7 +84,15 @@ public class UserController {
 
     @GetMapping("/dashboard")
     public String getUserDashboard(Model model, Authentication authentication) {
+        List<Project> projects = projectService.findAllProjects();
+        List<Project> onGoingProjects = projectService.findAllProjectsByStatus(IN_PROGRESS);
+        List<Project> completedProjects = projectService.findAllProjectsByStatus(COMPLETED);
+        List<Project> archivedProjects = projectService.findAllProjectsByStatus(ARCHIVED);
         model.addAttribute("authUser", getAuthUser(authentication));
+        model.addAttribute("projects", projects);
+        model.addAttribute("onGoingProjects", onGoingProjects);
+        model.addAttribute("completedProjects", completedProjects);
+        model.addAttribute("archivedProjects", archivedProjects);
         return "user/dashboard";
     }
 
