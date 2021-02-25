@@ -35,33 +35,32 @@ public class UserController {
     @GetMapping("/")
     public String indexPage(Model model, Authentication authentication) {
         if (authentication != null) {
-            User user = getUser(authentication);
-            model.addAttribute("user", user);
+            model.addAttribute("authUser", getAuthUser(authentication));;
         }
         return "index";
     }
 
     @GetMapping("/user")
-    public String getUser(Model model, Authentication authentication) {
-        User user = getUser(authentication);
+    public String getAuthUser(Model model, Authentication authentication) {
+        User user = userService.findUserByUsername(getAuthUser(authentication).getUsername());
+        model.addAttribute("authUser", getAuthUser(authentication));
         model.addAttribute("user", user);
         return "user/profile";
     }
 
     @GetMapping("/user/{username}")
-    public String getUser(@PathVariable String username, Model model, Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        if (username.equals(userDetails.getUsername())) {
-            User user = userService.findUserByUsername(username);
-            model.addAttribute("user", user);
-            return "user/profile";
-        }
-        return "redirect:/";
+    public String getAuthUser(@PathVariable String username, Model model, Authentication authentication) {
+        User user = userService.findUserByUsername(username);
+        model.addAttribute("authUser", getAuthUser(authentication));
+        model.addAttribute("user", user);
+        return "user/profile";
     }
 
     @GetMapping("/user/{username}/update")
-    public String updateUser(@PathVariable String username, Model model) {
+    public String updateUser(@PathVariable String username,
+                             Model model, Authentication authentication) {
         User user = userService.findUserByUsername(username);
+        model.addAttribute("authUser", getAuthUser(authentication));
         model.addAttribute("user", user);
         return "user/update";
     }
@@ -74,6 +73,7 @@ public class UserController {
     }
 
     @PostMapping("/user/{username}/delete")
+    // TODO: Who can do it???
     public String deleteUser(@PathVariable String username) {
         userService.deleteUserByUsername(username);
         return "redirect:/logout";
@@ -81,34 +81,30 @@ public class UserController {
 
     @GetMapping("/dashboard")
     public String getUserDashboard(Model model, Authentication authentication) {
-        User user = getUser(authentication);
-        model.addAttribute("user", user);
+        model.addAttribute("authUser", getAuthUser(authentication));
         return "user/dashboard";
     }
 
     @GetMapping("/user/projects-list")
     public String getUserProjects(Model model, Authentication authentication) {
-        User user = getUser(authentication);
-        List<Project> projects = projectService.findAllProjectsByUsername(user.getUsername());
+        List<Project> projects = projectService.findAllProjectsByUsername(getAuthUser(authentication).getUsername());
         model.addAttribute("projects", projects);
-        model.addAttribute("user", user);
+        model.addAttribute("authUser", getAuthUser(authentication));
         return "user/projects-list";
     }
 
     @GetMapping("/user/all-tasks")
     public String getUsersTasks(Model model, Authentication authentication) {
-        User user = getUser(authentication);
-        List<Task> tasks = taskService.findAllByUserUsername(user.getUsername());
+        List<Task> tasks = taskService.findAllByUserUsername(getAuthUser(authentication).getUsername());
         model.addAttribute("tasks", tasks);
-        model.addAttribute("user", user);
+        model.addAttribute("authUser", getAuthUser(authentication));
         return "user/tasks-list";
     }
 
     @GetMapping("/users-list")
     public String getUsersList(Model model, Authentication authentication) {
-        User user = getUser(authentication);
-        List<User> usersList = userService.findAllByUsernameNot(user.getUsername());
-        model.addAttribute("user", user);
+        List<User> usersList = userService.findAllByUsernameNot(getAuthUser(authentication).getUsername());
+        model.addAttribute("authUser", getAuthUser(authentication));
         model.addAttribute("usersList", usersList);
         return "user/users-list";
     }
@@ -154,7 +150,7 @@ public class UserController {
         return "error";
     }
 
-    private User getUser(Authentication authentication){
+    private User getAuthUser(Authentication authentication){
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return userService.findUserByUsername(userDetails.getUsername());
     }

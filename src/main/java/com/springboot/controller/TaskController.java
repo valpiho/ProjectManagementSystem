@@ -28,19 +28,17 @@ public class TaskController {
 
     @GetMapping("/{task_id}")
     public String getTask(@PathVariable(name = "task_id") Long taskId,
-                          Model model) {
-
+                          Model model, Authentication authentication) {
         Task task = taskService.findTaskById(taskId);
+        model.addAttribute("authUser", getAuthUser(authentication));
         model.addAttribute("task", task);
-
         return "task/task";
     }
 
     @GetMapping("/tasks-list")
     public String getAllTasks(Model model, Authentication authentication) {
-        User user = getUser(authentication);
         List<Task> tasks = taskService.findAllTasks();
-        model.addAttribute("user", user);
+        model.addAttribute("authUser", getAuthUser(authentication));
         model.addAttribute("tasks", tasks);
         return "task/tasks-list";
     }
@@ -83,7 +81,8 @@ public class TaskController {
     }
 
     @GetMapping("/create")
-    public String createTaskForm(Model model) {
+    public String createTaskForm(Model model, Authentication authentication) {
+        model.addAttribute("authUser", getAuthUser(authentication));
         model.addAttribute("task", new Task());
         return "task/create-task";
     }
@@ -127,7 +126,7 @@ public class TaskController {
         return "";
     }
 
-    private User getUser(Authentication authentication){
+    private User getAuthUser(Authentication authentication){
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return userService.findUserByUsername(userDetails.getUsername());
     }

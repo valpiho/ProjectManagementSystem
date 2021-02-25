@@ -23,7 +23,7 @@
                     <a class="nav-link" th:href="@{/user}">Profile</a>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item text-nowrap">
-                    <a class="nav-link" th:href="@{/user/{username}/update(username=${user.username})}">Update</a>
+                    <a class="nav-link" th:href="@{/user/{username}/update(username=${authUser.username})}">Update</a>
                 </li>
             </ul>
             <ul class="navbar-nav justify-content-right">
