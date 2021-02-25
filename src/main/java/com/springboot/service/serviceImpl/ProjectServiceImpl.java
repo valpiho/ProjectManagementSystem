@@ -93,4 +93,9 @@ public class ProjectServiceImpl implements ProjectService {
         projectRepository.save(project);
     }
 
+    @Override
+    public void deleteProject(Long id) {
+
+    }
+
 }

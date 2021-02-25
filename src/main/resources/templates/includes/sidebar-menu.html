@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <div class="sidebar-sticky">
     <ul class="nav flex-column">
         <li class="nav-item">
@@ -7,7 +12,7 @@
             <a class="nav-link" th:href="@{/projects/projects-list}">All Projects</a>
         </li>
         <li>
-            <a class="nav-link" th:href="@{/}">All Tasks *</a>
+            <a class="nav-link" th:href="@{/tasks/all-tasks}">All Tasks</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" th:href="@{/users-list}">All Users</a>
@@ -17,10 +22,10 @@
     <span class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">Personal Items</span>
     <ul class="nav flex-column">
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/}">Projects *</a>
+            <a class="nav-link" th:href="@{/user/projects-list}">Projects</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/}">Tasks *</a>
+            <a class="nav-link" th:href="@{/user/all-tasks}">Tasks</a>
         </li>
     </ul>
 </div>

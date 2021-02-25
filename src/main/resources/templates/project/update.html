@@ -26,6 +26,48 @@
             <h2>UpdateProject</h2>
             <hr class="feature-divider">
 
+            <form action="#" th:action="@{/projects/{project_id}/updateForm(project_id=${project.id})}" th:object="${project}" method="post">
+                <div class="mb-3 row">
+                    <label for="title" class="col-sm-3 col-form-label">Project Title</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control"
+                               th:field="*{projectName}" id="title" name="title">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="description" class="col-sm-3 col-form-label">Project Description</label>
+                    <div class="col-sm-4">
+                    <textarea class="form-control" rows="5"
+                              th:field="*{description}" id="description" name="description"></textarea>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="startDate" class="col-sm-3 col-form-label">Project Start Date</label>
+                    <div class="col-sm-4">
+                        <input type="date" class="form-control"
+                               th:field="*{startDate}" id="startDate" name="startDate">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="endDate" class="col-sm-3 col-form-label">Project End Date</label>
+                    <div class="col-sm-4">
+                        <input type="date" class="form-control"
+                               th:field="*{endDate}" id="endDate" name="endDate">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="status" class="col-sm-3 col-form-label">Project Status</label>
+                    <div class="col-sm-4">
+                        <select class="form-control"
+                                th:field="*{status}" id="status" name="status">
+                            <option th:value="*{status.NOT_STARTED}" selected>NOT STARTED</option>
+                            <option th:value="*{status.IN_PROGRESS}">IN PROGRESS</option>
+                        </select>
+                    </div>
+                </div>
+                <input type="hidden" th:field="*{id}" id="id">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </main>
     </div>
 </div>
