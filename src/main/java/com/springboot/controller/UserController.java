@@ -106,7 +106,7 @@ public class UserController {
     @GetMapping("/all-tasks")
     public String getUsersTasks(Model model, Authentication authentication) {
         User user = getUser(authentication);
-        List<Task> tasks = taskService.findAllByUser(user);
+        List<Task> tasks = taskService.findAllByUserUsername(user.getUsername());
         model.addAttribute("user", user);
         model.addAttribute("tasks", tasks);
         return "user/all-tasks";

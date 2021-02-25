@@ -12,7 +12,7 @@ public interface TaskService {
 
     Task findTaskById(long id);
     List<Task> findByProjectId(long id);
-    List<Task> findAllByUser(User user);
+    List<Task> findAllByUserUsername(String username);
     List<Task> findAllByStatus(ProjectTaskStatus status);
 
     void createTask(Project project, String description, TaskPriority priority, ProjectTaskStatus status);

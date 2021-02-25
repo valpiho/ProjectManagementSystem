@@ -7,6 +7,7 @@ import com.springboot.enumeration.TaskPriority;
 import com.springboot.enumeration.ProjectTaskStatus;
 import com.springboot.repository.TaskRepository;
 import com.springboot.service.TaskService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,8 +34,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> findAllByUser(User user) {
-        return taskRepository.findAllByUser(user);
+    public List<Task> findAllByUserUsername(String username) {
+
+        return taskRepository.findAllByUserUsername(username);
     }
 
     @Override
