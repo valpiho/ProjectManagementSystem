@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Profile</title>
+    <title>Overview of all projects</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link th:src="@{/static/styles/styles.css}" rel="stylesheet">
 </head>
@@ -23,7 +23,7 @@
              th:insert="includes/sidebar-menu"></nav>
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5">
-            <h2>All Projects overview</h2>
+            <h2>Overview of all projects</h2>
             <hr class="feature-divider">
             <div class="row">
                 <div class="d-grid justify-content-end">
@@ -37,6 +37,7 @@
                         <tr>
                             <th>Projects</th>
                             <th>Description</th>
+                            <th>Users</th>
                             <th>Tasks</th>
                             <th>Status</th>
                         </tr>
@@ -49,9 +50,17 @@
                             </td>
                             <td th:text="${project.description}"></td>
                             <td>
+                                <span th:text="${project.users.size() + ' User(s)'}"></span>
+                            </td>
+                            <td>
                                 <span th:text="${project.tasks.size() + ' Task(s)'}"></span>
                             </td>
-                            <td th:text="${project.status}"></td>
+                            <td th:switch="${project.status.toString()}">
+                                <span class="badge bg-secondary" th:case="'NOT_STARTED'">Not started</span>
+                                <span class="badge bg-primary" th:case="'IN_PROGRESS'">In progress</span>
+                                <span class="badge bg-success" th:case="'COMPLETED'">Completed</span>
+                                <span class="badge bg-danger" th:case="'ARCHIVED'">Archived</span>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

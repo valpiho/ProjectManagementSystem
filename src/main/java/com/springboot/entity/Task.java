@@ -27,11 +27,11 @@ public class Task {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 6)
-    private TaskPriority priority;
+    private TaskPriority priority = TaskPriority.HIGH;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 11)
-    private ProjectTaskStatus status = ProjectTaskStatus.NOT_STARTED;
+    private ProjectTaskStatus status;
 
     public Task() {}
 

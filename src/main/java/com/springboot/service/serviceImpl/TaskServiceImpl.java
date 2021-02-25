@@ -50,7 +50,7 @@ public class TaskServiceImpl implements TaskService {
 
         task.setProject(project);
         task.setTaskDescription(description);
-        task.setPriority(TaskPriority.MEDIUM);
+        task.setPriority(priority);
         task.setStatus(ProjectTaskStatus.NOT_STARTED);
 
         taskRepository.save(task);

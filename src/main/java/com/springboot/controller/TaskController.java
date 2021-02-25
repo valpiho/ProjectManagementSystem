@@ -1,8 +1,12 @@
 package com.springboot.controller;
 
 import com.springboot.entity.Task;
+import com.springboot.entity.User;
 import com.springboot.enumeration.ProjectTaskStatus;
 import com.springboot.service.TaskService;
+import com.springboot.service.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,26 +18,28 @@ import java.util.List;
 public class TaskController {
 
     private final TaskService taskService;
+    private final UserService userService;
 
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService,
+                          UserService userService) {
         this.taskService = taskService;
+        this.userService = userService;
     }
 
     @GetMapping("/{task_id}")
     public String getTask(@PathVariable(name = "task_id") Long taskId,
-                          Model model) {
-
+                          Model model, Authentication authentication) {
         Task task = taskService.findTaskById(taskId);
+        model.addAttribute("authUser", getAuthUser(authentication));
         model.addAttribute("task", task);
-
         return "task/task";
     }
 
-    @GetMapping("/all-tasks")
-    public String getAllTasks(Model model) {
+    @GetMapping("/tasks-list")
+    public String getAllTasks(Model model, Authentication authentication) {
         List<Task> tasks = taskService.findAllTasks();
+        model.addAttribute("authUser", getAuthUser(authentication));
         model.addAttribute("tasks", tasks);
-
         return "task/tasks-list";
     }
 
@@ -75,9 +81,10 @@ public class TaskController {
     }
 
     @GetMapping("/create")
-    public String createTaskForm(Model model) {
+    public String createTaskForm(Model model, Authentication authentication) {
+        model.addAttribute("authUser", getAuthUser(authentication));
         model.addAttribute("task", new Task());
-        return "task/create-task";
+        return "task/create";
     }
 
     @PostMapping("/create-task")
@@ -87,7 +94,7 @@ public class TaskController {
                                 task.getTaskDescription(),
                                 task.getPriority(),
                                 task.getStatus());
-        return "task/task";
+        return "redirect:/tasks/task";
     }
 
     @GetMapping("{task_id}/update")
@@ -117,5 +124,10 @@ public class TaskController {
         taskService.deleteTask(id);
 
         return "";
+    }
+
+    private User getAuthUser(Authentication authentication){
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userService.findUserByUsername(userDetails.getUsername());
     }
 }

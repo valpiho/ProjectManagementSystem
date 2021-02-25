@@ -41,7 +41,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void createProject(String username, String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status) {
+    public void createProject(String username, String projectName, String description, Date startDate, Date endDate) {
         Project project = new Project();
         User user = userService.findUserByUsername(username);
         project.setOwner(user);
@@ -50,18 +50,13 @@ public class ProjectServiceImpl implements ProjectService {
         project.setStartDate(startDate);
         project.setEndDate(endDate);
         project.setCreatedAt(new Date());
-        project.setStatus(status);
+        project.setStatus(ProjectTaskStatus.NOT_STARTED);
         projectRepository.save(project);
     }
 
     @Override
-    public List<Project> findAllArchivedProjects(ProjectTaskStatus status) {
-        return projectRepository.findAllByStatus(ProjectTaskStatus.ARCHIVED);
-    }
-
-    @Override
-    public List<Project> findAllOngoingProjects(ProjectTaskStatus status) {
-        return projectRepository.findAllByStatus(ProjectTaskStatus.IN_PROGRESS);
+    public List<Project> findAllProjectsByStatus(ProjectTaskStatus status) {
+        return projectRepository.findAllByStatus(status);
     }
 
     @Override

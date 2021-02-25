@@ -15,13 +15,11 @@ public interface ProjectService {
 
     Project findProjectById(Long id);
 
-    void createProject(String username, String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status);
+    void createProject(String username, String projectName, String description, Date startDate, Date endDate);
 
     List<Project> findAllProjectsByUsername(String username);
 
-    List<Project> findAllArchivedProjects(ProjectTaskStatus status);
-
-    List<Project> findAllOngoingProjects(ProjectTaskStatus status);
+    List<Project> findAllProjectsByStatus(ProjectTaskStatus status);
 
     List<Project> findAllProjects();
 
