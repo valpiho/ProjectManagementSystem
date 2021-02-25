@@ -84,7 +84,7 @@ public class TaskController {
     public String createTaskForm(Model model, Authentication authentication) {
         model.addAttribute("authUser", getAuthUser(authentication));
         model.addAttribute("task", new Task());
-        return "task/create-task";
+        return "task/create";
     }
 
     @PostMapping("/create-task")
@@ -94,7 +94,7 @@ public class TaskController {
                                 task.getTaskDescription(),
                                 task.getPriority(),
                                 task.getStatus());
-        return "task/task";
+        return "redirect:/tasks/task";
     }
 
     @GetMapping("{task_id}/update")
