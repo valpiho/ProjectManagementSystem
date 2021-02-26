@@ -31,7 +31,7 @@
                     <label for="projectId" class="col-sm-3 col-form-label">Project ID</label>
                     <div class="col-sm-4">
                         <input type="text" class="form-control"
-                               th:field="*{id}" id="projectId" name="projectId">
+                               th:field="*{project.id}" id="projectId" name="projectId">
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -60,10 +60,10 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="user" class="col-sm-3 col-form-label">User</label>
+                    <label for="username" class="col-sm-3 col-form-label">User</label>
                     <div class="col-sm-4">
                         <input type="text" class="form-control"
-                               th:field="*{user.username}" id="user" name="user">
+                               th:field="*{user.username}" id="username" name="username">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>

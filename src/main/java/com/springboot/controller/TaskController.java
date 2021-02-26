@@ -92,11 +92,13 @@ public class TaskController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         taskService.createTask(task.getProject().getId(),
+                                task.getTitle(),
                                 task.getTaskDescription(),
                                 task.getPriority(),
                                 userDetails.getUsername(),
                                 task.getStatus());
 
+//TODO: selle alumise reaga on midagi valesti ... aga ma ei tea mis...
         Task newTask = taskService.findTaskById(task.getId());
         return String.format("redirect:/tasks/%s", newTask.getId());
     }

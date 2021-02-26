@@ -50,15 +50,17 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void createTask(Long projectId, String description, TaskPriority priority, String username, ProjectTaskStatus status) {
+    public void createTask(Long projectId, String title, String description, TaskPriority priority, String username, ProjectTaskStatus status) {
         Task task = new Task();
         User user = userService.findUserByUsername(username);
         Project project = projectService.findProjectById(projectId);
         task.setUser(user);
         task.setProject(project);
+        task.setTitle(title);
         task.setTaskDescription(description);
         task.setPriority(priority);
         task.setStatus(ProjectTaskStatus.NOT_STARTED);
+
         taskRepository.save(task);
     }
 

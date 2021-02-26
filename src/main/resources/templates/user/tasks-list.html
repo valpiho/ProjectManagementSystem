@@ -27,7 +27,7 @@
                 <hr class="feature-divider">
                 <div class="row">
                     <div class="d-grid justify-content-end">
-                        <a th:href="@{/tasks/create-task}">
+                        <a th:href="@{/tasks/create}">
                             <button class="btn btn-primary" type="button">Add new task</button>
                         </a>
                     </div>
@@ -51,7 +51,7 @@
                                 </td>
                                 <td th:text="${task.taskDescription}"></td>
                                 <td th:text="${task.priority}"></td>
-                                <td th:text="${task.user}"></td>
+                                <td th:text="${task.user.username}"></td>
                                 <td th:text="${task.status}"></td>
                                 <td>
                                     <a th:href="@{/tasks/{task_id}/update(task_id=${task.id})}">Edit</a>
