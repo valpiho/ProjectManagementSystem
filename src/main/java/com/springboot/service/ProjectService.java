@@ -30,4 +30,6 @@ public interface ProjectService {
     void addUserToProject(Long id, List<User> users);
 
     void deleteProject(Long id);
+
+    Project getProject(Long id);
 }

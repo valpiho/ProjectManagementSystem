@@ -41,6 +41,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public Project getProject (Long id) {
+        return projectRepository.findProjectById(id);
+    }
+
+    @Override
     public void createProject(String username, String projectName, String description, Date startDate, Date endDate) {
         Project project = new Project();
         User user = userService.findUserByUsername(username);
