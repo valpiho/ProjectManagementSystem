@@ -88,13 +88,17 @@ public class TaskController {
     }
 
     @PostMapping("/create-task")
-    public String createTask(@ModelAttribute(value = "task") Task task) {
+    public String createTask(@ModelAttribute(value = "task") Task task, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        taskService.createTask(task.getProject(),
+        taskService.createTask(task.getProject().getId(),
                                 task.getTaskDescription(),
                                 task.getPriority(),
+                                userDetails.getUsername(),
                                 task.getStatus());
-        return "redirect:/tasks/task";
+
+        Task newTask = taskService.findTaskById(task.getId());
+        return String.format("redirect:/tasks/%s", newTask.getId());
     }
 
     @GetMapping("{task_id}/update")

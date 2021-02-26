@@ -46,7 +46,7 @@ public class ProjectController {
 
     @GetMapping("/projects-list-ongoing")
     // TODO: Get all ongoing projects
-    public String getAllOngoingProjects(Model model, Authentication authentication) { ;
+    public String getAllOngoingProjects(Model model, Authentication authentication) {
         List<Project> projects = projectService.findAllProjectsByStatus(IN_PROGRESS);
         model.addAttribute("projects", projects);
         model.addAttribute("authUser", getAuthUser(authentication));
@@ -55,7 +55,7 @@ public class ProjectController {
 
     @GetMapping("/projects-list-completed")
     // TODO: Get all completed projects
-    public String getAllCompletedProjects(Model model, Authentication authentication) { ;
+    public String getAllCompletedProjects(Model model, Authentication authentication) {
         List<Project> projects = projectService.findAllProjectsByStatus(COMPLETED);
         model.addAttribute("projects", projects);
         model.addAttribute("authUser", getAuthUser(authentication));
@@ -82,8 +82,13 @@ public class ProjectController {
     public String createProject(@ModelAttribute(value = "project") Project project,
                                 Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        projectService.createProject(userDetails.getUsername(), project.getProjectName(), project.getDescription(),
-                project.getStartDate(), project.getEndDate());
+
+        projectService.createProject(userDetails.getUsername(),
+                                    project.getProjectName(),
+                                    project.getDescription(),
+                                    project.getStartDate(),
+                                    project.getEndDate());
+
         Project newProject = projectService.findProjectByProjectName(project.getProjectName());
         return String.format("redirect:/projects/%s", newProject.getId());
     }

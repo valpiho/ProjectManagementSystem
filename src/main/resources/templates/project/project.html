@@ -42,7 +42,7 @@
                         <td>
                             <span th:text="${project.tasks.size() + ' Task(s)'}"></span>
                         </td>
-                        <td th:switch="${project.status.toString()}">
+                        <td th:switch="${project.status}">
                             <span class="badge bg-secondary" th:case="'NOT_STARTED'">Not started</span>
                             <span class="badge bg-primary" th:case="'IN_PROGRESS'">In progress</span>
                             <span class="badge bg-success" th:case="'COMPLETED'">Completed</span>
@@ -52,6 +52,38 @@
                     </tbody>
                 </table>
             </div>
+
+            <h2>Tasks in project</h2>
+            <hr class="feature-divider">
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Description</th>
+                        <th>Priority</th>
+                        <th>Assigned user</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="task: ${project.tasks}">
+                        <td th:text="${task.title}"></td>
+                        <td th:text="${task.taskDescription}"></td>
+                        <td th:text="${task.priority}"></td>
+                        <td th:text="${task.user}"></td>
+                        <td th:switch="${task.status}">
+                            <span class="badge bg-secondary" th:case="'NOT_STARTED'">Not started</span>
+                            <span class="badge bg-primary" th:case="'IN_PROGRESS'">In progress</span>
+                            <span class="badge bg-success" th:case="'COMPLETED'">Completed</span>
+                            <span class="badge bg-danger" th:case="'ARCHIVED'">Archived</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
             <h2>Users in project</h2>
             <hr class="feature-divider">
             <div class="table-responsive">

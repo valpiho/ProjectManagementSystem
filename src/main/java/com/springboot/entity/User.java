@@ -27,7 +27,7 @@ public class User{
     @JoinColumn(name = "project_id")
     private List<Project> ownProjects = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "task_id")
     private List<Task> tasks = new ArrayList<>();
 

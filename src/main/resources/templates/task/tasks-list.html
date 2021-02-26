@@ -50,9 +50,18 @@
                                        th:text="${taskInList.title}"></a>
                                 </td>
                                 <td th:text="${taskInList.taskDescription}"></td>
-                                <td th:text="${taskInList.priority}"></td>
+                                <td th:switch="${taskInList.priority}">
+                                    <span class="badge bg-success" th:case="'LOW'">Low</span>
+                                    <span class="badge bg-warning" th:case="'MEDIUM'">Medium</span>
+                                    <span class="badge bg-danger" th:case="'HIGH'">High</span>
+                                </td>
                                 <td th:text="${taskInList.user}"></td>
-                                <td th:text="${taskInList.status}"></td>
+                                <td th:switch="${taskInList.status}">
+                                    <span class="badge bg-secondary" th:case="'NOT_STARTED'">Not started</span>
+                                    <span class="badge bg-primary" th:case="'IN_PROGRESS'">In progress</span>
+                                    <span class="badge bg-success" th:case="'COMPLETED'">Completed</span>
+                                    <span class="badge bg-danger" th:case="'ARCHIVED'">Archived</span>
+                                </td>
                                 <td>
                                     <a th:href="@{/tasks/{task_id}/update(task_id=${taskInList.id})}">Edit</a>
                                     <a th:href="@{/tasks/{task_id}/archive(task_id=${taskInList.id})}">Archive</a>

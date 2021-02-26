@@ -28,6 +28,13 @@
             <hr class="feature-divider">
             <form action="#" th:action="@{/tasks/create-task}" th:object="${task}" method="post">
                 <div class="mb-3 row">
+                    <label for="projectId" class="col-sm-3 col-form-label">Project ID</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control"
+                               th:field="*{id}" id="projectId" name="projectId">
+                    </div>
+                </div>
+                <div class="mb-3 row">
                     <label for="title" class="col-sm-3 col-form-label">Title</label>
                     <div class="col-sm-4">
                         <input type="text" class="form-control"
