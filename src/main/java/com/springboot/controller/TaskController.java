@@ -103,9 +103,10 @@ public class TaskController {
 
     @GetMapping("{task_id}/update")
     public String updateTask(@PathVariable(name = "task_id") Long taskId,
-                             Model model){
+                             Model model, Authentication authentication){
         Task task = taskService.findTaskById(taskId);
         model.addAttribute("task", task);
+        model.addAttribute("authUser", getAuthUser(authentication));
         return "task/update";
     }
 
@@ -120,7 +121,7 @@ public class TaskController {
                 task.getUser(),
                 task.getStatus());
 
-        return "task/task";
+        return String.format("redirect:/tasks/%s", task.getId());
     }
 
     @DeleteMapping("tasks/{task_id}/delete-task")

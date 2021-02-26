@@ -50,13 +50,13 @@
                                        th:text="${taskInList.title}"></a>
                                 </td>
                                 <td th:text="${taskInList.taskDescription}"></td>
-                                <td th:switch="${taskInList.priority}">
+                                <td th:switch="${taskInList.priority.toString()}">
                                     <span class="badge bg-success" th:case="'LOW'">Low</span>
                                     <span class="badge bg-warning" th:case="'MEDIUM'">Medium</span>
                                     <span class="badge bg-danger" th:case="'HIGH'">High</span>
                                 </td>
                                 <td th:text="${taskInList.user}"></td>
-                                <td th:switch="${taskInList.status}">
+                                <td th:switch="${taskInList.status.toString()}">
                                     <span class="badge bg-secondary" th:case="'NOT_STARTED'">Not started</span>
                                     <span class="badge bg-primary" th:case="'IN_PROGRESS'">In progress</span>
                                     <span class="badge bg-success" th:case="'COMPLETED'">Completed</span>

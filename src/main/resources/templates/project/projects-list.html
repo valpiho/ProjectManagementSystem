@@ -55,7 +55,7 @@
                             <td>
                                 <span th:text="${project.tasks.size() + ' Task(s)'}"></span>
                             </td>
-                            <td th:switch="${project.status}">
+                            <td th:switch="${project.status.toString()}">
                                 <span class="badge bg-secondary" th:case="'NOT_STARTED'">Not started</span>
                                 <span class="badge bg-primary" th:case="'IN_PROGRESS'">In progress</span>
                                 <span class="badge bg-success" th:case="'COMPLETED'">Completed</span>
