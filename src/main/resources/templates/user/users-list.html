@@ -23,33 +23,52 @@
              th:insert="includes/sidebar-menu"></nav>
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5">
-            <h2>Overview of all users</h2>
-            <hr class="feature-divider">
-            <div class="row">
-                <div class="table-responsive">
-                    <table class="table table-striped table-sm">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Projects</th>
-                            <th>Tasks</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="userInList: ${usersList}">
-                            <td>
-                                <a th:href="@{/user/{username}(username=${userInList.username})}"
-                                   th:text="${userInList.firstName} + ' ' + ${userInList.lastName}"></a>
-                            </td>
-                            <td th:text="${userInList.username}"></td>
-                            <td th:text="${userInList.email}"></td>
-                            <td th:text="${userInList.projects.size()}"></td>
-                            <td th:text="${userInList.tasks.size()}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
+            <!--shadowed body starts-->
+            <div class="my-3 p-3 bg-body rounded shadow-sm">
+                <h3 class="border-bottom pb-2 mb-0">Overview of all users</h3>
+                <div class="d-flex text-muted pt-3">
+                    <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
+                         xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
+                         preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#ef4271"/>
+                        <text x="50%" y="50%" fill="#ef4271" dy=".3em">32x32</text>
+                    </svg>
+
+                    <p class="pb-3 mb-0 small lh-sm ">
+                        <strong class="d-block text-gray-dark">@note</strong>
+                        An overview of the users of the team (except logged in user)!
+                    </p>
+
+                </div>
+                <!--shadowed body ends-->
+
+                <hr class="feature-divider">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Projects</th>
+                                <th>Tasks</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="userInList: ${usersList}">
+                                <td>
+                                    <a th:href="@{/user/{username}(username=${userInList.username})}"
+                                       th:text="${userInList.firstName} + ' ' + ${userInList.lastName}"></a>
+                                </td>
+                                <td th:text="${userInList.username}"></td>
+                                <td th:text="${userInList.email}"></td>
+                                <td th:text="${userInList.projects.size()}"></td>
+                                <td th:text="${userInList.tasks.size()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </main>
