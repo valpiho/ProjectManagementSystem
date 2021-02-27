@@ -113,15 +113,6 @@ public class ProjectController {
         return String.format("redirect:/projects/%s", project.getId());
     }
 
-    @GetMapping("/{project_id}/users-list")
-    // TODO: Get all users for current project
-    public String getProjectUsersList(@PathVariable (name = "project_id") Long projectId,
-                             Model model, Authentication authentication) {
-        Project project = projectService.findProjectById(projectId);
-        model.addAttribute("project", project);
-        model.addAttribute("authUser", getAuthUser(authentication));
-        return "project/project";
-    }
 
     @GetMapping("/{project_id}/user-invite")
     // TODO: Invite user for project

@@ -3,7 +3,6 @@ package com.springboot.controller;
 import com.springboot.entity.Project;
 import com.springboot.entity.Task;
 import com.springboot.entity.User;
-import com.springboot.enumeration.ProjectTaskStatus;
 import com.springboot.exception.EmailExistException;
 import com.springboot.exception.UsernameExistException;
 import com.springboot.service.ProjectService;

@@ -41,11 +41,6 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project getProject (Long id) {
-        return projectRepository.findProjectById(id);
-    }
-
-    @Override
     public void createProject(String username, String projectName, String description, Date startDate, Date endDate) {
         Project project = new Project();
         User user = userService.findUserByUsername(username);
@@ -79,12 +74,6 @@ public class ProjectServiceImpl implements ProjectService {
         project.setStatus(status);
     }
 
-    @Override
-    public void changeProjectStatus(Long id, ProjectTaskStatus status) {
-        Project project = projectRepository.findProjectById(id);
-        project.setStatus(status);
-        projectRepository.save(project);
-    }
 
     @Override
     public void addUserToProject(Long id, List<User> users) {
@@ -95,7 +84,5 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void deleteProject(Long id) {
-
     }
-
 }

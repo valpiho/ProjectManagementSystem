@@ -44,7 +44,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> findAllByUserUsername(String username) {
-
         return taskRepository.findAllByUserUsername(username);
     }
 
@@ -77,20 +76,6 @@ public class TaskServiceImpl implements TaskService {
         task.setTaskDescription(description);
         task.setPriority(priority);
         task.setUpdatedAt(new Date());
-        task.setStatus(status);
-        taskRepository.save(task);
-    }
-
-    @Override
-    public void changeTaskPriority(Long id, TaskPriority priority) {
-        Task task = taskRepository.findTaskById(id);
-        task.setPriority(priority);
-        taskRepository.save(task);
-    }
-
-    @Override
-    public void changeTaskStatus(Long id, ProjectTaskStatus status) {
-        Task task = taskRepository.findTaskById(id);
         task.setStatus(status);
         taskRepository.save(task);
     }

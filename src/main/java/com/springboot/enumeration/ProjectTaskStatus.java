@@ -6,5 +6,4 @@ public enum ProjectTaskStatus {
     IN_PROGRESS,
     COMPLETED,
     ARCHIVED
-
 }

@@ -7,7 +7,6 @@ import com.springboot.enumeration.ProjectTaskStatus;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 public interface ProjectService {
 
@@ -25,11 +24,7 @@ public interface ProjectService {
 
     void updateProject(Long id, String projectName, String description, Date startDate, Date endDate, ProjectTaskStatus status);
 
-    void changeProjectStatus(Long id, ProjectTaskStatus status);
-
     void addUserToProject(Long id, List<User> users);
 
     void deleteProject(Long id);
-
-    Project getProject(Long id);
 }
