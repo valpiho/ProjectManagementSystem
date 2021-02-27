@@ -23,52 +23,67 @@
              th:insert="includes/sidebar-menu"></nav>
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5">
-            <h2>Overview of my projects</h2>
-            <hr class="feature-divider">
-            <div class="row">
-                <div class="d-grid justify-content-end">
-                    <a th:href="@{/projects/create}">
-                        <button class="btn btn-primary" type="button">Add new project</button>
-                    </a>
+            <div class="my-3 p-3 bg-body rounded shadow-sm">
+                <h3>Overview of my projects</h3>
+                <div class="d-flex text-muted pt-3">
+                    <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
+                         xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
+                         preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#ef4271"/>
+                        <text x="50%" y="50%" fill="#ef4271" dy=".3em">32x32</text>
+                    </svg>
+                    <p class="pb-3 mb-0 small lh-sm ">
+                        <strong class="d-block text-gray-dark">@note</strong>
+                        All the projects I have created are gathered here!
+                    </p>
+                    <div class="d-grid col-8 justify-content-end">
+                        <a th:href="@{/projects/create}">
+                            <button class="btn btn-primary" type="button">Add new project</button>
+                        </a>
+                    </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-striped table-sm">
-                        <thead>
-                        <tr>
-                            <th>Projects</th>
-                            <th>Description</th>
-                            <th>Users</th>
-                            <th>Tasks</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="project: ${projects}">
-                            <td>
-                                <a th:href="@{/projects/{project_id}(project_id=${project.id})}"
-                                   th:text="${project.projectName}"></a>
-                            </td>
-                            <td th:text="${project.description}"></td>
-                            <td>
-                                <span th:text="${project.users.size() + ' User(s)'}"></span>
-                            </td>
-                            <td>
-                                <span th:text="${project.tasks.size() + ' Task(s)'}"></span>
-                            </td>
-                            <td th:switch="${project.status.toString()}">
-                                <span class="badge bg-secondary" th:case="'NOT_STARTED'">Not started</span>
-                                <span class="badge bg-primary" th:case="'IN_PROGRESS'">In progress</span>
-                                <span class="badge bg-success" th:case="'COMPLETED'">Completed</span>
-                                <span class="badge bg-danger" th:case="'ARCHIVED'">Archived</span>
-                            </td>
-                            <td>
-                                <a th:href="@{/projects/{project_id}/update(project_id=${project.id})}">Edit</a> /
-                                <a th:href="@{/projects/{project_id}/archive(project_id=${project.id})}">Archive</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+
+                <hr class="feature-divider">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th>Projects</th>
+                                <th>Description</th>
+                                <th>Users</th>
+                                <th>Tasks</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="project: ${projects}">
+                                <td>
+                                    <a th:href="@{/projects/{project_id}(project_id=${project.id})}"
+                                       th:text="${project.projectName}"></a>
+                                </td>
+                                <td th:text="${project.description}"></td>
+                                <td>
+                                    <span th:text="${project.users.size() + ' User(s)'}"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${project.tasks.size() + ' Task(s)'}"></span>
+                                </td>
+                                <td th:switch="${project.status.toString()}">
+                                    <span class="badge bg-secondary" th:case="'NOT_STARTED'">Not started</span>
+                                    <span class="badge bg-primary" th:case="'IN_PROGRESS'">In progress</span>
+                                    <span class="badge bg-success" th:case="'COMPLETED'">Completed</span>
+                                    <span class="badge bg-danger" th:case="'ARCHIVED'">Archived</span>
+                                </td>
+                                <td>
+                                    <a th:href="@{/projects/{project_id}/update(project_id=${project.id})}">Edit</a> /
+                                    <a th:href="@{/projects/{project_id}/archive(project_id=${project.id})}">Archive</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </main>
