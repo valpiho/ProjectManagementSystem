@@ -26,14 +26,15 @@
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5">
             <h2>Create new task</h2>
             <hr class="feature-divider">
-            <form action="#" th:action="@{/tasks/create-task}" th:object="${task}" method="post">
-                <div class="mb-3 row">
+
+                <form action="#" th:action="@{/project/{project_id}/task-create(project_id=${projects.id})}" th:object="${task}" method="post">
+                <!--<div class="mb-3 row">
                     <label for="projectId" class="col-sm-3 col-form-label">Project ID</label>
                     <div class="col-sm-4">
                         <input type="text" class="form-control"
                                th:field="*{id}" id="projectId" name="projectId">
                     </div>
-                </div>
+                </div>-->
                 <div class="mb-3 row">
                     <label for="title" class="col-sm-3 col-form-label">Title</label>
                     <div class="col-sm-4">
