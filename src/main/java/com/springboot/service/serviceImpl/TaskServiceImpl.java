@@ -33,12 +33,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task findTaskById(long id) {
-        return taskRepository.findById(id);
+    public Task findTaskById(Long id) {
+        return taskRepository.findTaskById(id);
     }
 
     @Override
-    public List<Task> findByProjectId(long id) {
+    public List<Task> findByProjectId(Long id) {
         return taskRepository.findByProjectId(id);
     }
 
@@ -70,43 +70,41 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void updateTask(long taskId, String title, String description, TaskPriority priority, User user, ProjectTaskStatus status) {
-        Task task = taskRepository.findById(taskId);
+    public void updateTask(Long taskId, String title, String description, TaskPriority priority, ProjectTaskStatus status) {
+        Task task = taskRepository.findTaskById(taskId);
 
         task.setTitle(title);
         task.setTaskDescription(description);
         task.setPriority(priority);
-        task.setUser(user);
-        task.setStatus(status);
-
-        taskRepository.save(task);
-    }
-
-
-    @Override
-    public void changeTaskPriority(long id, TaskPriority priority) {
-       Task task = taskRepository.findById(id);
-       task.setPriority(priority);
-       taskRepository.save(task);
-    }
-
-    @Override
-    public void changeTaskStatus(long id, ProjectTaskStatus status) {
-        Task task = taskRepository.findById(id);
+        task.setUpdatedAt(new Date());
         task.setStatus(status);
         taskRepository.save(task);
     }
 
     @Override
-    public void addMembersToTask(long id, User user) {
-        Task task = taskRepository.findById(id);
+    public void changeTaskPriority(Long id, TaskPriority priority) {
+        Task task = taskRepository.findTaskById(id);
+        task.setPriority(priority);
+        taskRepository.save(task);
+    }
+
+    @Override
+    public void changeTaskStatus(Long id, ProjectTaskStatus status) {
+        Task task = taskRepository.findTaskById(id);
+        task.setStatus(status);
+        taskRepository.save(task);
+    }
+
+    @Override
+    public void addMembersToTask(Long id, User user) {
+        Task task = taskRepository.findTaskById(id);
         task.setUser(user);
         taskRepository.save(task);
     }
 
     @Override
-    public void deleteTask(long id) {
-        Task task = taskRepository.findById(id);
+    public void deleteTask(Long id) {
+        Task task = taskRepository.findTaskById(id);
         taskRepository.delete(task);
     }
 

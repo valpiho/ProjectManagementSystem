@@ -52,6 +52,7 @@
                         </select>
                     </div>
                 </div>
+                <!--
                 <div class="mb-3 row">
                     <label for="user" class="col-sm-3 col-form-label">User</label>
                     <div class="col-sm-4">
@@ -59,10 +60,11 @@
                                th:field="*{user.username}" id="user" name="user">
                     </div>
                 </div>
+                -->
                 <div class="mb-3 row">
                     <label for="status" class="col-sm-3 col-form-label">Task Status</label>
                     <div class="col-sm-4">
-                        <select class="form-control"
+                        <select class="form-select"
                                 th:field="*{status}" id="status" name="status">
                             <option th:value="*{status.NOT_STARTED}" selected>NOT STARTED</option>
                             <option th:value="*{status.IN_PROGRESS}">IN PROGRESS</option>
