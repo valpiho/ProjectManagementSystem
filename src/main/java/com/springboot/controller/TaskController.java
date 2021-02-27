@@ -31,7 +31,7 @@ public class TaskController {
         this.projectService = projectService;
     }
 
-    @GetMapping("tasks/{task_id}")
+    @GetMapping("{task_id}")
     public String getTask(@PathVariable(name = "task_id") Long taskId,
                           Model model, Authentication authentication) {
         Task task = taskService.findTaskById(taskId);
@@ -115,7 +115,7 @@ public class TaskController {
         return String.format("redirect:/projects/%s", task.getProject().getId());
     }
 
-    @GetMapping("{task_id}/update")
+    @GetMapping("/{task_id}/update")
     public String updateTask(@PathVariable(name = "task_id") Long taskId,
                              Model model, Authentication authentication) {
         Task task = taskService.findTaskById(taskId);
@@ -132,7 +132,6 @@ public class TaskController {
                 task.getTitle(),
                 task.getTaskDescription(),
                 task.getPriority(),
-                task.getUser(),
                 task.getStatus());
 
         return String.format("redirect:/tasks/%s", task.getId());
