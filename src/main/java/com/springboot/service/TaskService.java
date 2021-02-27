@@ -15,7 +15,7 @@ public interface TaskService {
     List<Task> findAllByUserUsername(String username);
     List<Task> findAllByStatus(ProjectTaskStatus status);
 
-    void createTask(Long projectId, String description, TaskPriority priority, String username, ProjectTaskStatus status);
+    void createTask(Long projectId, String title, String description, TaskPriority priority, String username, ProjectTaskStatus status);
 
     void updateTask(long taskId, String title, String description, TaskPriority priority, User user, ProjectTaskStatus status);
 

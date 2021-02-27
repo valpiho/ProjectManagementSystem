@@ -27,7 +27,7 @@ public class Project {
     private Date updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User owner;
 
     @Enumerated(EnumType.STRING)

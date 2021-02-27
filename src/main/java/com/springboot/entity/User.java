@@ -23,8 +23,6 @@ public class User{
     private Date createdAt;
     private Date updatedAt;
 
-
-
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Project> ownProjects = new ArrayList<>();
 
