@@ -38,7 +38,7 @@ public class UserController {
     @GetMapping("/")
     public String indexPage(Model model, Authentication authentication) {
         if (authentication != null) {
-            model.addAttribute("authUser", getAuthUser(authentication));;
+            model.addAttribute("authUser", getAuthUser(authentication));
         }
         return "index";
     }

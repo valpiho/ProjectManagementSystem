@@ -52,7 +52,12 @@
                                 <td th:text="${task.taskDescription}"></td>
                                 <td th:text="${task.priority}"></td>
                                 <td th:text="${task.user.username}"></td>
-                                <td th:text="${task.status}"></td>
+                                <td th:switch="${task.status.toString()}">
+                                    <span class="badge bg-secondary" th:case="'NOT_STARTED'">Not started</span>
+                                    <span class="badge bg-primary" th:case="'IN_PROGRESS'">In progress</span>
+                                    <span class="badge bg-success" th:case="'COMPLETED'">Completed</span>
+                                    <span class="badge bg-danger" th:case="'ARCHIVED'">Archived</span>
+                                </td>
                                 <td>
                                     <a th:href="@{/tasks/{task_id}/update(task_id=${task.id})}">Edit</a>
                                     <a th:href="@{/tasks/{task_id}/archive(task_id=${task.id})}">Archive</a>

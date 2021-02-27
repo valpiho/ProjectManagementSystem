@@ -125,7 +125,7 @@ public class TaskController {
     @PostMapping("/task-create")
     public String createTask(@RequestParam(value = "project_id") Long project_id,
                              @ModelAttribute(value = "task") Task task, Authentication authentication) {
-        taskService.createTask(project_id, task.getTaskDescription(), task.getPriority(), getAuthUser(authentication).getUsername(), task.getStatus());
+        taskService.createTask(project_id, task.getTitle(), task.getTaskDescription(), task.getPriority(), getAuthUser(authentication).getUsername(), task.getStatus());
         return String.format("redirect:/projects/%s", project_id);
     }
 
