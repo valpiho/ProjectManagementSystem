@@ -10,22 +10,25 @@ import java.util.List;
 
 public interface TaskService {
 
-    Task findTaskById(long id);
-    List<Task> findByProjectId(long id);
+    Task findTaskById(Long id);
+
+    List<Task> findByProjectId(Long id);
+
     List<Task> findAllByUserUsername(String username);
+
     List<Task> findAllByStatus(ProjectTaskStatus status);
 
     void createTask(Long projectId, String title, String description, TaskPriority priority, String username, ProjectTaskStatus status);
 
-    void updateTask(long taskId, String title, String description, TaskPriority priority, User user, ProjectTaskStatus status);
+    void updateTask(Long taskId, String title, String description, TaskPriority priority, User user, ProjectTaskStatus status);
 
-    void changeTaskPriority(long id, TaskPriority priority);
+    void changeTaskPriority(Long id, TaskPriority priority);
 
-    void changeTaskStatus(long id, ProjectTaskStatus status);
+    void changeTaskStatus(Long id, ProjectTaskStatus status);
 
-    void addMembersToTask(long id, User user);
+    void addMembersToTask(Long id, User user);
 
-    void deleteTask(long id);
+    void deleteTask(Long id);
 
     List<Task> findAllTasks();
 }
