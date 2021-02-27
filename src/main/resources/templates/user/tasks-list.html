@@ -39,6 +39,7 @@
                                 <th>Description</th>
                                 <th>Priority</th>
                                 <th>User</th>
+                                <th>Project</th>
                                 <th>Status</th>
                             </tr>
                             </thead>
@@ -56,6 +57,7 @@
                                     <span class="badge bg-danger" th:case="'HIGH'">High</span>
                                 </td>
                                 <td th:text="${task.user.username}"></td>
+                                <td th:text="${task.project.projectName}"></td>
                                 <td th:switch="${task.status.toString()}">
                                     <span class="badge bg-secondary" th:case="'NOT_STARTED'">Not started</span>
                                     <span class="badge bg-primary" th:case="'IN_PROGRESS'">In progress</span>
