@@ -1,15 +1,18 @@
 package com.springboot.service.serviceImpl;
 
+import com.springboot.entity.Project;
 import com.springboot.entity.Task;
 import com.springboot.entity.User;
 import com.springboot.enumeration.TaskPriority;
 import com.springboot.enumeration.ProjectTaskStatus;
 import com.springboot.repository.TaskRepository;
+import com.springboot.service.ProjectService;
 import com.springboot.service.TaskService;
 import com.springboot.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,12 +21,15 @@ public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
     private final UserService userService;
+    private final ProjectService projectService;
 
 
-    public TaskServiceImpl(TaskRepository taskRepository, UserService userService) {
+    public TaskServiceImpl(TaskRepository taskRepository,
+                           UserService userService,
+                           ProjectService projectService) {
         this.taskRepository = taskRepository;
         this.userService = userService;
-
+        this.projectService = projectService;
     }
 
     @Override
@@ -50,11 +56,15 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void createTask(Long projectId, String description, TaskPriority priority, String username, ProjectTaskStatus status) {
         Task task = new Task();
+        Project project = projectService.findProjectById(projectId);
         User user = userService.findUserByUsername(username);
+
+        task.setProject(project);
         task.setUser(user);
         task.setTaskDescription(description);
         task.setPriority(priority);
         task.setStatus(ProjectTaskStatus.NOT_STARTED);
+        task.setCreatedAt(new Date());
         taskRepository.save(task);
     }
 

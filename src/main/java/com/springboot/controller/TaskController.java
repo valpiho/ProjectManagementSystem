@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping({"/tasks", "/projects"})
+@RequestMapping("/tasks")
 public class TaskController {
 
     private final TaskService taskService;
@@ -109,21 +109,24 @@ public class TaskController {
     }*/
 
     //TODO AT: added GetMapping for creating a task under Project
-    @GetMapping("/project/{project_id}/task-create")
-    public String createTaskForm(@PathVariable(value = "project_id") Long projectId, Model model) {
-        Project project = projectService.getProject(projectId);
-        model.addAttribute("project", project);
+    @GetMapping("/create")
+    public String createTask(@RequestParam(value = "project_id", required = false) Long project_id,
+                             Model model, Authentication authentication) {
+        if (project_id != null) {
+            Project project = projectService.findProjectById(project_id);
+            model.addAttribute("project", project);
+        }
+        model.addAttribute("authUser", getAuthUser(authentication));
         model.addAttribute("task", new Task());
-        return "task/task-create";
+        return "task/create";
     }
 
     //TODO AT: added PostMapping for task under Project
-    @PostMapping("/projects/{project_id}/task-create")
-    public String createTask(@PathVariable(value = "project_id") Long projectId,
-                             @ModelAttribute(value = "task") Task task) {
-        Project project = projectService.getProject(projectId);
-        taskService.addTask(project.getId(), task.getTaskDescription(), task.getPriority(), task.getStatus());
-        return "redirect:/projects/{project_id}";
+    @PostMapping("/task-create")
+    public String createTask(@RequestParam(value = "project_id") Long project_id,
+                             @ModelAttribute(value = "task") Task task, Authentication authentication) {
+        taskService.createTask(project_id, task.getTaskDescription(), task.getPriority(), getAuthUser(authentication).getUsername(), task.getStatus());
+        return String.format("redirect:/projects/%s", project_id);
     }
 
 

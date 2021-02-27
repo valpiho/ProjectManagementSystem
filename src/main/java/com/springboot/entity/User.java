@@ -23,7 +23,7 @@ public class User{
     private Date createdAt;
     private Date updatedAt;
 
-    //TODO: küsida Val üle. DB project table creates project_id
+
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "project_id", referencedColumnName = "id")
