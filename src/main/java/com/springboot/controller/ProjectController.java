@@ -45,7 +45,6 @@ public class ProjectController {
     }
 
     @GetMapping("/projects-list-ongoing")
-    // TODO: Get all ongoing projects
     public String getAllOngoingProjects(Model model, Authentication authentication) {
         List<Project> projects = projectService.findAllProjectsByStatus(IN_PROGRESS);
         model.addAttribute("projects", projects);
@@ -54,7 +53,6 @@ public class ProjectController {
     }
 
     @GetMapping("/projects-list-completed")
-    // TODO: Get all completed projects
     public String getAllCompletedProjects(Model model, Authentication authentication) {
         List<Project> projects = projectService.findAllProjectsByStatus(COMPLETED);
         model.addAttribute("projects", projects);
@@ -63,7 +61,6 @@ public class ProjectController {
     }
 
     @GetMapping("/projects-list-archived")
-    // TODO: Get all archived projects
     public String getAllArchivedProjects(Model model, Authentication authentication) {
         List<Project> projects = projectService.findAllProjectsByStatus(ARCHIVED);
         model.addAttribute("projects", projects);
@@ -97,8 +94,8 @@ public class ProjectController {
     public String updateProject(@PathVariable (name = "project_id") Long projectId,
                                 Model model, Authentication authentication) {
         Project project = projectService.findProjectById(projectId);
-        model.addAttribute("project", project);
         model.addAttribute("authUser", getAuthUser(authentication));
+        model.addAttribute("project", project);
         return "project/update";
     }
 

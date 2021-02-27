@@ -27,14 +27,7 @@
             <h2>Create new task</h2>
             <hr class="feature-divider">
 
-                <form action="#" th:action="@{/project/{project_id}/task-create(project_id=${projects.id})}" th:object="${task}" method="post">
-                <!--<div class="mb-3 row">
-                    <label for="projectId" class="col-sm-3 col-form-label">Project ID</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control"
-                               th:field="*{id}" id="projectId" name="projectId">
-                    </div>
-                </div>-->
+                <form action="#" th:action="@{/tasks/task-create(project_id=${project.id})}" th:object="${task}" method="post">
                 <div class="mb-3 row">
                     <label for="title" class="col-sm-3 col-form-label">Title</label>
                     <div class="col-sm-4">
@@ -58,13 +51,6 @@
                             <option th:value="*{priority.MEDIUM}">Medium</option>
                             <option th:value="*{priority.LOW}">Low</option>
                         </select>
-                    </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="user" class="col-sm-3 col-form-label">User</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control"
-                               th:field="*{user.username}" id="user" name="user">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
