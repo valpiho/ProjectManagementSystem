@@ -38,7 +38,6 @@ public class Project {
     private List<User> users = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "task_id", referencedColumnName = "id")
     private List<Task> tasks = new ArrayList<>();
 
     public Project() { }
