@@ -11,11 +11,13 @@ import java.util.List;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    Task findById(long id);
+    Task findTaskById(Long id);
 
     List<Task> findByProjectId(Long id);
 
     List<Task> findAllByUserUsername(String username);
 
     List<Task> findAllByStatus(ProjectTaskStatus status);
+
+    List<Task> findTaskByUser(User user);
 }

@@ -86,28 +86,6 @@ public class TaskController {
         return "task/tasks-archived";
     }
 
-    /*@GetMapping("/create")
-    public String createTaskForm(Model model, Authentication authentication) {
-        model.addAttribute("authUser", getAuthUser(authentication));
-        model.addAttribute("task", new Task());
-        return "task/create";
-    }
-
-    //TODO SO: change
-    @PostMapping("/create-task")
-    public String createTask(@ModelAttribute(value = "task") Task task, Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
-        taskService.createTask(task.getProject().getId(),
-                task.getTaskDescription(),
-                task.getPriority(),
-                userDetails.getUsername(),
-                task.getStatus());
-
-        Task newTask = taskService.findTaskById(task.getId());
-        return String.format("redirect:/tasks/%s", newTask.getId());
-    }*/
-
     //TODO AT: added GetMapping for creating a task under Project
     @GetMapping("/create")
     public String createTask(@RequestParam(value = "project_id", required = false) Long project_id,
@@ -131,6 +109,7 @@ public class TaskController {
                              @ModelAttribute(value = "task") Task task, Authentication authentication) {
         if (project_id != null) {
             taskService.createTask(project_id, task.getTitle(), task.getTaskDescription(), task.getPriority(), getAuthUser(authentication).getUsername(), task.getStatus());
+            return String.format("redirect:/projects/%s", project_id);
         }
         taskService.createTask(task.getProject().getId(), task.getTitle(), task.getTaskDescription(), task.getPriority(), getAuthUser(authentication).getUsername(), task.getStatus());
         return String.format("redirect:/projects/%s", project_id);
@@ -148,7 +127,7 @@ public class TaskController {
 
     @PostMapping("/{task_id}/updateForm")
     public String updateTask(@PathVariable(name = "task_id") Long taskId,
-                             @ModelAttribute(value = "task") Task task) {
+                             @ModelAttribute(value = "user") Task task) {
 
         taskService.updateTask(taskId,
                 task.getTitle(),
