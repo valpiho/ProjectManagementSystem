@@ -59,34 +59,37 @@ public class TaskController {
     }
 
     @GetMapping("/not-started")
-    public String getAllNotStartedTasks(Model model) {
+    public String getAllNotStartedTasks(Model model, Authentication authentication) {
         List<Task> tasks = taskService.findAllByStatus(ProjectTaskStatus.NOT_STARTED);
         model.addAttribute("tasks", tasks);
+        model.addAttribute("authUser", getAuthUser(authentication));
         return "task/tasks-not-started";
     }
 
     @GetMapping("/in-progress")
-    public String getAllTasksInProgress(Model model) {
+    public String getAllTasksInProgress(Model model, Authentication authentication) {
         List<Task> tasks = taskService.findAllByStatus(ProjectTaskStatus.IN_PROGRESS);
         model.addAttribute("tasks", tasks);
+        model.addAttribute("authUser", getAuthUser(authentication));
         return "task/tasks-inprogress";
     }
 
     @GetMapping("/completed")
-    public String getAllCompletedTasks(Model model) {
+    public String getAllCompletedTasks(Model model, Authentication authentication) {
         List<Task> tasks = taskService.findAllByStatus(ProjectTaskStatus.COMPLETED);
         model.addAttribute("tasks", tasks);
+        model.addAttribute("authUser", getAuthUser(authentication));
         return "task/tasks-completed";
     }
 
     @GetMapping("/archived")
-    public String getAllArchivedTasks(Model model) {
+    public String getAllArchivedTasks(Model model, Authentication authentication) {
         List<Task> tasks = taskService.findAllByStatus(ProjectTaskStatus.ARCHIVED);
         model.addAttribute("tasks", tasks);
+        model.addAttribute("authUser", getAuthUser(authentication));
         return "task/tasks-archived";
     }
 
-    //TODO AT: added GetMapping for creating a task under Project
     @GetMapping("/create")
     public String createTask(@RequestParam(value = "project_id", required = false) Long project_id,
                              Model model, Authentication authentication) {
@@ -103,7 +106,6 @@ public class TaskController {
         return "task/create-task";
     }
 
-    //TODO AT: added PostMapping for task under Project
     @PostMapping("/task-create")
     public String createTask(@RequestParam(value = "project_id", required = false) Long project_id,
                              @ModelAttribute(value = "task") Task task, Authentication authentication) {
