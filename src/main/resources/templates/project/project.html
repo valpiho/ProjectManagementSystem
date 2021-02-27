@@ -82,7 +82,13 @@
                             <span class="badge bg-warning" th:case="'MEDIUM'">Medium</span>
                             <span class="badge bg-danger" th:case="'HIGH'">High</span>
                         </td>
-
+                        <td th:text="${task.user.username}"></td>
+                        <td th:switch="${task.status.toString()}">
+                            <span class="badge bg-secondary" th:case="'NOT_STARTED'">Not started</span>
+                            <span class="badge bg-primary" th:case="'IN_PROGRESS'">In progress</span>
+                            <span class="badge bg-success" th:case="'COMPLETED'">Completed</span>
+                            <span class="badge bg-danger" th:case="'ARCHIVED'">Archived</span>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

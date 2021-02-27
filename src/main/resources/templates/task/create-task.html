@@ -56,7 +56,7 @@
                 <div class="mb-3 row">
                     <label for="project" class="col-sm-3 col-form-label">Project</label>
                     <div class="col-sm-4">
-                        <select class="form-select" id="project"  name="project" th:field="*{project}">
+                        <select class="form-select" id="project"  name="project" th:field="*{project.id}">
                             <option th:each="selectProject : ${projects}"
                                     th:value="${selectProject.id}" th:text="${selectProject.projectName}"></option>
                         </select><br>
