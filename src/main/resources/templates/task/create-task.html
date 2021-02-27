@@ -58,7 +58,7 @@
                     <div class="col-sm-4">
                         <select class="form-select" id="project"  name="project" th:field="*{project}">
                             <option th:each="selectProject : ${projects}"
-                                    th:value="${selectProject.projectName}" th:text="${selectProject.projectName}"></option>
+                                    th:value="${selectProject.id}" th:text="${selectProject.projectName}"></option>
                         </select><br>
                     </div>
                 </div>
