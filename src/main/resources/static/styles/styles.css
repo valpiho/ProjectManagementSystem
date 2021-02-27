@@ -9,12 +9,10 @@ body {
     vertical-align: text-bottom;
 }
 
-/*
- * Sidebar
- */
+/* * Sidebar*/
 
 .sidebar {
-    position: fixed;
+    position: relative;
     top: 0;
     bottom: 0;
     left: 0;
@@ -34,8 +32,9 @@ body {
 }
 
 .sidebar .nav-link {
-    font-weight: 500;
+    font-weight: 400;
     color: #333;
+    text-decoration-line: underline;
 }
 
 .sidebar .nav-link .feather {
@@ -44,7 +43,8 @@ body {
 }
 
 .sidebar .nav-link.active {
-    color: #007bff;
+    color: #005a82;
+    border-bottom: solid #005a82 5px;
 }
 
 .sidebar .nav-link:hover .feather,
@@ -93,10 +93,10 @@ body{
     font-size: 12px;
     color: #818182;
     font-weight: 600;
-    margin-top: 10%;
+    margin-top: 50%;
 }
 .a{
-    text-decoration: none;
+    text-decoration: #005a82;
     color: #495057;
     font-weight: 600;
     font-size: 14px;

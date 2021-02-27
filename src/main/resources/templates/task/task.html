@@ -24,49 +24,48 @@
                  th:insert="includes/sidebar-menu"></nav>
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-5">
-                <h2>Task</h2>
-                <hr class="feature-divider">
-                <div class="table-responsive">
-                    <table class="table table-striped table-sm">
-                        <thead>
-                        <tr>
-                            <th>Task</th>
-                            <th>Description</th>
-                            <th>Priority</th>
-                            <th>Assigned user</th>
-                            <th>Status</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                <div class="my-3 p-3 bg-body rounded shadow-sm">
+                    <h3>Task</h3>
+                    <hr class="feature-divider">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th>Task</th>
+                                <th>Description</th>
+                                <th>Priority</th>
+                                <th>Assigned user</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        <tr>
-                            <td th:text="${task.title}"></td>
-                            <td th:text="${task.taskDescription}"></td>
+                            <tr>
+                                <td th:text="${task.title}"></td>
+                                <td th:text="${task.taskDescription}"></td>
 
-                            <td th:switch="${task.priority.toString()}">
-                                <span class="badge bg-success" th:case="'LOW'">Low</span>
-                                <span class="badge bg-warning" th:case="'MEDIUM'">Medium</span>
-                                <span class="badge bg-danger" th:case="'HIGH'">High</span>
-                            </td>
-                            <td>
-                                <span th:text="${task.user.username}"></span>
-                            </td>
-                            <td th:switch="${task.status.toString()}">
-                                <span class="badge bg-secondary" th:case="'NOT_STARTED'">Not started</span>
-                                <span class="badge bg-primary" th:case="'IN_PROGRESS'">In progress</span>
-                                <span class="badge bg-success" th:case="'COMPLETED'">Completed</span>
-                                <span class="badge bg-danger" th:case="'ARCHIVED'">Archived</span>
-                            </td>
-                            <td>
-                                <a th:href="@{/tasks/{task_id}/update(task_id=${task.id})}">Edit</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                                <td th:switch="${task.priority.toString()}">
+                                    <span class="badge bg-success" th:case="'LOW'">Low</span>
+                                    <span class="badge bg-warning" th:case="'MEDIUM'">Medium</span>
+                                    <span class="badge bg-danger" th:case="'HIGH'">High</span>
+                                </td>
+                                <td>
+                                    <span th:text="${task.user.username}"></span>
+                                </td>
+                                <td th:switch="${task.status.toString()}">
+                                    <span class="badge bg-secondary" th:case="'NOT_STARTED'">Not started</span>
+                                    <span class="badge bg-primary" th:case="'IN_PROGRESS'">In progress</span>
+                                    <span class="badge bg-success" th:case="'COMPLETED'">Completed</span>
+                                    <span class="badge bg-danger" th:case="'ARCHIVED'">Archived</span>
+                                </td>
+                                <td>
+                                    <a th:href="@{/tasks/{task_id}/update(task_id=${task.id})}">Edit</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-
-
             </main>
         </div>
     </div>

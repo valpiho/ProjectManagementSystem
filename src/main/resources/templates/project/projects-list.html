@@ -27,18 +27,22 @@
             <div class="my-3 p-3 bg-body rounded shadow-sm">
                 <h3 class="border-bottom pb-2 mb-0">Overview of all projects</h3>
                 <div class="d-flex text-muted pt-3">
-                    <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
-                         xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
-                         preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="#ef4271"/>
-                        <text x="50%" y="50%" fill="#ef4271" dy=".3em">32x32</text>
-                    </svg>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-secondary btn-primary" style="background-color:#ef4271">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                 fill="currentColor"
+                                 class="bi bi-archive" viewBox="0 0 16 16">
+                                <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+                            </svg>
+                            <span th:text="${projects.size() + ' Existing Projects'}"></span>
+                        </button>
+                    </div>
 
-                    <p class="pb-3 mb-0 small lh-sm ">
-                        <strong class="d-block text-gray-dark">@note</strong>
-                        An overview of the projects of the whole team!
-                    </p>
-                    <div class="d-grid col-7 justify-content-end">
+                    <div class="fs-6">
+                        "Those who plan do better than those who do not plan even though they rarely stick to their
+                        plan." Winston Churchill
+                    </div>
+                    <div class="d-grid col-3 justify-content-end">
                         <a th:href="@{/projects/create}">
                             <button class="btn btn-primary" type="button">Add new project</button>
                         </a>
