@@ -1,77 +1,66 @@
-create table hibernate_sequence
-(
-    next_val bigint null
-);
+CREATE TABLE `hibernate_sequence` (
+    `next_val` bigint DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
-create table user
-(
-    id bigint not null
-        primary key,
-    authorities tinyblob null,
-    email varchar(255) null,
-    first_name varchar(255) null,
-    last_name varchar(255) null,
-    password varchar(255) null,
-    role varchar(255) null,
-    username varchar(255) null,
-    created_at datetime(6) null,
-    is_enabled bit not null,
-    updated_at datetime(6) null
-);
+CREATE TABLE `project` (
+                           `id` bigint NOT NULL AUTO_INCREMENT,
+                           `created_at` datetime(6) DEFAULT NULL,
+                           `description` varchar(255) DEFAULT NULL,
+                           `end_date` datetime(6) DEFAULT NULL,
+                           `project_name` varchar(255) DEFAULT NULL,
+                           `start_date` datetime(6) DEFAULT NULL,
+                           `status` varchar(11) DEFAULT NULL,
+                           `updated_at` datetime(6) DEFAULT NULL,
+                           `user_id` bigint DEFAULT NULL,
+                           `project_id` bigint DEFAULT NULL,
+                           PRIMARY KEY (`id`),
+                           KEY `FKo06v2e9kuapcugnyhttqa1vpt` (`user_id`),
+                           KEY `FK4a06bn71vioqip4r57hpqg3hm` (`project_id`),
+                           CONSTRAINT `FK4a06bn71vioqip4r57hpqg3hm` FOREIGN KEY (`project_id`) REFERENCES `user` (`id`),
+                           CONSTRAINT `FKo06v2e9kuapcugnyhttqa1vpt` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
-create table project
-(
-    id bigint auto_increment
-        primary key,
-    description varchar(255) null,
-    end_date datetime(6) null,
-    project_name varchar(255) null,
-    start_date datetime(6) null,
-    status varchar(11) null,
-    task_id bigint null,
-    created_at datetime(6) null,
-    updated_at datetime(6) null,
-    user_id bigint null,
-    project_id bigint null,
-    constraint FK4a06bn71vioqip4r57hpqg3hm
-        foreign key (project_id) references user (id),
-    constraint FKo06v2e9kuapcugnyhttqa1vpt
-        foreign key (user_id) references user (id)
-);
+CREATE TABLE `task` (
+                        `id` bigint NOT NULL AUTO_INCREMENT,
+                        `created_at` datetime(6) DEFAULT NULL,
+                        `priority` varchar(6) DEFAULT NULL,
+                        `status` varchar(11) DEFAULT NULL,
+                        `task_description` varchar(255) DEFAULT NULL,
+                        `title` varchar(255) DEFAULT NULL,
+                        `updated_at` datetime(6) DEFAULT NULL,
+                        `project_id` bigint DEFAULT NULL,
+                        `user_id` bigint DEFAULT NULL,
+                        `task_id` bigint DEFAULT NULL,
+                        PRIMARY KEY (`id`),
+                        KEY `FKk8qrwowg31kx7hp93sru1pdqa` (`project_id`),
+                        KEY `FK2hsytmxysatfvt0p1992cw449` (`user_id`),
+                        KEY `FKae1mroqa689kinqybv3bcauv` (`task_id`),
+                        CONSTRAINT `FK2hsytmxysatfvt0p1992cw449` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+                        CONSTRAINT `FKae1mroqa689kinqybv3bcauv` FOREIGN KEY (`task_id`) REFERENCES `user` (`id`),
+                        CONSTRAINT `FKk8qrwowg31kx7hp93sru1pdqa` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
-create table task
-(
-    id bigint auto_increment
-        primary key,
-    priority varchar(6) null,
-    status varchar(11) null,
-    task_description varchar(255) null,
-    project_id bigint null,
-    user_id bigint null,
-    task_id bigint null,
-    created_at datetime(6) null,
-    title varchar(255) null,
-    updated_at datetime(6) null,
-    constraint FK2hsytmxysatfvt0p1992cw449
-        foreign key (user_id) references user (id),
-    constraint FKae1mroqa689kinqybv3bcauv
-        foreign key (task_id) references user (id),
-    constraint FKk8qrwowg31kx7hp93sru1pdqa
-        foreign key (project_id) references project (id)
-);
+CREATE TABLE `user` (
+                        `id` bigint NOT NULL,
+                        `authorities` tinyblob,
+                        `created_at` datetime(6) DEFAULT NULL,
+                        `email` varchar(255) DEFAULT NULL,
+                        `first_name` varchar(255) DEFAULT NULL,
+                        `is_enabled` bit(1) NOT NULL,
+                        `last_name` varchar(255) DEFAULT NULL,
+                        `password` varchar(255) DEFAULT NULL,
+                        `role` varchar(255) DEFAULT NULL,
+                        `updated_at` datetime(6) DEFAULT NULL,
+                        `username` varchar(255) DEFAULT NULL,
+                        PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
-alter table project
-    add constraint FKfhq6ejqa3bedwlymsw10j1pb2
-        foreign key (task_id) references task (id);
-
-create table users_projects
-(
-    user_id bigint not null,
-    project_id bigint not null,
-    primary key (user_id, project_id),
-    constraint FK5gka63hbj8siyiahiqs0kupe2
-        foreign key (project_id) references project (id),
-    constraint FK5tvof3bxcwalwr5y11jo3fpn0
-        foreign key (user_id) references user (id)
-);
+CREATE TABLE `users_projects` (
+                                  `user_id` bigint NOT NULL,
+                                  `project_id` bigint NOT NULL,
+                                  KEY `FK5gka63hbj8siyiahiqs0kupe2` (`project_id`),
+                                  KEY `FK5tvof3bxcwalwr5y11jo3fpn0` (`user_id`),
+                                  CONSTRAINT `FK5gka63hbj8siyiahiqs0kupe2` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`),
+                                  CONSTRAINT `FK5tvof3bxcwalwr5y11jo3fpn0` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
