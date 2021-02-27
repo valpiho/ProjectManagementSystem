@@ -112,20 +112,27 @@ public class TaskController {
     @GetMapping("/create")
     public String createTask(@RequestParam(value = "project_id", required = false) Long project_id,
                              Model model, Authentication authentication) {
+        model.addAttribute("authUser", getAuthUser(authentication));
+        model.addAttribute("task", new Task());
         if (project_id != null) {
             Project project = projectService.findProjectById(project_id);
             model.addAttribute("project", project);
+            return "task/create";
+        } else {
+            List<Project> projects = projectService.findAllProjectsByUsername(getAuthUser(authentication).getUsername());
+            model.addAttribute("projects", projects);
         }
-        model.addAttribute("authUser", getAuthUser(authentication));
-        model.addAttribute("task", new Task());
-        return "task/create";
+        return "task/create-task";
     }
 
     //TODO AT: added PostMapping for task under Project
     @PostMapping("/task-create")
-    public String createTask(@RequestParam(value = "project_id") Long project_id,
+    public String createTask(@RequestParam(value = "project_id", required = false) Long project_id,
                              @ModelAttribute(value = "task") Task task, Authentication authentication) {
-        taskService.createTask(project_id, task.getTitle(), task.getTaskDescription(), task.getPriority(), getAuthUser(authentication).getUsername(), task.getStatus());
+        if (project_id != null) {
+            taskService.createTask(project_id, task.getTaskDescription(), task.getPriority(), getAuthUser(authentication).getUsername(), task.getStatus());
+        }
+        taskService.createTask(task.getProject().getId(), task.getTaskDescription(), task.getPriority(), getAuthUser(authentication).getUsername(), task.getStatus());
         return String.format("redirect:/projects/%s", project_id);
     }
 
