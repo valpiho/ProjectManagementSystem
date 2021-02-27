@@ -130,9 +130,9 @@ public class TaskController {
     public String createTask(@RequestParam(value = "project_id", required = false) Long project_id,
                              @ModelAttribute(value = "task") Task task, Authentication authentication) {
         if (project_id != null) {
-            taskService.createTask(project_id, task.getTaskDescription(), task.getPriority(), getAuthUser(authentication).getUsername(), task.getStatus());
+            taskService.createTask(project_id, task.getTitle(), task.getTaskDescription(), task.getPriority(), getAuthUser(authentication).getUsername(), task.getStatus());
         }
-        taskService.createTask(task.getProject().getId(), task.getTaskDescription(), task.getPriority(), getAuthUser(authentication).getUsername(), task.getStatus());
+        taskService.createTask(task.getProject().getId(), task.getTitle(), task.getTaskDescription(), task.getPriority(), getAuthUser(authentication).getUsername(), task.getStatus());
         return String.format("redirect:/projects/%s", project_id);
     }
 
