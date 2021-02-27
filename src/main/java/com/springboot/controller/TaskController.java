@@ -112,9 +112,8 @@ public class TaskController {
             return String.format("redirect:/projects/%s", project_id);
         }
         taskService.createTask(task.getProject().getId(), task.getTitle(), task.getTaskDescription(), task.getPriority(), getAuthUser(authentication).getUsername(), task.getStatus());
-        return String.format("redirect:/projects/%s", project_id);
+        return String.format("redirect:/projects/%s", task.getProject().getId());
     }
-
 
     @GetMapping("{task_id}/update")
     public String updateTask(@PathVariable(name = "task_id") Long taskId,

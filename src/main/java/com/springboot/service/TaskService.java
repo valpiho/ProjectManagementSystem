@@ -31,5 +31,4 @@ public interface TaskService {
     void deleteTask(Long id);
 
     List<Task> findAllTasks();
-
 }

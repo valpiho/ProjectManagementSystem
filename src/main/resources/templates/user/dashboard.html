@@ -49,7 +49,7 @@
                         <div class="card-body">
                             <h5 class="card-title">List of Existing Tasks</h5>
                             <p class="card-text">This is the list of all Tasks in system</p>
-                            <a class="nav-link" th:href="@{/projects/projects-list}">
+                            <a class="nav-link" th:href="@{/tasks/tasks-list}">
                                 <button type="button" class="btn btn-secondary btn-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                          fill="currentColor"
@@ -92,7 +92,7 @@
                         <div class="card-body">
                             <h5 class="card-title">List of Ongoing Tasks</h5>
                             <p class="card-text">This is the list of all Ongoing Tasks in system</p>
-                            <a class="nav-link" th:href="@{/projects/projects-list}">
+                            <a class="nav-link" th:href="@{/tasks/in-progress}">
                                 <button type="button" class="btn btn-secondary btn-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                          fill="currentColor"
@@ -103,7 +103,7 @@
                                         <path fill-rule="evenodd"
                                               d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z"/>
                                     </svg>
-                                    <span th:text="${authUser.tasks.size() + ' Task(s)'}"></span>
+                                    <span th:text="${onGoingTasks.size() + ' Task(s)'}"></span>
                                 </button>
                             </a>
                         </div>
@@ -134,8 +134,8 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">List of Completed Tasks</h5>
-                            <p class="card-text">This is the list of all Ongoing Tasks in system</p>
-                            <a class="nav-link" th:href="@{/projects/projects-list}">
+                            <p class="card-text">This is the list of all Completed Tasks in system</p>
+                            <a class="nav-link" th:href="@{/tasks/tasks-completed}">
                                 <button type="button" class="btn btn-secondary btn-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                          fill="currentColor"
@@ -146,7 +146,7 @@
                                         <path fill-rule="evenodd"
                                               d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z"/>
                                     </svg>
-                                    <span th:text="${authUser.tasks.size() + ' Task(s)'}"></span>
+                                    <span th:text="${completedTasks.size() + ' Task(s)'}"></span>
                                 </button>
                             </a>
                         </div>
@@ -181,8 +181,8 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">List of Archived Tasks</h5>
-                            <p class="card-text">This is the list of all Tasks in system</p>
-                            <a class="nav-link" th:href="@{/projects/projects-list}">
+                            <p class="card-text">This is the list of all Archived Tasks in system</p>
+                            <a class="nav-link" th:href="@{/tasks/archived}">
                                 <button type="button" class="btn btn-secondary btn-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                          fill="currentColor"
@@ -193,7 +193,7 @@
                                         <path fill-rule="evenodd"
                                               d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z"/>
                                     </svg>
-                                    <span th:text="${authUser.tasks.size() + ' Task(s)'}"></span>
+                                    <span th:text="${archivedTasks.size() + ' Task(s)'}"></span>
                                 </button>
                             </a>
                         </div>
