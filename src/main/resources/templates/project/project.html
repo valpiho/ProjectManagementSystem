@@ -89,6 +89,9 @@
                             <span class="badge bg-success" th:case="'COMPLETED'">Completed</span>
                             <span class="badge bg-danger" th:case="'ARCHIVED'">Archived</span>
                         </td>
+                        <td>
+                            <a th:href="@{/tasks/{task_id}/update(task_id=${task.id})}">Edit</a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

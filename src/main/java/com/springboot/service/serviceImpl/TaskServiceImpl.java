@@ -61,6 +61,7 @@ public class TaskServiceImpl implements TaskService {
 
         task.setProject(project);
         task.setUser(user);
+        task.setTitle(title);
         task.setTaskDescription(description);
         task.setPriority(priority);
         task.setStatus(ProjectTaskStatus.NOT_STARTED);
@@ -114,12 +115,12 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findAll();
     }
 
-    @Override
+    /*@Override
     public void addTask(Long id, String taskDescription, TaskPriority priority, ProjectTaskStatus status) {
         Task task = new Task();
         task.setTaskDescription(taskDescription);
         task.setPriority(priority);
         task.setStatus(ProjectTaskStatus.NOT_STARTED);
         taskRepository.save(task);
-    }
+    }*/
 }

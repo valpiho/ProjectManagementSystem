@@ -50,7 +50,11 @@
                                        th:text="${task.title}"></a>
                                 </td>
                                 <td th:text="${task.taskDescription}"></td>
-                                <td th:text="${task.priority}"></td>
+                                <td th:switch="${task.priority.toString()}">
+                                    <span class="badge bg-success" th:case="'LOW'">Low</span>
+                                    <span class="badge bg-warning" th:case="'MEDIUM'">Medium</span>
+                                    <span class="badge bg-danger" th:case="'HIGH'">High</span>
+                                </td>
                                 <td th:text="${task.user.username}"></td>
                                 <td th:switch="${task.status.toString()}">
                                     <span class="badge bg-secondary" th:case="'NOT_STARTED'">Not started</span>

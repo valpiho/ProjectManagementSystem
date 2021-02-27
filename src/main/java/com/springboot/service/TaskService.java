@@ -29,6 +29,4 @@ public interface TaskService {
 
     List<Task> findAllTasks();
 
-    //TODO: AT tests
-    void addTask(Long id, String taskDescription, TaskPriority priority, ProjectTaskStatus status);
 }
