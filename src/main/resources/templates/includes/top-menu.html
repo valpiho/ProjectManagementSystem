@@ -28,7 +28,7 @@
             </ul>
             <ul class="navbar-nav justify-content-right">
                 <li sec:authorize="isAuthenticated()" class="nav-item text-nowrap">
-                    <a class="nav-link" th:href="@{/logout}">Sing Out</a>
+                    <a class="nav-link" th:href="@{/logout}">Sign Out</a>
                 </li>
                 <li sec:authorize="isAnonymous()" class="nav-item text-nowrap">
                     <a class="nav-link" th:href="@{/login}">Sign In</a>

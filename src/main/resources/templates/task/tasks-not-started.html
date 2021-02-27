@@ -26,11 +26,6 @@
                 <h2>Tasks that have not been started</h2>
                 <hr class="feature-divider">
                 <div class="row">
-                    <div class="d-grid justify-content-end">
-                        <a th:href="@{/tasks/create-task}">
-                            <button class="btn btn-primary" type="button">Add new task</button>
-                        </a>
-                    </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-sm">
                             <thead>
@@ -55,8 +50,7 @@
                                 <td th:text="${task.user}"></td>
                                 <td th:text="${task.status}"></td>
                                 <td>
-                                    <a th:href="@{/tasks/{task_id}/update(task_id=${task.id})}">Edit</a> /
-                                    <a th:href="@{/tasks/{task_id}/archive(task_id=${task.id})}">Archive</a>
+                                    <a th:href="@{/tasks/{task_id}/update(task_id=${task.id})}">Edit</a>
                                 </td>
                             </tr>
                             </tbody>
