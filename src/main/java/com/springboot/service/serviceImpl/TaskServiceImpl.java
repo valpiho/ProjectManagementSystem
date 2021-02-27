@@ -12,6 +12,7 @@ import com.springboot.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,7 +23,10 @@ public class TaskServiceImpl implements TaskService {
     private final UserService userService;
     private final ProjectService projectService;
 
-    public TaskServiceImpl(TaskRepository taskRepository, UserService userService, ProjectService projectService) {
+
+    public TaskServiceImpl(TaskRepository taskRepository,
+                           UserService userService,
+                           ProjectService projectService) {
         this.taskRepository = taskRepository;
         this.userService = userService;
         this.projectService = projectService;
@@ -50,17 +54,17 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void createTask(Long projectId, String title, String description, TaskPriority priority, String username, ProjectTaskStatus status) {
+    public void createTask(Long projectId, String description, TaskPriority priority, String username, ProjectTaskStatus status) {
         Task task = new Task();
-        User user = userService.findUserByUsername(username);
         Project project = projectService.findProjectById(projectId);
-        task.setUser(user);
+        User user = userService.findUserByUsername(username);
+
         task.setProject(project);
-        task.setTitle(title);
+        task.setUser(user);
         task.setTaskDescription(description);
         task.setPriority(priority);
         task.setStatus(ProjectTaskStatus.NOT_STARTED);
-
+        task.setCreatedAt(new Date());
         taskRepository.save(task);
     }
 
@@ -108,5 +112,14 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<Task> findAllTasks() {
         return taskRepository.findAll();
+    }
+
+    @Override
+    public void addTask(Long id, String taskDescription, TaskPriority priority, ProjectTaskStatus status) {
+        Task task = new Task();
+        task.setTaskDescription(taskDescription);
+        task.setPriority(priority);
+        task.setStatus(ProjectTaskStatus.NOT_STARTED);
+        taskRepository.save(task);
     }
 }

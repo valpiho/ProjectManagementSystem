@@ -17,11 +17,11 @@ public class Task {
     private Date createdAt;
     private Date updatedAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "project_id", referencedColumnName = "id")
     private Project project;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
@@ -92,6 +92,7 @@ public class Task {
 
     public void setProject(Project project) {
         this.project = project;
+        project.getTasks().add(this);
     }
 
     public User getUser() {
@@ -100,6 +101,7 @@ public class Task {
 
     public void setUser(User user) {
         this.user = user;
+        user.getTasks().add(this);
     }
 
     public TaskPriority getPriority() {

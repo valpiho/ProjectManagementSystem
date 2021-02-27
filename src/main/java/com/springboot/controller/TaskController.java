@@ -1,8 +1,10 @@
 package com.springboot.controller;
 
+import com.springboot.entity.Project;
 import com.springboot.entity.Task;
 import com.springboot.entity.User;
 import com.springboot.enumeration.ProjectTaskStatus;
+import com.springboot.service.ProjectService;
 import com.springboot.service.TaskService;
 import com.springboot.service.UserService;
 import org.springframework.security.core.Authentication;
@@ -19,14 +21,17 @@ public class TaskController {
 
     private final TaskService taskService;
     private final UserService userService;
+    private final ProjectService projectService;
 
     public TaskController(TaskService taskService,
-                          UserService userService) {
+                          UserService userService,
+                          ProjectService projectService) {
         this.taskService = taskService;
         this.userService = userService;
+        this.projectService = projectService;
     }
 
-    @GetMapping("/{task_id}")
+    @GetMapping("tasks/{task_id}")
     public String getTask(@PathVariable(name = "task_id") Long taskId,
                           Model model, Authentication authentication) {
         Task task = taskService.findTaskById(taskId);
@@ -45,10 +50,11 @@ public class TaskController {
 
 
     @GetMapping("/{project_id}/tasks-list")
-    public String getAllTasksByProject(@PathVariable (name = "project_id") Long id, Model model) {
+    public String getAllTasksByProject(@PathVariable(name = "project_id") Long id, Model model) {
         List<Task> tasks = taskService.findByProjectId(id);
+        Project project = projectService.findProjectById(id);
+        model.addAttribute("project", project);
         model.addAttribute("tasks", tasks);
-
         return "task/tasks-list";
     }
 
@@ -66,46 +72,67 @@ public class TaskController {
         return "task/tasks-inprogress";
     }
 
-    @GetMapping ("/completed")
+    @GetMapping("/completed")
     public String getAllCompletedTasks(Model model) {
         List<Task> tasks = taskService.findAllByStatus(ProjectTaskStatus.COMPLETED);
         model.addAttribute("tasks", tasks);
         return "task/tasks-completed";
     }
 
-    @GetMapping ("/archived")
+    @GetMapping("/archived")
     public String getAllArchivedTasks(Model model) {
         List<Task> tasks = taskService.findAllByStatus(ProjectTaskStatus.ARCHIVED);
         model.addAttribute("tasks", tasks);
         return "task/tasks-archived";
     }
 
-    @GetMapping("/create")
+    /*@GetMapping("/create")
     public String createTaskForm(Model model, Authentication authentication) {
         model.addAttribute("authUser", getAuthUser(authentication));
         model.addAttribute("task", new Task());
         return "task/create";
     }
 
+    //TODO SO: change
     @PostMapping("/create-task")
     public String createTask(@ModelAttribute(value = "task") Task task, Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         taskService.createTask(task.getProject().getId(),
-                                task.getTitle(),
-                                task.getTaskDescription(),
-                                task.getPriority(),
-                                userDetails.getUsername(),
-                                task.getStatus());
+                task.getTaskDescription(),
+                task.getPriority(),
+                userDetails.getUsername(),
+                task.getStatus());
 
-//TODO: selle alumise reaga on midagi valesti ... aga ma ei tea mis...
         Task newTask = taskService.findTaskById(task.getId());
         return String.format("redirect:/tasks/%s", newTask.getId());
+    }*/
+
+    //TODO AT: added GetMapping for creating a task under Project
+    @GetMapping("/create")
+    public String createTask(@RequestParam(value = "project_id", required = false) Long project_id,
+                             Model model, Authentication authentication) {
+        if (project_id != null) {
+            Project project = projectService.findProjectById(project_id);
+            model.addAttribute("project", project);
+        }
+        model.addAttribute("authUser", getAuthUser(authentication));
+        model.addAttribute("task", new Task());
+        return "task/create";
     }
+
+    //TODO AT: added PostMapping for task under Project
+    @PostMapping("/task-create")
+    public String createTask(@RequestParam(value = "project_id") Long project_id,
+                             @ModelAttribute(value = "task") Task task, Authentication authentication) {
+        taskService.createTask(project_id, task.getTaskDescription(), task.getPriority(), getAuthUser(authentication).getUsername(), task.getStatus());
+        return String.format("redirect:/projects/%s", project_id);
+    }
+
 
     @GetMapping("{task_id}/update")
     public String updateTask(@PathVariable(name = "task_id") Long taskId,
-                             Model model, Authentication authentication){
+                             Model model, Authentication authentication) {
         Task task = taskService.findTaskById(taskId);
         model.addAttribute("task", task);
         model.addAttribute("authUser", getAuthUser(authentication));
@@ -127,13 +154,13 @@ public class TaskController {
     }
 
     @DeleteMapping("tasks/{task_id}/delete-task")
-    public String deleteTask(@PathVariable (name = "task_id") Long id) {
+    public String deleteTask(@PathVariable(name = "task_id") Long id) {
         taskService.deleteTask(id);
 
         return "";
     }
 
-    private User getAuthUser(Authentication authentication){
+    private User getAuthUser(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return userService.findUserByUsername(userDetails.getUsername());
     }

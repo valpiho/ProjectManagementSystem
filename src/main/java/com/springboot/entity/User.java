@@ -24,11 +24,9 @@ public class User{
     private Date updatedAt;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "project_id", referencedColumnName = "id")
     private List<Project> ownProjects = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "task_id", referencedColumnName = "id")
     private List<Task> tasks = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
