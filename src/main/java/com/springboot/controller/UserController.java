@@ -88,11 +88,20 @@ public class UserController {
         List<Project> onGoingProjects = projectService.findAllProjectsByStatus(IN_PROGRESS);
         List<Project> completedProjects = projectService.findAllProjectsByStatus(COMPLETED);
         List<Project> archivedProjects = projectService.findAllProjectsByStatus(ARCHIVED);
+        List<Task> tasks = taskService.findAllTasks();
+        List<Task> onGoingTasks = taskService.findAllByStatus(IN_PROGRESS);
+        List<Task> completedTasks = taskService.findAllByStatus(COMPLETED);
+        List<Task> archivedTasks = taskService.findAllByStatus(ARCHIVED);
         model.addAttribute("authUser", getAuthUser(authentication));
         model.addAttribute("projects", projects);
         model.addAttribute("onGoingProjects", onGoingProjects);
         model.addAttribute("completedProjects", completedProjects);
         model.addAttribute("archivedProjects", archivedProjects);
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("onGoingTasks", onGoingTasks);
+        model.addAttribute("completedTasks", completedTasks);
+        model.addAttribute("archivedTasks", archivedTasks);
+
         return "user/dashboard";
     }
 
