@@ -163,7 +163,7 @@ public class UserController {
             return "register";
         }
         userService.registerNewUser(user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail(), user.getPassword());
-        return "redirect:/login";
+        return "redirect:/login-success";
     }
 
     @GetMapping("/login")
@@ -172,6 +172,15 @@ public class UserController {
             return "redirect:/";
         }
 
+        return "login";
+    }
+
+    @GetMapping("/login-success")
+    public String loginSuccess(Authentication authentication, Model model) {
+        if (authentication != null) {
+            return "redirect:/";
+        }
+        model.addAttribute("success", "User has been registered");
         return "login";
     }
 

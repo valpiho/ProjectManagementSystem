@@ -21,6 +21,7 @@
 </header>
 
 <main class="form-signin">
+    <h1 class="h3 mb-3 fw-normal" th:text="${success}"></h1>
     <h1 class="h3 mb-3 fw-normal">Sign In your account</h1>
     <p th:if="${loginError}" class="error">Wrong user or password</p>
     <div th:if="${param.error}">
