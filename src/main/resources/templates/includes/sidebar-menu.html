@@ -4,28 +4,30 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div class="sidebar-sticky">
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/projects/projects-list}">All Projects</a>
-        </li>
-        <li>
-            <a class="nav-link" th:href="@{/tasks/tasks-list}">All Tasks</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/users-list}">All Users</a>
-        </li>
-    </ul>
+    <div class="my-3 p-3 bg-body rounded shadow-sm">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/projects/projects-list}">All Projects</a>
+            </li>
+            <li>
+                <a class="nav-link" th:href="@{/tasks/tasks-list}">All Tasks</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/users-list}">All Users</a>
+            </li>
+        </ul>
 
-    <span class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">Personal Items</span>
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/user/projects-list}">Projects</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/user/tasks-list}">Tasks</a>
-        </li>
-    </ul>
+        <span class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted fw-bolder">My Items</span>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/projects-list}">My Projects</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/tasks-list}">My Tasks</a>
+            </li>
+        </ul>
+    </div>
 </div>
