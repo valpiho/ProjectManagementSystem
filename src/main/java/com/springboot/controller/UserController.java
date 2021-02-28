@@ -12,7 +12,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.List;
 
@@ -69,7 +71,19 @@ public class UserController {
 
     @PostMapping("/user/{username}/updateForm")
     public String updateUser(@PathVariable(value = "username") String username,
-                             @ModelAttribute(value = "user") User user) throws UsernameExistException, EmailExistException {
+                             @ModelAttribute(value = "user") User user, Model model, Authentication authentication) throws UsernameExistException, EmailExistException {
+        if(userService.findUserByUsername(user.getUsername()) != null && userService.findUserByUsername(user.getUsername()).getUsername().equals(user.getUsername())) {
+            model.addAttribute("authUser", getAuthUser(authentication));
+            model.addAttribute("user", user);
+            model.addAttribute("errorUser", "User exists");
+            return "user/update";
+        }
+        if(userService.findUserByEmail(user.getEmail()) != null && userService.findUserByEmail(user.getEmail()).getEmail().equals(user.getEmail())) {
+            model.addAttribute("authUser", getAuthUser(authentication));
+            model.addAttribute("user", user);
+            model.addAttribute("errorEmail", "Email exists");
+            return "user/update";
+        }
         userService.updateUserByUsername(username, user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail(), user.getPassword());
         return "user/profile";
     }
@@ -138,8 +152,16 @@ public class UserController {
     }
 
     @PostMapping("/registerForm")
-    public String registerUser(@ModelAttribute(value = "user") User user)
+    public String registerUser(@ModelAttribute(value = "user") User user, Model model)
             throws UsernameExistException, EmailExistException {
+        if(userService.findUserByUsername(user.getUsername()) != null && userService.findUserByUsername(user.getUsername()).getUsername().equals(user.getUsername())) {
+            model.addAttribute("errorUser", "User exists");
+            return "register";
+        }
+        if(userService.findUserByEmail(user.getEmail()) != null && userService.findUserByEmail(user.getEmail()).getEmail().equals(user.getEmail())) {
+            model.addAttribute("errorEmail", "Email exists");
+            return "register";
+        }
         userService.registerNewUser(user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail(), user.getPassword());
         return "redirect:/login";
     }
@@ -149,6 +171,7 @@ public class UserController {
         if (authentication != null) {
             return "redirect:/";
         }
+
         return "login";
     }
 
