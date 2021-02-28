@@ -55,7 +55,8 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="profile-work">
-                                    <p>WORK LINK</p>
+                                    <br>
+                                    <p>WORK LINKS</p>
                                     <a href="">Website Link</a><br/>
                                     <a href="">LinkedIn Profile</a><br/>
                                     <a href="">Facebook Profile</a>
@@ -116,7 +117,7 @@
                                                 <label>My Active Projects </label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p th:text="${user.projects.size()}"></p>
+                                                <a th:href="@{/user/projects-list}" th:text="${user.projects.size()}"></a>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -124,7 +125,7 @@
                                                 <label>My Active Tasks </label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p th:text="${user.tasks.size()}"></p>
+                                                <a th:href="@{/user/tasks-list}" th:text="${user.tasks.size()}"></a>
                                             </div>
                                         </div>
                                     </div>
