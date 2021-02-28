@@ -113,18 +113,18 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>My Active Projects </label>
+                                                <label>My Projects </label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p th:text="${user.projects.size()}"></p>
+                                                <a th:href="@{/user/projects-list}" th:text="${user.projects.size()}"></a>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>My Active Tasks </label>
+                                                <label>My Tasks </label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p th:text="${user.tasks.size()}"></p>
+                                                <a th:href="@{/user/tasks-list}" th:text="${user.tasks.size()}"></a>
                                             </div>
                                         </div>
                                     </div>
